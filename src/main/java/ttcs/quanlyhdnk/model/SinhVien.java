@@ -6,10 +6,6 @@ package ttcs.quanlyhdnk.model;
 
 import java.util.Date;
 
-/**
- *
- * @author ADMIN
- */
 public class SinhVien extends NguoiDung{
 
     public SinhVien() {

@@ -5,17 +5,16 @@ import java.time.LocalDateTime;
 
 public class HoatDong {
     private int id, numberOfRegistrations;// soLuongDangKy
-    private String name, content, genre, address, picture, note;// ten, noiDung,theLoai,diaChi,anh, ghichu;
+    private String title, content, genre, address, picture, note;// ten, noiDung,theLoai,diaChi,anh, ghichu;
     private LocalDateTime startDate, endDate, postingTime;
-    private String idUser;// nguoiDangHoatDong
+    private String idUser,nameUser;// nguoiDangHoatDong
 
     public HoatDong() {
     }
-
-    public HoatDong(int id, int numberOfRegistrations, String name, String content, String genre, String address, String picture, String note, LocalDateTime startDate, LocalDateTime endDate, LocalDateTime postingTime, String idUser) {
+    public HoatDong(int id, int numberOfRegistrations, String title, String content, String genre, String address, String picture, String note, LocalDateTime startDate, LocalDateTime endDate, LocalDateTime postingTime, String idUser, String nameUser) {
         this.id = id;
         this.numberOfRegistrations = numberOfRegistrations;
-        this.name = name;
+        this.title = title;
         this.content = content;
         this.genre = genre;
         this.address = address;
@@ -25,6 +24,7 @@ public class HoatDong {
         this.endDate = endDate;
         this.postingTime = postingTime;
         this.idUser = idUser;
+        this.nameUser = nameUser;
     }
 
     public int getId() {
@@ -43,12 +43,12 @@ public class HoatDong {
         this.numberOfRegistrations = numberOfRegistrations;
     }
 
-    public String getName() {
-        return name;
+    public String getTitle() {
+        return title;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setTitle(String title) {
+        this.title = title;
     }
 
     public String getContent() {
@@ -122,5 +122,15 @@ public class HoatDong {
     public void setIdUser(String idUser) {
         this.idUser = idUser;
     }
+
+    public String getNameUser() {
+        return nameUser;
+    }
+
+    public void setNameUser(String nameUser) {
+        this.nameUser = nameUser;
+    }
+
+
     
 }
