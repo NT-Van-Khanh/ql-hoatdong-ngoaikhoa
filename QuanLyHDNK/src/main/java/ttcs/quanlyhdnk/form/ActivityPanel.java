@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
-import ttcs.quanlyhdnk.DAO.SinhVien.ListHoatDong;
+import ttcs.quanlyhdnk.DAO.SinhVien.StudentActivity;
 import ttcs.quanlyhdnk.model.Activity;
 import ttcs.quanlyhdnk.util.DateTimeUtil;
 /**

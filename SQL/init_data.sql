@@ -49,10 +49,18 @@ GO
 
 INSERT TaiKhoan(maTK, matKhau, tenTK, maVaiTro, maDonVi, email, sdt, diaChi, ngaySinh, gioiTinh)
 VALUES('TKCLBA1','123456',N'Thư kí câu lạc bộ A-1','ND','CLBA','clba@gmail.com','0123456789',NULL,'12-01-2000',NULL)
+INSERT TaiKhoan(maTK, matKhau, tenTK, maVaiTro, maDonVi, email, sdt, diaChi, ngaySinh, gioiTinh)
+VALUES('N21DCCN000','123456',N'NGUYEN A','SV','D21CQCN01-N','abc@gmail.com','0123456789',NULL,'12-01-2000',NULL)
 GO
 
 INSERT HoatDong(tenHD, maTheLoai, noiDung, ngayBD, ngayKT, soLuongDK, maNguoiDang, diaDiem, anh)
-VALUES('Khóa ôn tập thi cuối kì môn A','KH',
-	'Khóa ôn tập thi cuối kì do CLB A tổ chức, dành cho các bạn sinh viên muốn ôn thi môn A','12-02-2024',
+VALUES(N'Khóa ôn tập thi cuối kì môn A','KH',
+	N'Khóa ôn tập thi cuối kì do CLB A tổ chức, dành cho các bạn sinh viên muốn ôn thi môn A','12-02-2024',
 	'12-04-2024',5,'TKCLBA1','Phong AAA',NULL)
+INSERT HoatDong(tenHD, maTheLoai, noiDung, ngayBD, ngayKT, soLuongDK, maNguoiDang, diaDiem, anh)
+VALUES(N'Khóa ôn tập thi cuối kì môn B','KH',
+	N'Khóa ôn tập thi cuối kì do CLB A tổ chức, dành cho các bạn sinh viên muốn ôn thi môn B','02-16-2024',
+	'02-17-2024',5,'TKCLBA1','Phong AAA',NULL)
 GO
+INSERT DangKy(maHoatDong,maTaiKhoan)
+VALUES(15,'N21DCCN000')

@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import ttcs.quanlyhdnk.DAO.SinhVien.ListHoatDong;
+import ttcs.quanlyhdnk.DAO.SinhVien.StudentActivity;
 import ttcs.quanlyhdnk.form.ActivityPanel;
 import ttcs.quanlyhdnk.model.Activity;
 import ttcs.quanlyhdnk.run.*;
@@ -29,8 +29,7 @@ public class SinhVienForm extends javax.swing.JFrame {
         initComponents();
         
     //Load data
-        //LoadActivityList();
-        LoadActivityPanelList();
+        LoadActivityPanelList("Activities");
         
     //design frame
 //        setExtendedState(MAXIMIZED_BOTH);
@@ -46,11 +45,20 @@ public class SinhVienForm extends javax.swing.JFrame {
         pnlListHD.setPreferredSize(new Dimension(pnlListHD.getWidth(),(int)(soLuong*210+10)));
     }
     
-    private void LoadActivityPanelList(){
-        
+    private void LoadActivityPanelList(String type){
+
         List<Activity> ListHD = new ArrayList<Activity>();
-        ListHD= LoadActivityList();
-        
+
+        if(type.equals("Activities")){
+            
+            ListHD= LoadActivityList();
+            
+        }else if(type.equals("TakenActivities")){
+            
+            ListHD= LoadTakenActivities("N21DCCN000");
+            
+        }
+
         if(!ListHD.isEmpty()){
             pnlListHD.removeAll();
             for(int index =0;index<ListHD.size();++index){
@@ -65,13 +73,24 @@ public class SinhVienForm extends javax.swing.JFrame {
         }
         
     }
-    
+    private List<Activity> LoadTakenActivities(String IDAccount){
+        
+        List<Activity> activityList = new ArrayList<>();
+        try {
+            StudentActivity daoList = new StudentActivity();
+            activityList = daoList.TakenActivities(IDAccount);          
+        } catch (Exception ex) {
+           // System.out.println("aasdasdsd"); Thong bao loi
+            Logger.getLogger(ActivityPanel.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return activityList;
+    }
     private List<Activity> LoadActivityList(){
         
         List<Activity> activityList = new ArrayList<>();
         try {
-            ListHoatDong daoList = new ListHoatDong();
-            activityList = daoList.getList();           
+            StudentActivity daoList = new StudentActivity();
+            activityList = daoList.getCurrentActivities();           
         } catch (Exception ex) {
            // System.out.println("aasdasdsd"); Thong bao loi
             Logger.getLogger(ActivityPanel.class.getName()).log(Level.SEVERE, null, ex);
@@ -83,10 +102,10 @@ public class SinhVienForm extends javax.swing.JFrame {
         
     }
     
-    private void reLoadData(int type){
+    private void reLoadData(String type){
         pnlListHD.removeAll();
         cmbSort.removeAllItems();
-        LoadActivityPanelList();
+        LoadActivityPanelList(type);
         cmbSortLoadData();  
     }
     

@@ -12,9 +12,6 @@ import java.awt.Color;
  */
 public class QuanLyHDNK extends javax.swing.JFrame {
 
-    /**
-     * Creates new form mainForm
-     */
     public QuanLyHDNK() {
 //        jDialog1.setVisible(true);
         initComponents();

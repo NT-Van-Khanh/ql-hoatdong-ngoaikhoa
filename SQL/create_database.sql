@@ -44,7 +44,7 @@ go
 create table HoatDong(
 	maHD int primary key not null identity(1,1),
 	tenHD nvarchar(200) not null,
-	noiDung text not null,
+	noiDung ntext not null,
 	maTheLoai nvarchar(2) not null,
 	ngayDang datetime not null DEFAULT getdate(),
 	ngayBD datetime not null,
@@ -76,7 +76,7 @@ go
 create table ThongBao(
 	maTB int primary key not null identity(1,1),
 	tieuDe nvarchar(100) not null,
-	noiDung text not null,
+	noiDung ntext not null,
 	thoiGian datetime not null DEFAULT getdate(),
 	maHoatDong int not null,
 	maNguoiDang nvarchar(15) not null,
