@@ -14,6 +14,7 @@ import ttcs.quanlyhdnk.model.Activity;
 import ttcs.quanlyhdnk.util.Helper;
 import ttcs.quanlyhdnk.util.DateTimeUtil;
 public class StudentActivity{
+    
     public List<Activity> getCurrentActivities() throws Exception{
         List<Activity> Activities = new ArrayList<>();
         String query = "SELECT HoatDong.maHD as maHD, HoatDong.tenHD as tenHD, HoatDong.noiDung as noiDung, LoaiHoatDong.tenLHD as theLoai, " +
@@ -53,6 +54,7 @@ public class StudentActivity{
             
             
     }
+    
     public List<Activity> TakenActivities(String idAccount) throws Exception{
         List<Activity> Activities = new ArrayList<>();
         String query = "SELECT HoatDong.maHD as maHD, HoatDong.tenHD as tenHD, HoatDong.noiDung as noiDung, LoaiHoatDong.tenLHD as theLoai, " +
@@ -97,6 +99,8 @@ public class StudentActivity{
             return Activities;
         }
     }
+   
+    
     public void sortByID(){
     
     }

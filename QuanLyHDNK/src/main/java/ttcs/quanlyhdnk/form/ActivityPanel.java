@@ -26,6 +26,7 @@ public class ActivityPanel extends javax.swing.JPanel {
     public ActivityPanel(Activity hoatDong){
         initComponents();
         setContentForCard(hoatDong);
+        setContentForDlg(hoatDong);
     }
     
     private void setContentForCard(Activity hoatDong){
@@ -38,27 +39,36 @@ public class ActivityPanel extends javax.swing.JPanel {
         lblEndTime.setText(hoatDong.getEndDate().toString());
         //lblEndTime.setIcon();
     }
-
+    private void setContentForDlg(Activity hoatDong){
+        lblContentOfDlg.setText(hoatDong.getContent());
+        lblTitleOfDlg.setText(hoatDong.getTitle());
+        lblGenreOfDlg.setText(hoatDong.getGenre());
+        lblNameUserOfDlg.setText(hoatDong.getNameUser());
+        lblPostingTimeOfDlg.setText(hoatDong.getPostingTime().toString());//sua 3 dong nay
+        lblStartTimeOfDlg.setText(hoatDong.getStartDate().toString());
+        lblEndTimeOfDlg.setText(hoatDong.getEndDate().toString());
+        //lblEndTime.setIcon();
+    }
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jDialog1 = new javax.swing.JDialog();
+        dlgActivityInformation = new javax.swing.JDialog();
         jPanel2 = new javax.swing.JPanel();
-        lblTitle1 = new javax.swing.JLabel();
-        lblContent1 = new javax.swing.JLabel();
+        lblTitleOfDlg = new javax.swing.JLabel();
+        lblContentOfDlg = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
-        lblStartTime1 = new javax.swing.JLabel();
+        lblStartTimeOfDlg = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
-        lblEndTime1 = new javax.swing.JLabel();
+        lblEndTimeOfDlg = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
-        lblNameUser1 = new javax.swing.JLabel();
+        lblNameUserOfDlg = new javax.swing.JLabel();
         jLabel11 = new javax.swing.JLabel();
-        lblGenre1 = new javax.swing.JLabel();
+        lblGenreOfDlg = new javax.swing.JLabel();
         jLabel13 = new javax.swing.JLabel();
-        lblPostingTime1 = new javax.swing.JLabel();
-        lblPicture1 = new javax.swing.JLabel();
+        lblPostingTimeOfDlg = new javax.swing.JLabel();
+        lblPictureOfDlg = new javax.swing.JLabel();
         btnRegister1 = new javax.swing.JButton();
         lblTitle = new javax.swing.JLabel();
         lblPicture = new javax.swing.JLabel();
@@ -74,8 +84,8 @@ public class ActivityPanel extends javax.swing.JPanel {
         jLabel12 = new javax.swing.JLabel();
         lblPostingTime = new javax.swing.JLabel();
 
-        jDialog1.setBackground(new java.awt.Color(255, 255, 255));
-        jDialog1.setSize(new java.awt.Dimension(800, 350));
+        dlgActivityInformation.setBackground(new java.awt.Color(255, 255, 255));
+        dlgActivityInformation.setSize(new java.awt.Dimension(800, 350));
 
         jPanel2.setBackground(new java.awt.Color(242, 242, 242));
         jPanel2.addFocusListener(new java.awt.event.FocusAdapter() {
@@ -89,43 +99,43 @@ public class ActivityPanel extends javax.swing.JPanel {
             }
         });
 
-        lblTitle1.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        lblTitle1.setForeground(new java.awt.Color(0, 102, 204));
-        lblTitle1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lblTitle1.setText("Tieu de cua hoat dong");
+        lblTitleOfDlg.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        lblTitleOfDlg.setForeground(new java.awt.Color(0, 102, 204));
+        lblTitleOfDlg.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblTitleOfDlg.setText("Tieu de cua hoat dong");
 
-        lblContent1.setText("Mô tả hoạt động");
+        lblContentOfDlg.setText("Mô tả hoạt động");
 
         jLabel5.setForeground(new java.awt.Color(51, 51, 51));
         jLabel5.setText("Diễn ra từ");
 
-        lblStartTime1.setText("00:00 01-01-2024");
+        lblStartTimeOfDlg.setText("00:00 01-01-2024");
 
         jLabel7.setForeground(new java.awt.Color(51, 51, 51));
         jLabel7.setText("đến");
 
-        lblEndTime1.setText("00:00 01-01-2024");
+        lblEndTimeOfDlg.setText("00:00 01-01-2024");
 
         jLabel9.setForeground(new java.awt.Color(51, 51, 51));
         jLabel9.setText("Người đăng:");
 
-        lblNameUser1.setText("CLB Hoạt động tình nguyện Học viện công nghệ bưu chính viễn thông cơ sở TPHCM");
+        lblNameUserOfDlg.setText("CLB Hoạt động tình nguyện Học viện công nghệ bưu chính viễn thông cơ sở TPHCM");
 
         jLabel11.setForeground(new java.awt.Color(51, 51, 51));
         jLabel11.setText("Loại hoạt động:");
 
-        lblGenre1.setText("Phong trào");
+        lblGenreOfDlg.setText("Phong trào");
 
         jLabel13.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         jLabel13.setText("Đăng lúc:");
 
-        lblPostingTime1.setText("00:00 01-01-2024");
+        lblPostingTimeOfDlg.setText("00:00 01-01-2024");
 
-        lblPicture1.setBackground(new java.awt.Color(255, 204, 0));
-        lblPicture1.setForeground(new java.awt.Color(255, 255, 255));
-        lblPicture1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lblPicture1.setText("Ảnh");
-        lblPicture1.setOpaque(true);
+        lblPictureOfDlg.setBackground(new java.awt.Color(255, 204, 0));
+        lblPictureOfDlg.setForeground(new java.awt.Color(255, 255, 255));
+        lblPictureOfDlg.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblPictureOfDlg.setText("Ảnh");
+        lblPictureOfDlg.setOpaque(true);
 
         btnRegister1.setText("Đăng ký");
 
@@ -133,7 +143,7 @@ public class ActivityPanel extends javax.swing.JPanel {
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(lblTitle1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(lblTitleOfDlg, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGap(8, 8, 8)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -143,9 +153,9 @@ public class ActivityPanel extends javax.swing.JPanel {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jLabel13, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(lblPostingTime1, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(lblPostingTimeOfDlg, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(lblPicture1, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(lblPictureOfDlg, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel2Layout.createSequentialGroup()
@@ -154,63 +164,63 @@ public class ActivityPanel extends javax.swing.JPanel {
                                     .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(lblNameUser1, javax.swing.GroupLayout.DEFAULT_SIZE, 488, Short.MAX_VALUE)
+                                    .addComponent(lblNameUserOfDlg, javax.swing.GroupLayout.DEFAULT_SIZE, 488, Short.MAX_VALUE)
                                     .addGroup(jPanel2Layout.createSequentialGroup()
-                                        .addComponent(lblStartTime1, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(lblStartTimeOfDlg, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                         .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(lblEndTime1, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(lblEndTimeOfDlg, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addGap(0, 0, Short.MAX_VALUE))))
-                            .addComponent(lblContent1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(lblContentOfDlg, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addGroup(jPanel2Layout.createSequentialGroup()
                                 .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(lblGenre1, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(lblGenreOfDlg, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(0, 0, Short.MAX_VALUE)))
                         .addContainerGap())))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addComponent(lblTitle1, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(lblTitleOfDlg, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel9)
-                            .addComponent(lblNameUser1))
+                            .addComponent(lblNameUserOfDlg))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                .addComponent(lblStartTime1)
+                                .addComponent(lblStartTimeOfDlg)
                                 .addComponent(jLabel7)
-                                .addComponent(lblEndTime1))
+                                .addComponent(lblEndTimeOfDlg))
                             .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(lblGenre1)
+                            .addComponent(lblGenreOfDlg)
                             .addComponent(jLabel11))
                         .addGap(12, 12, 12)
-                        .addComponent(lblContent1, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(lblPicture1, javax.swing.GroupLayout.PREFERRED_SIZE, 213, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(lblContentOfDlg, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(lblPictureOfDlg, javax.swing.GroupLayout.PREFERRED_SIZE, 213, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jLabel13)
-                        .addComponent(lblPostingTime1))
+                        .addComponent(lblPostingTimeOfDlg))
                     .addComponent(btnRegister1))
                 .addContainerGap(51, Short.MAX_VALUE))
         );
 
-        javax.swing.GroupLayout jDialog1Layout = new javax.swing.GroupLayout(jDialog1.getContentPane());
-        jDialog1.getContentPane().setLayout(jDialog1Layout);
-        jDialog1Layout.setHorizontalGroup(
-            jDialog1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        javax.swing.GroupLayout dlgActivityInformationLayout = new javax.swing.GroupLayout(dlgActivityInformation.getContentPane());
+        dlgActivityInformation.getContentPane().setLayout(dlgActivityInformationLayout);
+        dlgActivityInformationLayout.setHorizontalGroup(
+            dlgActivityInformationLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jPanel2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
-        jDialog1Layout.setVerticalGroup(
-            jDialog1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        dlgActivityInformationLayout.setVerticalGroup(
+            dlgActivityInformationLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jPanel2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
@@ -339,7 +349,8 @@ public class ActivityPanel extends javax.swing.JPanel {
 
     private void formMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_formMouseClicked
 //       JOptionPane.showConfirmDialog(this,"Chi tiet hoat dong");
-       jDialog1.setVisible(true);
+       dlgActivityInformation.setVisible(true);
+       dlgActivityInformation.setLocationRelativeTo(null);
 //       List<HoatDong> ListHD= new ArrayList<>();
 //        try {
 //            ListHoatDong daoList = new ListHoatDong();
@@ -365,7 +376,7 @@ public class ActivityPanel extends javax.swing.JPanel {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnRegister1;
-    private javax.swing.JDialog jDialog1;
+    private javax.swing.JDialog dlgActivityInformation;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
@@ -378,20 +389,20 @@ public class ActivityPanel extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JLabel lblContent;
-    private javax.swing.JLabel lblContent1;
+    private javax.swing.JLabel lblContentOfDlg;
     private javax.swing.JLabel lblEndTime;
-    private javax.swing.JLabel lblEndTime1;
+    private javax.swing.JLabel lblEndTimeOfDlg;
     private javax.swing.JLabel lblGenre;
-    private javax.swing.JLabel lblGenre1;
+    private javax.swing.JLabel lblGenreOfDlg;
     private javax.swing.JLabel lblNameUser;
-    private javax.swing.JLabel lblNameUser1;
+    private javax.swing.JLabel lblNameUserOfDlg;
     private javax.swing.JLabel lblPicture;
-    private javax.swing.JLabel lblPicture1;
+    private javax.swing.JLabel lblPictureOfDlg;
     private javax.swing.JLabel lblPostingTime;
-    private javax.swing.JLabel lblPostingTime1;
+    private javax.swing.JLabel lblPostingTimeOfDlg;
     private javax.swing.JLabel lblStartTime;
-    private javax.swing.JLabel lblStartTime1;
+    private javax.swing.JLabel lblStartTimeOfDlg;
     private javax.swing.JLabel lblTitle;
-    private javax.swing.JLabel lblTitle1;
+    private javax.swing.JLabel lblTitleOfDlg;
     // End of variables declaration//GEN-END:variables
 }

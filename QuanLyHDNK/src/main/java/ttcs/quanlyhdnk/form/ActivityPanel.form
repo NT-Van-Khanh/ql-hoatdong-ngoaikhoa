@@ -2,7 +2,7 @@
 
 <Form version="1.3" maxVersion="1.9" type="org.netbeans.modules.form.forminfo.JPanelFormInfo">
   <NonVisualComponents>
-    <Container class="javax.swing.JDialog" name="jDialog1">
+    <Container class="javax.swing.JDialog" name="dlgActivityInformation">
       <Properties>
         <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
           <Color blue="ff" green="ff" red="ff" type="rgb"/>
@@ -42,7 +42,7 @@
           <Layout>
             <DimensionLayout dim="0">
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Component id="lblTitle1" max="32767" attributes="0"/>
+                  <Component id="lblTitleOfDlg" max="32767" attributes="0"/>
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace min="-2" pref="8" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
@@ -52,10 +52,10 @@
                               <EmptySpace max="32767" attributes="0"/>
                               <Component id="jLabel13" min="-2" pref="60" max="-2" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
-                              <Component id="lblPostingTime1" min="-2" pref="100" max="-2" attributes="0"/>
+                              <Component id="lblPostingTimeOfDlg" min="-2" pref="100" max="-2" attributes="0"/>
                           </Group>
                           <Group type="102" attributes="0">
-                              <Component id="lblPicture1" min="-2" pref="200" max="-2" attributes="0"/>
+                              <Component id="lblPictureOfDlg" min="-2" pref="200" max="-2" attributes="0"/>
                               <EmptySpace type="unrelated" max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="0" attributes="0">
                                   <Group type="102" attributes="0">
@@ -65,22 +65,22 @@
                                       </Group>
                                       <EmptySpace max="-2" attributes="0"/>
                                       <Group type="103" groupAlignment="0" attributes="0">
-                                          <Component id="lblNameUser1" alignment="0" pref="488" max="32767" attributes="0"/>
+                                          <Component id="lblNameUserOfDlg" alignment="0" pref="488" max="32767" attributes="0"/>
                                           <Group type="102" alignment="0" attributes="0">
-                                              <Component id="lblStartTime1" min="-2" pref="110" max="-2" attributes="0"/>
+                                              <Component id="lblStartTimeOfDlg" min="-2" pref="110" max="-2" attributes="0"/>
                                               <EmptySpace max="-2" attributes="0"/>
                                               <Component id="jLabel7" min="-2" pref="30" max="-2" attributes="0"/>
                                               <EmptySpace max="-2" attributes="0"/>
-                                              <Component id="lblEndTime1" min="-2" pref="100" max="-2" attributes="0"/>
+                                              <Component id="lblEndTimeOfDlg" min="-2" pref="100" max="-2" attributes="0"/>
                                               <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                                           </Group>
                                       </Group>
                                   </Group>
-                                  <Component id="lblContent1" max="32767" attributes="0"/>
+                                  <Component id="lblContentOfDlg" max="32767" attributes="0"/>
                                   <Group type="102" attributes="0">
                                       <Component id="jLabel11" min="-2" pref="100" max="-2" attributes="0"/>
                                       <EmptySpace max="-2" attributes="0"/>
-                                      <Component id="lblGenre1" min="-2" pref="140" max="-2" attributes="0"/>
+                                      <Component id="lblGenreOfDlg" min="-2" pref="140" max="-2" attributes="0"/>
                                       <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                                   </Group>
                               </Group>
@@ -93,38 +93,38 @@
             <DimensionLayout dim="1">
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="0" attributes="0">
-                      <Component id="lblTitle1" min="-2" pref="45" max="-2" attributes="0"/>
+                      <Component id="lblTitleOfDlg" min="-2" pref="45" max="-2" attributes="0"/>
                       <EmptySpace min="-2" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Group type="102" alignment="1" attributes="0">
                               <Group type="103" groupAlignment="3" attributes="0">
                                   <Component id="jLabel9" alignment="3" min="-2" max="-2" attributes="0"/>
-                                  <Component id="lblNameUser1" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="lblNameUserOfDlg" alignment="3" min="-2" max="-2" attributes="0"/>
                               </Group>
                               <EmptySpace max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="0" attributes="0">
                                   <Group type="103" alignment="0" groupAlignment="3" attributes="0">
-                                      <Component id="lblStartTime1" alignment="3" min="-2" max="-2" attributes="0"/>
+                                      <Component id="lblStartTimeOfDlg" alignment="3" min="-2" max="-2" attributes="0"/>
                                       <Component id="jLabel7" alignment="3" min="-2" max="-2" attributes="0"/>
-                                      <Component id="lblEndTime1" alignment="3" min="-2" max="-2" attributes="0"/>
+                                      <Component id="lblEndTimeOfDlg" alignment="3" min="-2" max="-2" attributes="0"/>
                                   </Group>
                                   <Component id="jLabel5" alignment="0" min="-2" pref="16" max="-2" attributes="0"/>
                               </Group>
                               <EmptySpace max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="3" attributes="0">
-                                  <Component id="lblGenre1" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="lblGenreOfDlg" alignment="3" min="-2" max="-2" attributes="0"/>
                                   <Component id="jLabel11" alignment="3" min="-2" max="-2" attributes="0"/>
                               </Group>
                               <EmptySpace min="-2" pref="12" max="-2" attributes="0"/>
-                              <Component id="lblContent1" min="-2" pref="141" max="-2" attributes="0"/>
+                              <Component id="lblContentOfDlg" min="-2" pref="141" max="-2" attributes="0"/>
                           </Group>
-                          <Component id="lblPicture1" alignment="0" min="-2" pref="213" max="-2" attributes="0"/>
+                          <Component id="lblPictureOfDlg" alignment="0" min="-2" pref="213" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Group type="103" groupAlignment="3" attributes="0">
                               <Component id="jLabel13" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="lblPostingTime1" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="lblPostingTimeOfDlg" alignment="3" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <Component id="btnRegister1" alignment="0" min="-2" max="-2" attributes="0"/>
                       </Group>
@@ -134,7 +134,7 @@
             </DimensionLayout>
           </Layout>
           <SubComponents>
-            <Component class="javax.swing.JLabel" name="lblTitle1">
+            <Component class="javax.swing.JLabel" name="lblTitleOfDlg">
               <Properties>
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                   <Font name="Segoe UI" size="18" style="1"/>
@@ -146,7 +146,7 @@
                 <Property name="text" type="java.lang.String" value="Tieu de cua hoat dong"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JLabel" name="lblContent1">
+            <Component class="javax.swing.JLabel" name="lblContentOfDlg">
               <Properties>
                 <Property name="text" type="java.lang.String" value="M&#xf4; t&#x1ea3; ho&#x1ea1;t &#x111;&#x1ed9;ng"/>
               </Properties>
@@ -159,7 +159,7 @@
                 <Property name="text" type="java.lang.String" value="Di&#x1ec5;n ra t&#x1eeb;"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JLabel" name="lblStartTime1">
+            <Component class="javax.swing.JLabel" name="lblStartTimeOfDlg">
               <Properties>
                 <Property name="text" type="java.lang.String" value="00:00 01-01-2024"/>
               </Properties>
@@ -172,7 +172,7 @@
                 <Property name="text" type="java.lang.String" value="&#x111;&#x1ebf;n"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JLabel" name="lblEndTime1">
+            <Component class="javax.swing.JLabel" name="lblEndTimeOfDlg">
               <Properties>
                 <Property name="text" type="java.lang.String" value="00:00 01-01-2024"/>
               </Properties>
@@ -185,7 +185,7 @@
                 <Property name="text" type="java.lang.String" value="Ng&#x1b0;&#x1edd;i &#x111;&#x103;ng:"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JLabel" name="lblNameUser1">
+            <Component class="javax.swing.JLabel" name="lblNameUserOfDlg">
               <Properties>
                 <Property name="text" type="java.lang.String" value="CLB Ho&#x1ea1;t &#x111;&#x1ed9;ng t&#xec;nh nguy&#x1ec7;n H&#x1ecd;c vi&#x1ec7;n c&#xf4;ng ngh&#x1ec7; b&#x1b0;u ch&#xed;nh vi&#x1ec5;n th&#xf4;ng c&#x1a1; s&#x1edf; TPHCM"/>
               </Properties>
@@ -198,7 +198,7 @@
                 <Property name="text" type="java.lang.String" value="Lo&#x1ea1;i ho&#x1ea1;t &#x111;&#x1ed9;ng:"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JLabel" name="lblGenre1">
+            <Component class="javax.swing.JLabel" name="lblGenreOfDlg">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Phong tr&#xe0;o"/>
               </Properties>
@@ -209,12 +209,12 @@
                 <Property name="text" type="java.lang.String" value="&#x110;&#x103;ng l&#xfa;c:"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JLabel" name="lblPostingTime1">
+            <Component class="javax.swing.JLabel" name="lblPostingTimeOfDlg">
               <Properties>
                 <Property name="text" type="java.lang.String" value="00:00 01-01-2024"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JLabel" name="lblPicture1">
+            <Component class="javax.swing.JLabel" name="lblPictureOfDlg">
               <Properties>
                 <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                   <Color blue="0" green="cc" red="ff" type="rgb"/>

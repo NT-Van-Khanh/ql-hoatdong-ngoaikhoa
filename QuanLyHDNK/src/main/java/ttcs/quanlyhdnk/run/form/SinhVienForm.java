@@ -6,7 +6,9 @@ package ttcs.quanlyhdnk.run.form;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Dimension;
+import java.awt.Font;
 import java.util.AbstractList;
 import java.util.ArrayList;
 import java.util.List;
@@ -15,6 +17,7 @@ import java.util.logging.Logger;
 import ttcs.quanlyhdnk.DAO.SinhVien.StudentActivity;
 import ttcs.quanlyhdnk.form.ActivityPanel;
 import ttcs.quanlyhdnk.model.Activity;
+import ttcs.quanlyhdnk.model.SinhVien;
 import ttcs.quanlyhdnk.run.*;
 import ttcs.quanlyhdnk.util.DateTimeUtil;
 
@@ -23,42 +26,83 @@ import ttcs.quanlyhdnk.util.DateTimeUtil;
  * @author ADMIN
  */
 public class SinhVienForm extends javax.swing.JFrame {
-
+    private int selectedItemMenu=1;
+    private SinhVien account = new SinhVien();
     private List<Activity> activityList = new ArrayList<>();
     public SinhVienForm() {
         initComponents();
-        
     //Load data
-        LoadActivityPanelList("Activities");
-        
+        account.setUser("N21DCCN000");
+        LoadCurrentActivitiesPanel(); 
     //design frame
 //        setExtendedState(MAXIMIZED_BOTH);
-
     //test
-//        for(int i=0;i<dsHoatDong.size();i++){ 
-//            System.out.println(dsHoatDong.get(i).getGenre());
-//        }
 
     }
+    private void showForm(int index){
+        if(index!=selectedItemMenu){
+            Font fontForNewBtnMenu=btnHome.getFont();
+            Font fontForOldBtnMenu= new Font(fontForNewBtnMenu.getName(),fontForNewBtnMenu.PLAIN,fontForNewBtnMenu.getSize());
+            switch( selectedItemMenu){
+                case 1:
+                    btnHome.setFont(fontForOldBtnMenu);
+                    pnlHome.setOpaque(false);
+                    break;
+                case 2:
+                    btnRegistrationHistory.setFont(fontForOldBtnMenu);
+                    pnlRegistrationHistory.setOpaque(false);
 
-    private void setSizeFormSanPham(int soLuong){
-        pnlListHD.setPreferredSize(new Dimension(pnlListHD.getWidth(),(int)(soLuong*210+10)));
+                    break;   
+                case 3:
+                    btnParticipationHistory.setFont(fontForOldBtnMenu);
+                    pnlParticipationHistory.setOpaque(false);
+                    break;   
+                default:
+                    break;
+            }
+            
+            switch(index){
+                case 1:
+                    btnHome.setFont(fontForNewBtnMenu);
+                    pnlHome.setOpaque(true);
+                    break;
+                case 2:
+                    btnRegistrationHistory.setFont(fontForNewBtnMenu);
+                    pnlRegistrationHistory.setOpaque(true);
+                    break;   
+                case 3:
+                    btnParticipationHistory.setFont(fontForNewBtnMenu);
+                    pnlParticipationHistory.setOpaque(true);
+
+                    break;   
+                default:
+                    break;
+            }
+            this.selectedItemMenu=index;   
+        }
+//        pnlListHD.removeAll();
+//        pnlListHD.add(com);
+//        pnlListHD.revalidate();
+//        pnlListHD.repaint();
     }
     
-    private void LoadActivityPanelList(String type){
-
-        List<Activity> ListHD = new ArrayList<Activity>();
-
-        if(type.equals("Activities")){
-            
-            ListHD= LoadActivityList();
-            
-        }else if(type.equals("TakenActivities")){
-            
-            ListHD= LoadTakenActivities("N21DCCN000");
-            
-        }
-
+    private void setSizeFormSanPham(int soLuong){
+        Dimension dimension = new Dimension(pnlListHD.getWidth(),(int)(soLuong*210+10));
+        pnlListHD.setPreferredSize(dimension);
+    }
+    
+    
+    private void LoadCurrentActivitiesPanel(){ 
+        List<Activity> ListHD=  LoadActivityList();
+        LoadActivityPanelList( ListHD);
+    }
+    
+    private void LoadTakenActivitiesPanel(String IDAccount){
+        List<Activity> ListHD= LoadTakenActivities("N21DCCN000");
+        LoadActivityPanelList( ListHD);
+    }
+    
+    private void LoadActivityPanelList(List<Activity> ListHD){
         if(!ListHD.isEmpty()){
             pnlListHD.removeAll();
             for(int index =0;index<ListHD.size();++index){
@@ -73,6 +117,7 @@ public class SinhVienForm extends javax.swing.JFrame {
         }
         
     }
+    
     private List<Activity> LoadTakenActivities(String IDAccount){
         
         List<Activity> activityList = new ArrayList<>();
@@ -85,6 +130,7 @@ public class SinhVienForm extends javax.swing.JFrame {
         }
         return activityList;
     }
+    
     private List<Activity> LoadActivityList(){
         
         List<Activity> activityList = new ArrayList<>();
@@ -98,6 +144,7 @@ public class SinhVienForm extends javax.swing.JFrame {
         return activityList;
     }
     
+    
     private void cmbSortLoadData(){
         
     }
@@ -105,7 +152,6 @@ public class SinhVienForm extends javax.swing.JFrame {
     private void reLoadData(String type){
         pnlListHD.removeAll();
         cmbSort.removeAllItems();
-        LoadActivityPanelList(type);
         cmbSortLoadData();  
     }
     
@@ -131,6 +177,11 @@ public class SinhVienForm extends javax.swing.JFrame {
         jButton2 = new javax.swing.JButton();
         jPanel6 = new javax.swing.JPanel();
         jLabel4 = new javax.swing.JLabel();
+        dlgNotification = new javax.swing.JDialog();
+        jPanel3 = new javax.swing.JPanel();
+        jLabel2 = new javax.swing.JLabel();
+        jPanel4 = new javax.swing.JPanel();
+        jLabel1 = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
         header = new javax.swing.JPanel();
         lblAvatar = new javax.swing.JLabel();
@@ -307,6 +358,61 @@ public class SinhVienForm extends javax.swing.JFrame {
                 .addGap(7, 7, 7))
         );
 
+        dlgNotification.setPreferredSize(new java.awt.Dimension(600, 400));
+        dlgNotification.setSize(new java.awt.Dimension(600, 400));
+
+        jLabel2.setText("danh sách thông báo");
+
+        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
+        jPanel3.setLayout(jPanel3Layout);
+        jPanel3Layout.setHorizontalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addGap(89, 89, 89)
+                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 319, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(192, Short.MAX_VALUE))
+        );
+        jPanel3Layout.setVerticalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addGap(71, 71, 71)
+                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(128, Short.MAX_VALUE))
+        );
+
+        jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(0, 102, 204));
+        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel1.setText("THÔNG BÁO");
+
+        javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
+        jPanel4.setLayout(jPanel4Layout);
+        jPanel4Layout.setHorizontalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        );
+        jPanel4Layout.setVerticalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel4Layout.createSequentialGroup()
+                .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 45, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+
+        javax.swing.GroupLayout dlgNotificationLayout = new javax.swing.GroupLayout(dlgNotification.getContentPane());
+        dlgNotification.getContentPane().setLayout(dlgNotificationLayout);
+        dlgNotificationLayout.setHorizontalGroup(
+            dlgNotificationLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jPanel3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        );
+        dlgNotificationLayout.setVerticalGroup(
+            dlgNotificationLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(dlgNotificationLayout.createSequentialGroup()
+                .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Hoạt Động Ngoại Khóa");
         setBackground(new java.awt.Color(255, 255, 255));
@@ -333,6 +439,7 @@ public class SinhVienForm extends javax.swing.JFrame {
 
         btnTB.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/notification.png"))); // NOI18N
         btnTB.setContentAreaFilled(false);
+        btnTB.setPreferredSize(new java.awt.Dimension(50, 50));
         btnTB.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnTBActionPerformed(evt);
@@ -348,7 +455,7 @@ public class SinhVienForm extends javax.swing.JFrame {
                 .addComponent(lblAvatar)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(lblNameUser, javax.swing.GroupLayout.PREFERRED_SIZE, 184, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 770, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(btnTB, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(20, 20, 20))
         );
@@ -356,11 +463,11 @@ public class SinhVienForm extends javax.swing.JFrame {
             headerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(headerLayout.createSequentialGroup()
                 .addGap(10, 10, 10)
-                .addGroup(headerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(lblAvatar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(lblNameUser)
-                    .addComponent(btnTB, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(10, 10, 10))
+                .addGroup(headerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(lblAvatar, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(btnTB, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblNameUser, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(10, Short.MAX_VALUE))
         );
 
         pnlMenuBar.setBackground(new java.awt.Color(0, 153, 255));
@@ -385,16 +492,30 @@ public class SinhVienForm extends javax.swing.JFrame {
 
         pnlMenuBar.add(jPanel5);
 
-        pnlHome.setBackground(new java.awt.Color(255, 255, 255));
+        pnlHome.setBackground(new java.awt.Color(50, 173, 255));
         pnlHome.setMaximumSize(new java.awt.Dimension(220, 45));
         pnlHome.setMinimumSize(new java.awt.Dimension(220, 45));
         pnlHome.setOpaque(false);
         pnlHome.setPreferredSize(new java.awt.Dimension(220, 45));
 
+        btnHome.setBackground(new java.awt.Color(38, 168, 255));
         btnHome.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         btnHome.setForeground(new java.awt.Color(255, 255, 255));
         btnHome.setText("TRANG CHỦ");
         btnHome.setContentAreaFilled(false);
+        btnHome.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btnHomeMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                btnHomeMouseExited(evt);
+            }
+        });
+        btnHome.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnHomeActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout pnlHomeLayout = new javax.swing.GroupLayout(pnlHome);
         pnlHome.setLayout(pnlHomeLayout);
@@ -409,16 +530,30 @@ public class SinhVienForm extends javax.swing.JFrame {
 
         pnlMenuBar.add(pnlHome);
 
-        pnlRegistrationHistory.setBackground(new java.awt.Color(255, 255, 255));
+        pnlRegistrationHistory.setBackground(new java.awt.Color(50, 173, 255));
         pnlRegistrationHistory.setMaximumSize(new java.awt.Dimension(220, 45));
         pnlRegistrationHistory.setMinimumSize(new java.awt.Dimension(220, 45));
         pnlRegistrationHistory.setOpaque(false);
         pnlRegistrationHistory.setPreferredSize(new java.awt.Dimension(220, 45));
 
+        btnRegistrationHistory.setBackground(new java.awt.Color(38, 168, 255));
         btnRegistrationHistory.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         btnRegistrationHistory.setForeground(new java.awt.Color(255, 255, 255));
         btnRegistrationHistory.setText("ĐÃ ĐĂNG KÝ");
         btnRegistrationHistory.setContentAreaFilled(false);
+        btnRegistrationHistory.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btnRegistrationHistoryMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                btnRegistrationHistoryMouseExited(evt);
+            }
+        });
+        btnRegistrationHistory.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRegistrationHistoryActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout pnlRegistrationHistoryLayout = new javax.swing.GroupLayout(pnlRegistrationHistory);
         pnlRegistrationHistory.setLayout(pnlRegistrationHistoryLayout);
@@ -433,15 +568,29 @@ public class SinhVienForm extends javax.swing.JFrame {
 
         pnlMenuBar.add(pnlRegistrationHistory);
 
-        pnlParticipationHistory.setBackground(new java.awt.Color(255, 255, 255));
+        pnlParticipationHistory.setBackground(new java.awt.Color(50, 173, 255));
         pnlParticipationHistory.setMaximumSize(new java.awt.Dimension(220, 45));
         pnlParticipationHistory.setMinimumSize(new java.awt.Dimension(220, 45));
         pnlParticipationHistory.setOpaque(false);
 
+        btnParticipationHistory.setBackground(new java.awt.Color(38, 168, 255));
         btnParticipationHistory.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         btnParticipationHistory.setForeground(new java.awt.Color(255, 255, 255));
         btnParticipationHistory.setText("ĐÃ THAM GIA");
         btnParticipationHistory.setContentAreaFilled(false);
+        btnParticipationHistory.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btnParticipationHistoryMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                btnParticipationHistoryMouseExited(evt);
+            }
+        });
+        btnParticipationHistory.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnParticipationHistoryActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout pnlParticipationHistoryLayout = new javax.swing.GroupLayout(pnlParticipationHistory);
         pnlParticipationHistory.setLayout(pnlParticipationHistoryLayout);
@@ -633,15 +782,60 @@ public class SinhVienForm extends javax.swing.JFrame {
     }//GEN-LAST:event_txtSearchFocusGained
 
     private void txtSearchFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtSearchFocusLost
-            if(txtSearch.getText().equals("".strip())){
+        if(txtSearch.getText().equals("".strip())){
             txtSearch.setText("Tìm kiếm");
             txtSearch.setForeground(new Color(153,153,153));
         }
     }//GEN-LAST:event_txtSearchFocusLost
 
     private void btnTBActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTBActionPerformed
-        // TODO add your handling code here:
+        dlgNotification.setVisible(true);
+        dlgSinhVienInformation.setLocationRelativeTo(null);
     }//GEN-LAST:event_btnTBActionPerformed
+
+    private void btnHomeMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnHomeMouseEntered
+        btnHome.setOpaque(true);
+    }//GEN-LAST:event_btnHomeMouseEntered
+
+    private void btnHomeMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnHomeMouseExited
+        btnHome.setOpaque(false);
+    }//GEN-LAST:event_btnHomeMouseExited
+
+    private void btnRegistrationHistoryMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnRegistrationHistoryMouseEntered
+        btnRegistrationHistory.setOpaque(true);
+    }//GEN-LAST:event_btnRegistrationHistoryMouseEntered
+
+    private void btnParticipationHistoryMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnParticipationHistoryMouseEntered
+        btnParticipationHistory.setOpaque(true);
+    }//GEN-LAST:event_btnParticipationHistoryMouseEntered
+
+    private void btnRegistrationHistoryMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnRegistrationHistoryMouseExited
+         btnRegistrationHistory.setOpaque(false);
+    }//GEN-LAST:event_btnRegistrationHistoryMouseExited
+
+    private void btnParticipationHistoryMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnParticipationHistoryMouseExited
+         btnParticipationHistory.setOpaque(false);
+    }//GEN-LAST:event_btnParticipationHistoryMouseExited
+
+    private void btnHomeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHomeActionPerformed
+        //btnHome.setFont();
+        //pnlHome.setOpaque(true);
+        showForm(1);
+        LoadCurrentActivitiesPanel();
+    }//GEN-LAST:event_btnHomeActionPerformed
+
+    private void btnRegistrationHistoryActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistrationHistoryActionPerformed
+        showForm(2);
+        LoadTakenActivitiesPanel(account.getUser());
+    }//GEN-LAST:event_btnRegistrationHistoryActionPerformed
+
+    private void btnParticipationHistoryActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnParticipationHistoryActionPerformed
+        // ChuaHoanThanh();
+        showForm(3);
+        pnlListHD.removeAll();
+        pnlListHD.revalidate();
+        pnlListHD.repaint();
+    }//GEN-LAST:event_btnParticipationHistoryActionPerformed
 
     /**
      * @param args the command line arguments
@@ -701,9 +895,11 @@ public class SinhVienForm extends javax.swing.JFrame {
     private javax.swing.JButton btnSearch;
     private javax.swing.JButton btnTB;
     private javax.swing.JComboBox<String> cmbSort;
+    private javax.swing.JDialog dlgNotification;
     private javax.swing.JDialog dlgSinhVienInformation;
     private javax.swing.JPanel header;
     private javax.swing.JButton jButton2;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
@@ -711,6 +907,7 @@ public class SinhVienForm extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel16;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
@@ -723,6 +920,8 @@ public class SinhVienForm extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel16;
     private javax.swing.JPanel jPanel17;
     private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel3;
+    private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel6;
     private javax.swing.JScrollPane jScrollPane2;
