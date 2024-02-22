@@ -1,5 +1,6 @@
 package ttcs.quanlyhdnk.model;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 
 public class QuanTri extends NguoiDung {
@@ -8,8 +9,8 @@ public class QuanTri extends NguoiDung {
         super();
     }
 
-    public QuanTri(String user, String password, String name, String gender, String email, String address, String phoneNumber, String ghiChu, String role, Date accountCreationDate, Date Birthday) {
-        super(user, password, name, gender, email, address, phoneNumber, ghiChu, role, accountCreationDate, Birthday);
+    public QuanTri(String user, String password, String name, String gender, String email, String phoneNumber, String address, String note, String role, LocalDateTime accountCreationDate, LocalDateTime Birthday) {
+        super(user, password, name, gender, email, phoneNumber, address, note, role, accountCreationDate, Birthday);
     }
-    
+
 }

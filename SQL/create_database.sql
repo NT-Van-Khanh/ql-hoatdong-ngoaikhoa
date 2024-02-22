@@ -2,18 +2,14 @@ create database QuanLyHDNK
 go
 use [QuanLyHDNK]
 go
+
 create table VaiTro(
 	maVT nvarchar(2) primary key not null,
 	tenVT nvarchar(50) not null,
 	flagVT bit not null DEFAULT 0,
 )
 go
-create table DonVi(
-	maDV nvarchar(15) primary key not null,
-	tenDV nvarchar(150) not null,
-	flagDV bit not null DEFAULT 0,
-)
-GO
+
 create table TaiKhoan(
 	maTK nvarchar(15) primary key not null,
 	tenTK nvarchar(150) not null, 
@@ -21,16 +17,14 @@ create table TaiKhoan(
 	ngayTao date not null DEFAULT getdate(),
 	gioiTinh bit,
 	ngaySinh date not null,
-	email nvarchar(50) not null,
-	sdt char(10),
+	email nvarchar(50) not null unique,
+	sdt char(10) not null unique,
 	diaChi nvarchar(200),
 	maVaiTro nvarchar(2) not null,
-	maDonVi nvarchar(15) not null,
 	flagTK bit not null DEFAULT 0,
-	CONSTRAINT checkNS CHECK (DATEDIFF(YEAR, ngaySinh, getdate())<=100 AND DATEDIFF(YEAR, ngaySinh, getdate()) >= 18),
+	CONSTRAINT checkNS CHECK (DATEDIFF(YEAR, ngaySinh, getdate())<=150 AND DATEDIFF(YEAR, ngaySinh, getdate()) >= 18),
 	CONSTRAINT checkMTK CHECK (LEN(maTK)>=5),
 	CONSTRAINT fk_tk_vaitro Foreign key (maVaiTro) REFERENCES VaiTro(maVT) ON UPDATE CASCADE,
-	CONSTRAINT fk_tk_donvi FOREIGN KEY (maDonVi) REFERENCES DonVi(maDV) ON UPDATE CASCADE,
 )
 
 go
@@ -47,8 +41,8 @@ create table HoatDong(
 	noiDung ntext not null,
 	maTheLoai nvarchar(2) not null,
 	ngayDang datetime not null DEFAULT getdate(),
-	ngayBD datetime not null,
-	ngayKT datetime not null,
+	ngayBD datetime,
+	ngayKT datetime,
 	soLuongDK smallint,
 	diaDiem nvarchar(200),
 	anh nvarchar(MAX),
@@ -56,7 +50,7 @@ create table HoatDong(
 	flagHD bit not null DEFAULT 0,
 	CONSTRAINT checkNBD CHECK (ngayBD >= getDate()),
 	CONSTRAINT checkNKT CHECK (ngayKT > ngayBD),
-	CONSTRAINT checkSLDK CHECK (soLuongDK=null OR soLuongDK>=0),
+	CONSTRAINT checkSLDK CHECK (soLuongDK=null OR (soLuongDK>0 AND ngayBD!=NULL AND ngayKT!=NULL)),
 	CONSTRAINT fk_hd_maNguoiDangHD Foreign key (maNguoiDang) REFERENCES TaiKhoan(maTK),
 	CONSTRAINT fk_hd_theLoai Foreign key (maTheLoai) REFERENCES LoaiHoatDong(maLHD) ON UPDATE CASCADE,	
 )

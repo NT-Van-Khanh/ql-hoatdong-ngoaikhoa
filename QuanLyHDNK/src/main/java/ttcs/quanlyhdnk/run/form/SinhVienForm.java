@@ -28,12 +28,21 @@ import ttcs.quanlyhdnk.util.DateTimeUtil;
 public class SinhVienForm extends javax.swing.JFrame {
     private int selectedItemMenu=1;
     private SinhVien account = new SinhVien();
-    private List<Activity> activityList = new ArrayList<>();
+//    private List<Activity> activityList = new ArrayList<>();
     public SinhVienForm() {
         initComponents();
     //Load data
         account.setUser("N21DCCN000");
-        LoadCurrentActivitiesPanel(); 
+        loadCurrentActivitiesPanel(); 
+    //design frame
+//        setExtendedState(MAXIMIZED_BOTH);
+    //test
+
+    }
+    public SinhVienForm(SinhVien account) {
+        initComponents();
+    //Load data
+        loadCurrentActivitiesPanel(); 
     //design frame
 //        setExtendedState(MAXIMIZED_BOTH);
     //test
@@ -41,20 +50,20 @@ public class SinhVienForm extends javax.swing.JFrame {
     }
     private void showForm(int index){
         if(index!=selectedItemMenu){
-            Font fontForNewBtnMenu=btnHome.getFont();
-            Font fontForOldBtnMenu= new Font(fontForNewBtnMenu.getName(),fontForNewBtnMenu.PLAIN,fontForNewBtnMenu.getSize());
+            Font fontOfNewBtnMenu=btnHome.getFont();
+            Font fontOfOldBtnMenu= new Font(fontOfNewBtnMenu.getName(),fontOfNewBtnMenu.PLAIN,fontOfNewBtnMenu.getSize());
             switch( selectedItemMenu){
                 case 1:
-                    btnHome.setFont(fontForOldBtnMenu);
+                    btnHome.setFont(fontOfOldBtnMenu);
                     pnlHome.setOpaque(false);
                     break;
                 case 2:
-                    btnRegistrationHistory.setFont(fontForOldBtnMenu);
+                    btnRegistrationHistory.setFont(fontOfOldBtnMenu);
                     pnlRegistrationHistory.setOpaque(false);
 
                     break;   
                 case 3:
-                    btnParticipationHistory.setFont(fontForOldBtnMenu);
+                    btnParticipationHistory.setFont(fontOfOldBtnMenu);
                     pnlParticipationHistory.setOpaque(false);
                     break;   
                 default:
@@ -63,15 +72,15 @@ public class SinhVienForm extends javax.swing.JFrame {
             
             switch(index){
                 case 1:
-                    btnHome.setFont(fontForNewBtnMenu);
+                    btnHome.setFont(fontOfNewBtnMenu);
                     pnlHome.setOpaque(true);
                     break;
                 case 2:
-                    btnRegistrationHistory.setFont(fontForNewBtnMenu);
+                    btnRegistrationHistory.setFont(fontOfNewBtnMenu);
                     pnlRegistrationHistory.setOpaque(true);
                     break;   
                 case 3:
-                    btnParticipationHistory.setFont(fontForNewBtnMenu);
+                    btnParticipationHistory.setFont(fontOfNewBtnMenu);
                     pnlParticipationHistory.setOpaque(true);
 
                     break;   
@@ -91,39 +100,43 @@ public class SinhVienForm extends javax.swing.JFrame {
         pnlListHD.setPreferredSize(dimension);
     }
     
-    
-    private void LoadCurrentActivitiesPanel(){ 
-        List<Activity> ListHD=  LoadActivityList();
-        LoadActivityPanelList( ListHD);
+    private void loadCurrentActivitiesPanel(){ 
+        List<Activity> ListHD=  loadActivityList();
+        loadActivityPanelList( ListHD);
     }
     
-    private void LoadTakenActivitiesPanel(String IDAccount){
-        List<Activity> ListHD= LoadTakenActivities("N21DCCN000");
-        LoadActivityPanelList( ListHD);
+    private void loadTakenActivitiesPanel(String IDAccount){
+        List<Activity> ListHD= loadTakenActivities(IDAccount);
+        loadActivityPanelList( ListHD);
     }
     
-    private void LoadActivityPanelList(List<Activity> ListHD){
+    private void loadParticipationHistoryPanel(String IDAccount){
+        List<Activity> ListHD= loadParticipationHistory(IDAccount);
+        loadActivityPanelList( ListHD);
+    }
+    
+    private void loadActivityPanelList(List<Activity> ListHD){
+        pnlListHD.removeAll();
         if(!ListHD.isEmpty()){
-            pnlListHD.removeAll();
             for(int index =0;index<ListHD.size();++index){
-                System.out.println(ListHD.get(index).getId());
+                //System.out.println(ListHD.get(index).getId());
                 ActivityPanel activityPanel =new ActivityPanel(ListHD.get(index));
                 pnlListHD.add(activityPanel);
             }
-            pnlListHD.revalidate();
-            pnlListHD.repaint();
-            setSizeFormSanPham(ListHD.size());
+
             
         }
-        
+        pnlListHD.revalidate();
+        pnlListHD.repaint();
+        setSizeFormSanPham(ListHD.size());
     }
     
-    private List<Activity> LoadTakenActivities(String IDAccount){
+    private List<Activity> loadTakenActivities(String IDAccount){
         
         List<Activity> activityList = new ArrayList<>();
         try {
             StudentActivity daoList = new StudentActivity();
-            activityList = daoList.TakenActivities(IDAccount);          
+            activityList = daoList.getTakenActivities(IDAccount);          
         } catch (Exception ex) {
            // System.out.println("aasdasdsd"); Thong bao loi
             Logger.getLogger(ActivityPanel.class.getName()).log(Level.SEVERE, null, ex);
@@ -131,7 +144,20 @@ public class SinhVienForm extends javax.swing.JFrame {
         return activityList;
     }
     
-    private List<Activity> LoadActivityList(){
+    private List<Activity> loadParticipationHistory(String IDAccount){
+        
+        List<Activity> activityList = new ArrayList<>();
+        try {
+            StudentActivity daoList = new StudentActivity();
+            activityList = daoList.getParticipationHistory(IDAccount);          
+        } catch (Exception ex) {
+           // System.out.println("aasdasdsd"); Thong bao loi
+            Logger.getLogger(ActivityPanel.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return activityList;
+    }
+    
+    private List<Activity> loadActivityList(){
         
         List<Activity> activityList = new ArrayList<>();
         try {
@@ -143,8 +169,7 @@ public class SinhVienForm extends javax.swing.JFrame {
         }
         return activityList;
     }
-    
-    
+        
     private void cmbSortLoadData(){
         
     }
@@ -821,20 +846,22 @@ public class SinhVienForm extends javax.swing.JFrame {
         //btnHome.setFont();
         //pnlHome.setOpaque(true);
         showForm(1);
-        LoadCurrentActivitiesPanel();
+        loadCurrentActivitiesPanel();
     }//GEN-LAST:event_btnHomeActionPerformed
 
     private void btnRegistrationHistoryActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistrationHistoryActionPerformed
         showForm(2);
-        LoadTakenActivitiesPanel(account.getUser());
+        loadTakenActivitiesPanel(account.getUser());
     }//GEN-LAST:event_btnRegistrationHistoryActionPerformed
 
     private void btnParticipationHistoryActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnParticipationHistoryActionPerformed
         // ChuaHoanThanh();
         showForm(3);
-        pnlListHD.removeAll();
-        pnlListHD.revalidate();
-        pnlListHD.repaint();
+        loadParticipationHistoryPanel(account.getUser());
+        
+//        pnlListHD.removeAll();
+//        pnlListHD.revalidate();
+//        pnlListHD.repaint();
     }//GEN-LAST:event_btnParticipationHistoryActionPerformed
 
     /**
