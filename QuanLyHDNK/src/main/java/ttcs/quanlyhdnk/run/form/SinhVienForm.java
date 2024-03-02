@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
 package ttcs.quanlyhdnk.run.form;
 
 import java.awt.BorderLayout;
@@ -14,12 +10,14 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 import ttcs.quanlyhdnk.DAO.SinhVien.StudentActivity;
 import ttcs.quanlyhdnk.form.ActivityPanel;
 import ttcs.quanlyhdnk.model.Activity;
 import ttcs.quanlyhdnk.model.SinhVien;
 import ttcs.quanlyhdnk.run.*;
 import ttcs.quanlyhdnk.util.DateTimeUtil;
+import ttcs.quanlyhdnk.util.SHA256;
 
 /**
  *
@@ -28,12 +26,14 @@ import ttcs.quanlyhdnk.util.DateTimeUtil;
 public class SinhVienForm extends javax.swing.JFrame {
     private int selectedItemMenu=1;
     private SinhVien account = new SinhVien();
+    String pw=SHA256.toSHA256("abcdef");
 //    private List<Activity> activityList = new ArrayList<>();
     public SinhVienForm() {
         initComponents();
     //Load data
         account.setUser("N21DCCN000");
         loadCurrentActivitiesPanel(); 
+        System.out.println(pw);
     //design frame
 //        setExtendedState(MAXIMIZED_BOTH);
     //test
@@ -50,8 +50,8 @@ public class SinhVienForm extends javax.swing.JFrame {
     }
     private void showForm(int index){
         if(index!=selectedItemMenu){
-            Font fontOfNewBtnMenu=btnHome.getFont();
-            Font fontOfOldBtnMenu= new Font(fontOfNewBtnMenu.getName(),fontOfNewBtnMenu.PLAIN,fontOfNewBtnMenu.getSize());
+            Font fontOfNewBtnMenu= new Font("Segoe UI",Font.BOLD,14);
+            Font fontOfOldBtnMenu= new Font("Segoe UI",Font.PLAIN,14);
             switch( selectedItemMenu){
                 case 1:
                     btnHome.setFont(fontOfOldBtnMenu);
@@ -65,7 +65,11 @@ public class SinhVienForm extends javax.swing.JFrame {
                 case 3:
                     btnParticipationHistory.setFont(fontOfOldBtnMenu);
                     pnlParticipationHistory.setOpaque(false);
-                    break;   
+                    break;  
+                case 4:
+                    btnLogout.setFont(fontOfOldBtnMenu);
+                    pnlLogout.setOpaque(false);
+                    break;
                 default:
                     break;
             }
@@ -82,8 +86,11 @@ public class SinhVienForm extends javax.swing.JFrame {
                 case 3:
                     btnParticipationHistory.setFont(fontOfNewBtnMenu);
                     pnlParticipationHistory.setOpaque(true);
-
-                    break;   
+                    break;
+                case 4:
+                    btnLogout.setFont(fontOfNewBtnMenu);
+                    pnlLogout.setOpaque(true);
+                    break;
                 default:
                     break;
             }
@@ -204,9 +211,14 @@ public class SinhVienForm extends javax.swing.JFrame {
         jLabel4 = new javax.swing.JLabel();
         dlgNotification = new javax.swing.JDialog();
         jPanel3 = new javax.swing.JPanel();
-        jLabel2 = new javax.swing.JLabel();
-        jPanel4 = new javax.swing.JPanel();
+        notificationPanel1 = new ttcs.quanlyhdnk.form.notificationPanel();
+        notificationPanel2 = new ttcs.quanlyhdnk.form.notificationPanel();
+        notificationPanel3 = new ttcs.quanlyhdnk.form.notificationPanel();
+        notificationPanel4 = new ttcs.quanlyhdnk.form.notificationPanel();
+        notificationPanel5 = new ttcs.quanlyhdnk.form.notificationPanel();
         jLabel1 = new javax.swing.JLabel();
+        jPanel4 = new javax.swing.JPanel();
+        jLabel2 = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
         header = new javax.swing.JPanel();
         lblAvatar = new javax.swing.JLabel();
@@ -220,6 +232,8 @@ public class SinhVienForm extends javax.swing.JFrame {
         btnRegistrationHistory = new javax.swing.JButton();
         pnlParticipationHistory = new javax.swing.JPanel();
         btnParticipationHistory = new javax.swing.JButton();
+        pnlLogout = new javax.swing.JPanel();
+        btnLogout = new javax.swing.JButton();
         jPanel15 = new javax.swing.JPanel();
         pnlBody = new javax.swing.JPanel();
         jPanel16 = new javax.swing.JPanel();
@@ -383,59 +397,70 @@ public class SinhVienForm extends javax.swing.JFrame {
                 .addGap(7, 7, 7))
         );
 
-        dlgNotification.setPreferredSize(new java.awt.Dimension(600, 400));
-        dlgNotification.setSize(new java.awt.Dimension(600, 400));
+        dlgNotification.setUndecorated(true);
+        dlgNotification.setPreferredSize(new java.awt.Dimension(320, 400));
+        dlgNotification.setSize(new java.awt.Dimension(320, 400));
+        dlgNotification.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                dlgNotificationFocusLost(evt);
+            }
+        });
 
-        jLabel2.setText("danh sách thông báo");
+        jPanel3.setBackground(new java.awt.Color(229, 229, 229));
+        jPanel3.setMinimumSize(new java.awt.Dimension(320, 370));
+        jPanel3.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.CENTER, 0, 2));
+        jPanel3.add(notificationPanel1);
+        jPanel3.add(notificationPanel2);
+        jPanel3.add(notificationPanel3);
+        jPanel3.add(notificationPanel4);
+        jPanel3.add(notificationPanel5);
 
-        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
-        jPanel3.setLayout(jPanel3Layout);
-        jPanel3Layout.setHorizontalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel3Layout.createSequentialGroup()
-                .addGap(89, 89, 89)
-                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 319, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(192, Short.MAX_VALUE))
-        );
-        jPanel3Layout.setVerticalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel3Layout.createSequentialGroup()
-                .addGap(71, 71, 71)
-                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(128, Short.MAX_VALUE))
-        );
-
-        jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        jLabel1.setBackground(new java.awt.Color(255, 255, 255));
+        jLabel1.setFont(new java.awt.Font("Segoe UI Semibold", 1, 12)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(0, 102, 204));
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel1.setText("THÔNG BÁO");
+        jLabel1.setText("Xem thêm");
+        jLabel1.setOpaque(true);
+
+        jPanel4.setBackground(new java.awt.Color(255, 255, 255));
+
+        jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jLabel2.setForeground(new java.awt.Color(0, 102, 204));
+        jLabel2.setText("Thông báo");
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
         jPanel4Layout.setHorizontalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(jPanel4Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel4Layout.createSequentialGroup()
-                .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 45, Short.MAX_VALUE)
-                .addContainerGap())
+                .addContainerGap()
+                .addComponent(jLabel2)
+                .addContainerGap(18, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout dlgNotificationLayout = new javax.swing.GroupLayout(dlgNotification.getContentPane());
         dlgNotification.getContentPane().setLayout(dlgNotificationLayout);
         dlgNotificationLayout.setHorizontalGroup(
             dlgNotificationLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jPanel3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 320, Short.MAX_VALUE)
             .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(jPanel3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         dlgNotificationLayout.setVerticalGroup(
             dlgNotificationLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(dlgNotificationLayout.createSequentialGroup()
                 .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(2, 2, 2)
+                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, 309, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(2, 2, 2)
+                .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -446,6 +471,7 @@ public class SinhVienForm extends javax.swing.JFrame {
         jPanel1.setBackground(new java.awt.Color(242, 242, 242));
 
         header.setBackground(new java.awt.Color(0, 153, 255));
+        header.setPreferredSize(new java.awt.Dimension(332, 70));
 
         lblAvatar.setBackground(new java.awt.Color(255, 255, 255));
         lblAvatar.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -460,10 +486,12 @@ public class SinhVienForm extends javax.swing.JFrame {
         lblNameUser.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         lblNameUser.setForeground(new java.awt.Color(255, 255, 255));
         lblNameUser.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        lblNameUser.setText("TEN ( NGUYEN VAN A)");
+        lblNameUser.setText("Tên ( NGUYEN VAN A)");
 
         btnTB.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/notification.png"))); // NOI18N
         btnTB.setContentAreaFilled(false);
+        btnTB.setMaximumSize(new java.awt.Dimension(50, 50));
+        btnTB.setMinimumSize(new java.awt.Dimension(50, 50));
         btnTB.setPreferredSize(new java.awt.Dimension(50, 50));
         btnTB.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -481,18 +509,18 @@ public class SinhVienForm extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(lblNameUser, javax.swing.GroupLayout.PREFERRED_SIZE, 184, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(btnTB, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(20, 20, 20))
+                .addComponent(btnTB, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(10, 10, 10))
         );
         headerLayout.setVerticalGroup(
             headerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(headerLayout.createSequentialGroup()
                 .addGap(10, 10, 10)
                 .addGroup(headerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(lblAvatar, javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(btnTB, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lblNameUser, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(10, Short.MAX_VALUE))
+                    .addComponent(lblNameUser, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblAvatar, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnTB, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(0, 10, Short.MAX_VALUE))
         );
 
         pnlMenuBar.setBackground(new java.awt.Color(0, 153, 255));
@@ -630,6 +658,48 @@ public class SinhVienForm extends javax.swing.JFrame {
 
         pnlMenuBar.add(pnlParticipationHistory);
 
+        pnlLogout.setBackground(new java.awt.Color(50, 173, 255));
+        pnlLogout.setMaximumSize(new java.awt.Dimension(220, 45));
+        pnlLogout.setMinimumSize(new java.awt.Dimension(220, 45));
+        pnlLogout.setOpaque(false);
+
+        btnLogout.setBackground(new java.awt.Color(38, 168, 255));
+        btnLogout.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        btnLogout.setForeground(new java.awt.Color(255, 255, 255));
+        btnLogout.setText("ĐĂNG XUẤT");
+        btnLogout.setContentAreaFilled(false);
+        btnLogout.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                btnLogoutFocusGained(evt);
+            }
+        });
+        btnLogout.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btnLogoutMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                btnLogoutMouseExited(evt);
+            }
+        });
+        btnLogout.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnLogoutActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout pnlLogoutLayout = new javax.swing.GroupLayout(pnlLogout);
+        pnlLogout.setLayout(pnlLogoutLayout);
+        pnlLogoutLayout.setHorizontalGroup(
+            pnlLogoutLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(btnLogout, javax.swing.GroupLayout.DEFAULT_SIZE, 220, Short.MAX_VALUE)
+        );
+        pnlLogoutLayout.setVerticalGroup(
+            pnlLogoutLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(btnLogout, javax.swing.GroupLayout.DEFAULT_SIZE, 45, Short.MAX_VALUE)
+        );
+
+        pnlMenuBar.add(pnlLogout);
+
         jPanel15.setBackground(new java.awt.Color(255, 255, 255));
         jPanel15.setOpaque(false);
 
@@ -641,7 +711,7 @@ public class SinhVienForm extends javax.swing.JFrame {
         );
         jPanel15Layout.setVerticalGroup(
             jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 357, Short.MAX_VALUE)
+            .addGap(0, 322, Short.MAX_VALUE)
         );
 
         pnlMenuBar.add(jPanel15);
@@ -653,8 +723,9 @@ public class SinhVienForm extends javax.swing.JFrame {
 
         cmbSort.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Tên", "Thời gian bắt đầu", "Thời gian kết thúc" }));
 
+        jLabel3.setForeground(new java.awt.Color(51, 51, 51));
         jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        jLabel3.setText("Sap xep:");
+        jLabel3.setText("Sắp xếp:");
 
         txtSearch.setForeground(new java.awt.Color(153, 153, 153));
         txtSearch.setText("Tìm kiếm");
@@ -749,7 +820,7 @@ public class SinhVienForm extends javax.swing.JFrame {
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(header, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(header, javax.swing.GroupLayout.DEFAULT_SIZE, 1096, Short.MAX_VALUE)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(10, 10, 10)
                 .addComponent(pnlMenuBar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -815,7 +886,8 @@ public class SinhVienForm extends javax.swing.JFrame {
 
     private void btnTBActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTBActionPerformed
         dlgNotification.setVisible(true);
-        dlgSinhVienInformation.setLocationRelativeTo(null);
+        // dlgNotification.setLocationRelativeTo(btnTB);
+          dlgNotification.setLocation(btnTB.getLocation());
     }//GEN-LAST:event_btnTBActionPerformed
 
     private void btnHomeMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnHomeMouseEntered
@@ -864,6 +936,34 @@ public class SinhVienForm extends javax.swing.JFrame {
 //        pnlListHD.repaint();
     }//GEN-LAST:event_btnParticipationHistoryActionPerformed
 
+    private void btnLogoutMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnLogoutMouseEntered
+        btnLogout.setOpaque(true);
+    }//GEN-LAST:event_btnLogoutMouseEntered
+
+    private void btnLogoutMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnLogoutMouseExited
+        btnLogout.setOpaque(false);
+    }//GEN-LAST:event_btnLogoutMouseExited
+
+    private void btnLogoutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLogoutActionPerformed
+        int kq=JOptionPane.showConfirmDialog(this, "Bạn có muốn đăng xuất không?",
+                "Xác nhận",JOptionPane.YES_OPTION,JOptionPane.NO_OPTION);
+        if(kq==JOptionPane.YES_OPTION){
+            
+        }else if(kq==JOptionPane.NO_OPTION){
+            
+        }else {
+            
+        }
+    }//GEN-LAST:event_btnLogoutActionPerformed
+
+    private void btnLogoutFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_btnLogoutFocusGained
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnLogoutFocusGained
+
+    private void dlgNotificationFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_dlgNotificationFocusLost
+        dlgNotification.setVisible(false);
+    }//GEN-LAST:event_dlgNotificationFocusLost
+
     /**
      * @param args the command line arguments
      */
@@ -877,6 +977,7 @@ public class SinhVienForm extends javax.swing.JFrame {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
                 if ("Nimbus".equals(info.getName())) {
                     javax.swing.UIManager.setLookAndFeel(info.getClassName());
+//                    javax.swing.UIManager.setLookAndFeel("");
                     break;
                 }
             }
@@ -917,6 +1018,7 @@ public class SinhVienForm extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel avatar;
     private javax.swing.JButton btnHome;
+    private javax.swing.JButton btnLogout;
     private javax.swing.JButton btnParticipationHistory;
     private javax.swing.JButton btnRegistrationHistory;
     private javax.swing.JButton btnSearch;
@@ -954,9 +1056,15 @@ public class SinhVienForm extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JLabel lblAvatar;
     private javax.swing.JLabel lblNameUser;
+    private ttcs.quanlyhdnk.form.notificationPanel notificationPanel1;
+    private ttcs.quanlyhdnk.form.notificationPanel notificationPanel2;
+    private ttcs.quanlyhdnk.form.notificationPanel notificationPanel3;
+    private ttcs.quanlyhdnk.form.notificationPanel notificationPanel4;
+    private ttcs.quanlyhdnk.form.notificationPanel notificationPanel5;
     private javax.swing.JPanel pnlBody;
     private javax.swing.JPanel pnlHome;
     private javax.swing.JPanel pnlListHD;
+    private javax.swing.JPanel pnlLogout;
     private javax.swing.JPanel pnlMenuBar;
     private javax.swing.JPanel pnlParticipationHistory;
     private javax.swing.JPanel pnlRegistrationHistory;
