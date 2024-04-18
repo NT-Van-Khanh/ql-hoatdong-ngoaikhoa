@@ -9,17 +9,18 @@ import java.time.LocalDateTime;
 
 public class ThongBao {
     private int id;
-    private String title,content, idAction, idUser; // tieu de, noi dung, maHoatDong, maNguoiDang;
+    private String title,content, idAction, idUser, nameUser; // tieu de, noi dung, maHoatDong, maNguoiDang;
     private LocalDateTime postingTime;// thoiGian tao tb
     public ThongBao() {
     }
 
-    public ThongBao(int id, String title, String content, String idAction, String idUser, LocalDateTime postingTime) {
+    public ThongBao(int id, String title, String content, String idAction, String idUser, String nameUser, LocalDateTime postingTime) {
         this.id = id;
         this.title = title;
         this.content = content;
         this.idAction = idAction;
         this.idUser = idUser;
+        this.nameUser = nameUser;
         this.postingTime = postingTime;
     }
 
@@ -63,6 +64,14 @@ public class ThongBao {
         this.idUser = idUser;
     }
 
+    public String getNameUser() {
+        return nameUser;
+    }
+
+    public void setNameUser(String nameUser) {
+        this.nameUser = nameUser;
+    }
+
     public LocalDateTime getPostingTime() {
         return postingTime;
     }
@@ -70,6 +79,7 @@ public class ThongBao {
     public void setPostingTime(LocalDateTime postingTime) {
         this.postingTime = postingTime;
     }
+
 
 
     

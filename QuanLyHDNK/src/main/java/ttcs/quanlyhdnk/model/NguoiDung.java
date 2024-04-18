@@ -12,15 +12,15 @@ import java.util.Date;
  * @author ADMIN
  */
 public class NguoiDung {
-    private String user, password;
+    private String userID, password;
     private String name, gender, email, phoneNumber, address, note, role;//donVi 
     private LocalDateTime accountCreationDate, Birthday;
 
     public NguoiDung() {
     }
 
-    public NguoiDung(String user, String password, String name, String gender, String email, String phoneNumber, String address, String note, String role, LocalDateTime accountCreationDate, LocalDateTime Birthday) {
-        this.user = user;
+    public NguoiDung(String userID, String password, String name, String gender, String email, String phoneNumber, String address, String note, String role, LocalDateTime accountCreationDate, LocalDateTime Birthday) {
+        this.userID = userID;
         this.password = password;
         this.name = name;
         this.gender = gender;
@@ -33,12 +33,12 @@ public class NguoiDung {
         this.Birthday = Birthday;
     }
 
-    public String getUser() {
-        return user;
+    public String getUserID() {
+        return userID;
     }
 
-    public void setUser(String user) {
-        this.user = user;
+    public void setUserID(String user) {
+        this.userID = user;
     }
 
     public String getPassword() {

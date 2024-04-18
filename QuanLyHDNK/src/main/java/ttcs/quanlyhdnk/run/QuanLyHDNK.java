@@ -4,7 +4,12 @@
  */
 package ttcs.quanlyhdnk.run;
 
+import com.formdev.flatlaf.FlatLightLaf;
 import java.awt.Color;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.UnsupportedLookAndFeelException;
+import ttcs.quanlyhdnk.run.form.SinhVienForm;
 
 /**
  *
@@ -51,7 +56,6 @@ public class QuanLyHDNK extends javax.swing.JFrame {
         jPanel17 = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
         jPanel18 = new javax.swing.JPanel();
-        hoatDongCard2 = new ttcs.quanlyhdnk.form.ActivityPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Hoạt Động Ngoại Khóa");
@@ -135,10 +139,43 @@ public class QuanLyHDNK extends javax.swing.JFrame {
         jPanel13.setOpaque(false);
         jPanel13.setPreferredSize(new java.awt.Dimension(220, 45));
 
+        jButton8.setBackground(new java.awt.Color(255, 255, 102));
         jButton8.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jButton8.setForeground(new java.awt.Color(255, 255, 255));
         jButton8.setText("TRANG CHỦ");
         jButton8.setContentAreaFilled(false);
+        jButton8.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
+            public void mouseMoved(java.awt.event.MouseEvent evt) {
+                jButton8MouseMoved(evt);
+            }
+        });
+        jButton8.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                jButton8FocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                jButton8FocusLost(evt);
+            }
+        });
+        jButton8.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jButton8MouseClicked(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                jButton8MouseExited(evt);
+            }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                jButton8MousePressed(evt);
+            }
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                jButton8MouseReleased(evt);
+            }
+        });
+        jButton8.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton8ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel13Layout = new javax.swing.GroupLayout(jPanel13);
         jPanel13.setLayout(jPanel13Layout);
@@ -301,8 +338,6 @@ public class QuanLyHDNK extends javax.swing.JFrame {
         java.awt.FlowLayout flowLayout1 = new java.awt.FlowLayout(java.awt.FlowLayout.CENTER, 10, 10);
         flowLayout1.setAlignOnBaseline(true);
         jPanel18.setLayout(flowLayout1);
-        jPanel18.add(hoatDongCard2);
-
         jScrollPane2.setViewportView(jPanel18);
 
         javax.swing.GroupLayout jPanel17Layout = new javax.swing.GroupLayout(jPanel17);
@@ -356,7 +391,7 @@ public class QuanLyHDNK extends javax.swing.JFrame {
                 .addGap(10, 10, 10)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, 669, Short.MAX_VALUE))
+                    .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(10, 10, 10))
         );
 
@@ -417,6 +452,39 @@ public class QuanLyHDNK extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_txtSearchFocusLost
 
+    private void jButton8MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton8MousePressed
+
+    }//GEN-LAST:event_jButton8MousePressed
+
+    private void jButton8MouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton8MouseReleased
+
+    }//GEN-LAST:event_jButton8MouseReleased
+
+    private void jButton8FocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jButton8FocusGained
+//    jButton8.setOpaque(false);
+    }//GEN-LAST:event_jButton8FocusGained
+
+    private void jButton8MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton8MouseClicked
+         jButton8.setOpaque(true);
+
+    }//GEN-LAST:event_jButton8MouseClicked
+
+    private void jButton8MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton8MouseExited
+            jButton8.setOpaque(false);
+    }//GEN-LAST:event_jButton8MouseExited
+
+    private void jButton8MouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton8MouseMoved
+        jButton8.setOpaque(true);
+    }//GEN-LAST:event_jButton8MouseMoved
+
+    private void jButton8FocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jButton8FocusLost
+//        jButton8.setVisible(true);
+    }//GEN-LAST:event_jButton8FocusLost
+
+    private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton8ActionPerformed
+//        jButton8.setVisible(true);
+    }//GEN-LAST:event_jButton8ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -426,10 +494,16 @@ public class QuanLyHDNK extends javax.swing.JFrame {
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
          * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
          */
+//        try {
+//            javax.swing.UIManager.setLookAndFeel( new FlatLightLaf() );
+//        } catch (UnsupportedLookAndFeelException ex) {
+//            Logger.getLogger(SinhVienForm.class.getName()).log(Level.SEVERE, null, ex);
+//        }
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
                 if ("Nimbus".equals(info.getName())) {
                     javax.swing.UIManager.setLookAndFeel(info.getClassName());
+//                    javax.swing.UIManager.setLookAndFeel( new FlatLightLaf() );
                     break;
                 }
             }
@@ -456,7 +530,6 @@ public class QuanLyHDNK extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnSearch;
     private javax.swing.JPanel header;
-    private ttcs.quanlyhdnk.form.ActivityPanel hoatDongCard2;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton11;
     private javax.swing.JButton jButton8;

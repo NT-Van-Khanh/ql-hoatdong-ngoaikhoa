@@ -41,6 +41,8 @@ INSERT TaiKhoan(maTK, matKhau, tenTK, maVaiTro, email, sdt, diaChi, ngaySinh, gi
 VALUES('CLBB1','123456',N'Thư kí câu lạc bộ B-1','ND','clbb@gmail.com','0123456777',NULL,'5-11-2000',NULL)
 INSERT TaiKhoan(maTK, matKhau, tenTK, maVaiTro, email, sdt, diaChi, ngaySinh, gioiTinh)
 VALUES('N21DCCN000','123456',N'NGUYEN A','SV', 'n21dccn000@gmail.com','0123456666',NULL,'12-01-2003',1)
+INSERT TaiKhoan(maTK, matKhau, tenTK, maVaiTro, email, sdt, diaChi, ngaySinh, gioiTinh)
+VALUES('N21DCCN999','123456',N'NGUYEN A','SV', 'n21dccn999@gmail.com','0123453366',NULL,'12-08-2003',0)
 GO
 
 INSERT HoatDong(tenHD, maTheLoai, noiDung, ngayBD, ngayKT, soLuongDK, maNguoiDang, diaDiem, anh)
@@ -57,6 +59,20 @@ INSERT HoatDong(tenHD, maTheLoai, noiDung, ngayBD, ngayKT, soLuongDK, maNguoiDan
 VALUES(N'Khóa ôn tập thi cuối kì môn A', 'TN',
 	N'Khóa ôn tập thi cuối kì do CLB A tổ chức, dành cho các bạn sinh viên muốn ôn thi môn C','04-20-2024',
 	'06-01-2024',5,'CLBB1','Phong A1',NULL)
+
+INSERT HoatDong(tenHD, maTheLoai, noiDung, ngayBD, ngayKT, soLuongDK, maNguoiDang, diaDiem, anh)
+VALUES(N'Phong trào bảo vệ môi trường','TN',
+	N'Phong trào trồng cây xanh, vệ sinh đường phố trên con đường X gần trường học','06-01-2024',
+	'06-30-2024',null,'CLBB1','Phong B',NULL)
+
+INSERT HoatDong(tenHD, maTheLoai, noiDung, ngayBD, ngayKT, soLuongDK, maNguoiDang, diaDiem, anh)
+VALUES(N'Phong trào chạy bộ gây quỷ ','TN',
+	N'Phong trào chạy bộ gây quỷ ủng hộ...','06-01-2024',
+	'06-30-2024',null,'CLBB1','Phong B',NULL)
 GO
 INSERT DangKy(maHoatDong,maTaiKhoan)
 VALUES(10,'N21DCCN000')
+INSERT DangKy(maHoatDong,maTaiKhoan)
+VALUES(13,'N21DCCN000')
+INSERT DangKy(maHoatDong,maTaiKhoan)
+VALUES(10,'N21DCCN999')

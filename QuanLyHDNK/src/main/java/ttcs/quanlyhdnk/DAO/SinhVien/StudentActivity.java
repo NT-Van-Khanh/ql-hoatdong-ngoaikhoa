@@ -14,20 +14,34 @@ import ttcs.quanlyhdnk.model.Activity;
 import ttcs.quanlyhdnk.util.Helper;
 import ttcs.quanlyhdnk.util.DateTimeUtil;
 public class StudentActivity{
+//    private final String queryCurrentActivities = "SELECT HoatDong.maHD as maHD, HoatDong.tenHD as tenHD, HoatDong.noiDung as noiDung, LoaiHoatDong.tenLHD as theLoai, " +
+//            "TaiKhoan.tenTK as tenNguoiDang, HoatDong.diaDiem as diaDiem, HoatDong.anh as anh, HoatDong.soLuongDK as soLuongDK, " +
+//            "HoatDong.ngayBD as ngayBD , HoatDong.ngayKT as ngayKT, HoatDong.ngayDang as ngayDang " +
+//            "FROM HoatDong, LoaiHoatDong, TaiKhoan " +
+//            "WHERE ngayKT>GETDATE() AND HoatDong.maTheLoai = LoaiHoatDong.maLHD AND TaiKhoan.maTK=HoatDong.maNguoiDang ";
+//    private final String queryTakenActivities="SELECT HoatDong.maHD as maHD, HoatDong.tenHD as tenHD, HoatDong.noiDung as noiDung, LoaiHoatDong.tenLHD as theLoai, " +
+//            "NguoiDang.tenTK as tenNguoiDang, HoatDong.diaDiem as diaDiem, HoatDong.anh as anh, HoatDong.soLuongDK as soLuongDK, " +
+//            "HoatDong.ngayBD as ngayBD , HoatDong.ngayKT as ngayKT, HoatDong.ngayDang as ngayDang " +
+//            "FROM HoatDong, LoaiHoatDong, TaiKhoan AS NguoiDang, TaiKhoan AS NguoiXem, DangKy " +
+//            "WHERE DangKy.maTaiKhoan=? AND ngayKT>=GETDATE() AND DangKy.maTaiKhoan = NguoiXem.maTK " +
+//            "AND DangKy.maHoatDong=HoatDong.maHD " +
+//            "AND maTheLoai = LoaiHoatDong.maLHD AND NguoiDang.maTK=HoatDong.maNguoiDang ";    
     
-    private final String queryCurrentActivities = "SELECT HoatDong.maHD as maHD, HoatDong.tenHD as tenHD, HoatDong.noiDung as noiDung, LoaiHoatDong.tenLHD as theLoai, " +
-            "TaiKhoan.tenTK as tenNguoiDang, HoatDong.diaDiem as diaDiem, HoatDong.anh as anh, HoatDong.soLuongDK as soLuongDK, " +
-            "HoatDong.ngayBD as ngayBD , HoatDong.ngayKT as ngayKT, HoatDong.ngayDang as ngayDang " +
+    private final String queryCurrentActivities = "SELECT HoatDong.*, " +
+            "TaiKhoan.tenTK as tenNguoiDang, " +
+            "LoaiHoatDong.tenLHD as theLoai "+
             "FROM HoatDong, LoaiHoatDong, TaiKhoan " +
-            "WHERE ngayKT>GETDATE() AND HoatDong.maTheLoai = LoaiHoatDong.maLHD AND TaiKhoan.maTK=HoatDong.maNguoiDang ";
+            "WHERE HoatDong.ngayKT>GETDATE() AND HoatDong.maTheLoai = LoaiHoatDong.maLHD AND TaiKhoan.maTK=HoatDong.maNguoiDang ";
     
-    private final String queryTakenActivities="SELECT HoatDong.maHD as maHD, HoatDong.tenHD as tenHD, HoatDong.noiDung as noiDung, LoaiHoatDong.tenLHD as theLoai, " +
-            "NguoiDang.tenTK as tenNguoiDang, HoatDong.diaDiem as diaDiem, HoatDong.anh as anh, HoatDong.soLuongDK as soLuongDK, " +
-            "HoatDong.ngayBD as ngayBD , HoatDong.ngayKT as ngayKT, HoatDong.ngayDang as ngayDang " +
-            "FROM HoatDong, LoaiHoatDong, TaiKhoan AS NguoiDang, TaiKhoan AS NguoiXem, DangKy " +
-            "WHERE DangKy.maTaiKhoan=? AND ngayKT>=GETDATE() AND DangKy.maTaiKhoan = NguoiXem.maTK " +
-            "AND DangKy.maHoatDong=HoatDong.maHD " +
-            "AND maTheLoai = LoaiHoatDong.maLHD AND NguoiDang.maTK=HoatDong.maNguoiDang ";
+    private final String queryTakenActivities="SELECT DangKy.maDK, DangKy.thoiGian, HoatDong.*, " +
+            "NguoiDang.tenTK AS tenNguoiDang, LoaiHoatDong.tenLHD AS theLoai " +
+            "FROM DangKy " +
+            "JOIN HoatDong " +
+            "ON DangKy.maTaiKhoan =? AND HoatDong.ngayKT>=GETDATE() AND DangKy.maHoatDong = HoatDong.maHD " +
+            "JOIN (SELECT TaiKhoan.maTK, TaiKhoan.tenTK FROM TaiKhoan) AS NguoiDang " +
+            "ON HoatDong.maNguoiDang = NguoiDang.maTK  " +
+            "JOIN LoaiHoatDong " +
+            "ON HoatDong.maTheLoai= LoaiHoatDong.maLHD ";
     
     private final String queryParticipationHistory = "SELECT HoatDong.maHD as maHD, HoatDong.tenHD as tenHD, HoatDong.noiDung as noiDung, LoaiHoatDong.tenLHD as theLoai, " +
             "NguoiDang.tenTK as tenNguoiDang, HoatDong.diaDiem as diaDiem, HoatDong.anh as anh, HoatDong.soLuongDK as soLuongDK, " +
@@ -39,25 +53,30 @@ public class StudentActivity{
     
     private Activity getActivity(ResultSet rs) throws Exception{
         Activity activity = new Activity();
+        String checknull;
         activity.setId(Integer.parseInt(rs.getString("maHD")));
         activity.setTitle(rs.getString("tenHD"));
         activity.setContent(rs.getString("noiDung"));
         activity.setGenre(rs.getString("theLoai"));
-                
-                //hd.setIdUser(rs.getString("maNguoiDang")); 
+                 
         activity.setNameUser(rs.getString("tenNguoiDang"));
         activity.setAddress(rs.getString("diaDiem"));
-//                System.out.print(rs.getString("ngayDang"));
-        activity.setNumberOfRegistrations(Integer.parseInt(rs.getString("soLuongDK")));
+
+        checknull=rs.getString("soLuongDK");
+        if(checknull!=null) activity.setNumberOfRegistrations(Integer.parseInt(checknull));
+        else activity.setNumberOfRegistrations(0);
         activity.setPicture(rs.getString("anh"));
-                //DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-mm-dd HH:mm:ss");
         activity.setPostingTime((rs.getTimestamp("ngayDang").toLocalDateTime()));
         activity.setStartDate(rs.getTimestamp("ngayBD").toLocalDateTime());
         activity.setEndDate(rs.getTimestamp("ngayKT").toLocalDateTime());
-        
         return activity;
     }
     
+    private Activity getTakenActivities(ResultSet rs) throws Exception{
+        Activity activity = new Activity();
+        activity= getActivity(rs);
+        return activity;
+    }
     public List<Activity> getCurrentActivities() throws Exception{
         List<Activity> Activities = new ArrayList<>();
         String query = queryCurrentActivities;

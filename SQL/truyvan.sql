@@ -19,13 +19,28 @@ GO
 
 --*******SELECT*******
 --HoatDong
-SELECT HoatDong.maHD as maHD, HoatDong.tenHD as tenHD, HoatDong.noiDung as noiDung, LoaiHoatDong.tenLHD as theLoai, 
-TaiKhoan.tenTK as tenNguoiDang, HoatDong.diaDiem as diaDiem, HoatDong.anh as anh, HoatDong.soLuongDK as soLuongDK, 
-HoatDong.ngayBD as ngayBD, HoatDong.ngayKT as ngayKT, HoatDong.ngayDang as ngayDang 
-FROM HoatDong, LoaiHoatDong, TaiKhoan
-WHERE ngayDang>GETDATE() AND HoatDong.maTheLoai = LoaiHoatDong.maLHD AND TaiKhoan.maTK=HoatDong.maNguoiDang
+--**********TOI UU TRUY VAN ******************
+SELECT	HoatDong.*,
+        TaiKhoan.tenTK as tenNguoiDang,
+        LoaiHoatDong.tenLHD as theLoai
+        FROM HoatDong, LoaiHoatDong, TaiKhoan, DangKy
+        WHERE HoatDong.ngayKT>GETDATE() 
+		AND HoatDong.maTheLoai = LoaiHoatDong.maLHD 
+		AND TaiKhoan.maTK=HoatDong.maNguoiDang
 GO--done
 
+--**********TOI UU TRUY VAN ******************
+SELECT	DangKy.maDK,DangKy.thoiGian, HoatDong.*, 
+		NguoiDang.tenTK as tenNguoiDang, 
+		LoaiHoatDong.tenLHD as theLoai
+		FROM DangKy
+		JOIN HoatDong
+		ON DangKy.maTaiKhoan ='N21DCCN000' AND HoatDong.ngayKT>=GETDATE() AND DangKy.maHoatDong = HoatDong.maHD
+		JOIN (SELECT TaiKhoan.maTK, TaiKhoan.tenTK FROM TaiKhoan) as NguoiDang 
+		ON HoatDong.maNguoiDang = NguoiDang.maTK  
+		JOIN LoaiHoatDong
+		ON HoatDong.maTheLoai= LoaiHoatDong.maLHD
+		
 SELECT HoatDong.maHD as maHD, HoatDong.tenHD as tenHD, HoatDong.noiDung as noiDung, LoaiHoatDong.tenLHD as theLoai, 
 NguoiDang.tenTK as tenNguoiDang, HoatDong.diaDiem as diaDiem, HoatDong.anh as anh, HoatDong.soLuongDK as soLuongDK,  
 HoatDong.ngayBD as ngayBD , HoatDong.ngayKT as ngayKT, HoatDong.ngayDang as ngayDang 
@@ -33,8 +48,8 @@ FROM HoatDong, LoaiHoatDong, TaiKhoan AS NguoiDang, TaiKhoan AS NguoiXem, DangKy
 WHERE DangKy.maTaiKhoan = 'N21DCCN000' AND DangKy.maTaiKhoan = NguoiXem.maTK 
 AND DangKy.maHoatDong=HoatDong.maHD
 AND maTheLoai = LoaiHoatDong.maLHD AND NguoiDang.maTK=HoatDong.maNguoiDang
-GO--done
 
+GO--done
 SELECT HoatDong.maHD as maHD, HoatDong.tenHD as tenHD, HoatDong.noiDung as noiDung, LoaiHoatDong.tenLHD as theLoai, 
 NguoiDang.tenTK as tenNguoiDang, HoatDong.diaDiem as diaDiem, HoatDong.anh as anh, HoatDong.soLuongDK as soLuongDK,
 HoatDong.ngayBD as ngayBD , HoatDong.ngayKT as ngayKT, HoatDong.ngayDang as ngayDang 
@@ -65,3 +80,39 @@ WHERE maTK=''
 -- sinhvien
 
 --*******DELETE*******
+
+--**********TOI UU TRUY VAN ******************
+SELECT ThongBao.* 
+FROM ThongBao
+JOIN HoatDong
+ON maHD=maHoatDong
+
+SELECT	HoatDong.*,
+        TaiKhoan.tenTK as tenNguoiDang,
+        LoaiHoatDong.tenLHD as theLoai
+        FROM HoatDong, LoaiHoatDong, TaiKhoan, DangKy
+        WHERE HoatDong.ngayKT>GETDATE() 
+		AND HoatDong.maTheLoai = LoaiHoatDong.maLHD 
+		AND TaiKhoan.maTK=HoatDong.maNguoiDang
+
+
+SELECT HoatDong.*,
+LoaiHoatDong.tenLHD as theLoai, 
+NguoiDang.tenTK as tenNguoiDang 
+FROM HoatDong, LoaiHoatDong, TaiKhoan AS NguoiDang, DangKy
+WHERE DangKy.maTaiKhoan= 'N21DCCN000' AND ngayKT>=GETDATE() 
+AND DangKy.maHoatDong=HoatDong.maHD 
+AND HoatDong.maTheLoai = LoaiHoatDong.maLHD 
+AND NguoiDang.maTK=HoatDong.maNguoiDang
+/*
+
+NguoiDang.tenTK as tenNguoiDang, LoaiHoatDong.maLHD AS theLoai
+*/
+SELECT DangKy.maDK, HoatDong.*, NguoiDang.tenTK as tenNguoiDang, LoaiHoatDong.tenLHD as theLoai
+FROM DangKy
+JOIN HoatDong
+ON DangKy.maTaiKhoan ='N21DCCN000' AND HoatDong.ngayKT>=GETDATE() AND DangKy.maHoatDong = HoatDong.maHD
+JOIN (SELECT TaiKhoan.maTK, TaiKhoan.tenTK FROM TaiKhoan) as NguoiDang 
+ON HoatDong.maNguoiDang = NguoiDang.maTK  
+JOIN LoaiHoatDong
+ON HoatDong.maTheLoai= LoaiHoatDong.maLHD

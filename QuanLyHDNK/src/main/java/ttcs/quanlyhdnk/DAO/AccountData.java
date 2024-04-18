@@ -48,7 +48,7 @@ public class AccountData {
 
     private NguoiDung setNguoiDung(ResultSet rs) throws Exception{
         NguoiDung account = new NguoiDung();
-        account.setUser(rs.getString("maTK"));
+        account.setUserID(rs.getString("maTK"));
         account.setPassword(rs.getString("matKhau"));
         account.setRole(rs.getString("maVaiTro"));
         account.setName(rs.getString("tenTK"));
