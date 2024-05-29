@@ -31,63 +31,63 @@ public class StudentActivity{
             "TaiKhoan.tenTK as tenNguoiDang, " +
             "LoaiHoatDong.tenLHD as theLoai "+
             "FROM HoatDong, LoaiHoatDong, TaiKhoan " +
-            "WHERE HoatDong.ngayKT>GETDATE() AND HoatDong.maTheLoai = LoaiHoatDong.maLHD AND TaiKhoan.maTK=HoatDong.maNguoiDang ";
+            "WHERE flagHD = 0 " + 
+            "AND HoatDong.ngayKT>GETDATE() " +
+            "AND maHD NOT IN ( SELECT maHoatDong  FROM DangKy WHERE maTaiKhoan LIKE ? AND flagDK =0) " + 
+            "AND HoatDong.maTheLoai = LoaiHoatDong.maLHD AND TaiKhoan.maTK=HoatDong.maNguoiDang ";
     
     private final String queryTakenActivities="SELECT DangKy.maDK, DangKy.thoiGian, HoatDong.*, " +
             "NguoiDang.tenTK AS tenNguoiDang, LoaiHoatDong.tenLHD AS theLoai " +
             "FROM DangKy " +
             "JOIN HoatDong " +
-            "ON DangKy.maTaiKhoan =? AND HoatDong.ngayKT>=GETDATE() AND DangKy.maHoatDong = HoatDong.maHD " +
-            "JOIN (SELECT TaiKhoan.maTK, TaiKhoan.tenTK FROM TaiKhoan) AS NguoiDang " +
+            "ON DangKy.flagDK=0 AND DangKy.maTaiKhoan =? " + 
+            "AND HoatDong.ngayKT>=GETDATE() AND DangKy.maHoatDong = HoatDong.maHD " +
+            "JOIN (SELECT maTK, tenTK FROM TaiKhoan WHERE flagTK =0) AS NguoiDang " +
             "ON HoatDong.maNguoiDang = NguoiDang.maTK  " +
             "JOIN LoaiHoatDong " +
             "ON HoatDong.maTheLoai= LoaiHoatDong.maLHD ";
     
-    private final String queryParticipationHistory = "SELECT HoatDong.maHD as maHD, HoatDong.tenHD as tenHD, HoatDong.noiDung as noiDung, LoaiHoatDong.tenLHD as theLoai, " +
-            "NguoiDang.tenTK as tenNguoiDang, HoatDong.diaDiem as diaDiem, HoatDong.anh as anh, HoatDong.soLuongDK as soLuongDK, " +
-            "HoatDong.ngayBD as ngayBD , HoatDong.ngayKT as ngayKT, HoatDong.ngayDang as ngayDang " +
-            "FROM HoatDong, LoaiHoatDong, TaiKhoan AS NguoiDang, TaiKhoan AS NguoiXem, DangKy " +
-            "WHERE DangKy.maTaiKhoan=? AND ngayKT<GETDATE() AND DangKy.maTaiKhoan = NguoiXem.maTK " +
-            "AND DangKy.maHoatDong=HoatDong.maHD " +
-            "AND maTheLoai = LoaiHoatDong.maLHD AND NguoiDang.maTK=HoatDong.maNguoiDang ";
-    
-    private Activity getActivity(ResultSet rs) throws Exception{
-        Activity activity = new Activity();
-        String checknull;
-        activity.setId(Integer.parseInt(rs.getString("maHD")));
-        activity.setTitle(rs.getString("tenHD"));
-        activity.setContent(rs.getString("noiDung"));
-        activity.setGenre(rs.getString("theLoai"));
-                 
-        activity.setNameUser(rs.getString("tenNguoiDang"));
-        activity.setAddress(rs.getString("diaDiem"));
 
-        checknull=rs.getString("soLuongDK");
-        if(checknull!=null) activity.setNumberOfRegistrations(Integer.parseInt(checknull));
-        else activity.setNumberOfRegistrations(0);
-        activity.setPicture(rs.getString("anh"));
-        activity.setPostingTime((rs.getTimestamp("ngayDang").toLocalDateTime()));
-        activity.setStartDate(rs.getTimestamp("ngayBD").toLocalDateTime());
-        activity.setEndDate(rs.getTimestamp("ngayKT").toLocalDateTime());
-        return activity;
-    }
     
-    private Activity getTakenActivities(ResultSet rs) throws Exception{
-        Activity activity = new Activity();
-        activity= getActivity(rs);
-        return activity;
-    }
-    public List<Activity> getCurrentActivities() throws Exception{
+//    private Activity getActivity(ResultSet rs) throws Exception{
+//        Activity activity = new Activity();
+//        String checknull;
+//        activity.setId(Integer.parseInt(rs.getString("maHD")));
+//        activity.setTitle(rs.getString("tenHD"));
+//        activity.setContent(rs.getString("noiDung"));
+//        activity.setGenre(rs.getString("theLoai"));
+//                 
+//        activity.setNameUser(rs.getString("tenNguoiDang"));
+//        activity.setAddress(rs.getString("diaDiem"));
+//
+//        checknull=rs.getString("soLuongDK");
+//        if(checknull!=null) activity.setNumberOfRegistrations(Integer.parseInt(checknull));
+//        else activity.setNumberOfRegistrations(0);
+//        activity.setPicture(rs.getString("anh"));
+//        activity.setPostingTime((rs.getTimestamp("ngayDang").toLocalDateTime()));
+//        activity.setStartDate(rs.getTimestamp("ngayBD").toLocalDateTime());
+//        activity.setEndDate(rs.getTimestamp("ngayKT").toLocalDateTime());
+//        return activity;
+//    }
+    
+//    private Activity getTakenActivities(ResultSet rs) throws Exception{
+//        Activity activity = new Activity();
+//        activity.getActivityFromDB(rs);
+//        return activity;
+//    }
+    public List<Activity> getCurrentActivities(String idAccount) throws Exception{
         List<Activity> Activities = new ArrayList<>();
         String query = queryCurrentActivities;
+        
         try(
             Connection con = Helper.openConnection();
             PreparedStatement pstmt= con.prepareStatement(query);
-            ResultSet rs = pstmt.executeQuery();
         ){
+            pstmt.setString(1,idAccount);
+            ResultSet rs = pstmt.executeQuery();
             while(rs.next()){    
                 Activity hd = new Activity();
-                hd = getActivity(rs);
+                hd.getActivityDB(rs);
                 Activities.add(hd);
             }
             rs.close();
@@ -98,102 +98,30 @@ public class StudentActivity{
             
     }
     
-    public List<Activity> getTakenActivities(String idAccount) throws Exception{
-        List<Activity> activities = new ArrayList<>();
-        String query = queryTakenActivities;
-        try(
-            Connection con = Helper.openConnection();  
-            PreparedStatement pstmt= con.prepareStatement(query);
-
-        ){
-            pstmt.setString(1, idAccount);
-            
-            ResultSet rs = pstmt.executeQuery();
-            while(rs.next()){    
-                Activity hd = new Activity();
-                hd = getActivity(rs);
-                activities.add(hd);
-            }
-           
-            rs.close();
-            pstmt.close();
-            con.close();
-        }
-        return activities;
-    }
+//    public List<Activity> getTakenActivities(String idAccount) throws Exception{
+//        List<Activity> activities = new ArrayList<>();
+//        String query = queryTakenActivities;
+//        try(
+//            Connection con = Helper.openConnection();  
+//            PreparedStatement pstmt= con.prepareStatement(query);
+//
+//        ){
+//            pstmt.setString(1, idAccount);
+//            
+//            ResultSet rs = pstmt.executeQuery();
+//            while(rs.next()){    
+//                Activity hd = new Activity();
+//                hd.getActivityFromDB(rs);
+//                activities.add(hd);
+//            }
+//           
+//            rs.close();
+//            pstmt.close();
+//            con.close();
+//        }
+//        return activities;
+//    }
    
-    public List<Activity> getParticipationHistory(String idAccount) throws Exception{
-        List<Activity> activities = new ArrayList<>();
-        String query = queryParticipationHistory;
-        try(
-            Connection con = Helper.openConnection();  
-            PreparedStatement pstmt= con.prepareStatement(query);
-
-        ){
-            pstmt.setString(1, idAccount);
-            ResultSet rs = pstmt.executeQuery();
-            while(rs.next()){    
-                Activity hd = new Activity();
-                hd = getActivity(rs);
-                activities.add(hd);
-            }
-            
-            rs.close();
-            pstmt.close();
-            con.close();
-        }
-        return activities;
-    }
-    
-    public List<Activity> sortForPH(String idAccount,String byOpject) throws Exception{
-        List<Activity> activities = new ArrayList<>();
-        String querySort= " ORDER BY ? ";
-        String query = queryParticipationHistory + querySort;
-        try(
-            Connection con = Helper.openConnection();  
-            PreparedStatement pstmt= con.prepareStatement(query);
-
-        ){
-            pstmt.setString(1, idAccount);
-            pstmt.setString(2, byOpject);
-            ResultSet rs = pstmt.executeQuery();
-            while(rs.next()){    
-                Activity hd = new Activity();
-                hd = getActivity(rs);
-                activities.add(hd);
-            }
-            
-            rs.close();
-            pstmt.close();
-            con.close();
-        }
-        return activities;
-    }
-    
-    public List<Activity> sortForTA(String idAccount,String byOpject) throws Exception{
-        List<Activity> activities = new ArrayList<>();
-        String querySort= " ORDER BY ? ";
-        String query = queryTakenActivities + querySort;
-        try(
-            Connection con = Helper.openConnection();  
-            PreparedStatement pstmt= con.prepareStatement(query);
-
-        ){
-            pstmt.setString(1, idAccount);
-            pstmt.setString(2, byOpject);
-            ResultSet rs = pstmt.executeQuery();
-            while(rs.next()){    
-                Activity hd = new Activity();
-                hd = getActivity(rs);
-                activities.add(hd);
-            }
-            
-            rs.close();
-            pstmt.close();
-            con.close();
-        }
-        return activities;
-    }
     
     public List<Activity> sortForCA(String byOpject) throws Exception{
         List<Activity> activities = new ArrayList<>();
@@ -208,7 +136,7 @@ public class StudentActivity{
             ResultSet rs = pstmt.executeQuery();
             while(rs.next()){    
                 Activity hd = new Activity();
-                hd = getActivity(rs);
+                hd.getActivityDB(rs);
                 activities.add(hd);
             }
             

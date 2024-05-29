@@ -1,5 +1,6 @@
-package ttcs.quanlyhdnk.run.form;
+package ttcs.quanlyhdnk.run;
 
+import ttcs.quanlyhdnk.run.form.*;
 import com.formdev.flatlaf.FlatLightLaf;
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -47,42 +48,35 @@ import ttcs.quanlyhdnk.util.Image;
  *
  * @author ADMIN
  */
-public class SinhVienForm extends javax.swing.JFrame {
+public class KyThuatForm extends javax.swing.JFrame {
     private int selectedItemMenu=1;
     private NguoiDung account = new NguoiDung();
    // String pw=SHA256Encryption.toSHA256("abcdef"); 
 
-    public SinhVienForm() {
+    public KyThuatForm() {
         initComponents();
     //Load data
-       // account.setUserID("N21DCCN000");
-        loadCurrentActivitiesPanel(account.getUserID()); 
-     //   System.out.println(pw);
+        
+        account.setUserID("N21DCCN000");
+        
+
     //design frame
 //        setExtendedState(MAXIMIZED_BOTH);
     //test
 
     }
-    public SinhVienForm(NguoiDung account) {
+    public KyThuatForm(NguoiDung account) {
         initComponents();
+        
     //Load data
     //lblAvatar.setIcon(new javax.swing.ImageIcon(getClass().getResource(""))); // NOI18N
         
         setStudentInformation(account);
-        initDisplay();
-        
-//        try {
-//            byte[] tmp = Image.ImageIconToByte((javax.swing.ImageIcon)lblAvatar.getIcon());
-//            javax.swing.ImageIcon tmpImage = Image.ByteToImageIcon(tmp);
-//            lblAvatar.setIcon(tmpImage);
-//        } catch (IOException ex) {
-//            Logger.getLogger(SinhVienForm.class.getName()).log(Level.SEVERE, null, ex);
-//        }
+        initDisplay();  
        
-       // lblAvatar.setIcon(Image.resizeImage((javax.swing.ImageIcon)lblAvatar.getIcon(), 56,56));
-        
+    //test
     //design frame
-//        setExtendedState(MAXIMIZED_BOTH);
+    //    setExtendedState(MAXIMIZED_BOTH);
     //test
     }
 
@@ -92,32 +86,31 @@ public class SinhVienForm extends javax.swing.JFrame {
     }
     
     private void initDisplay(){        
-        loadInformationOfStudentDlg();
-        loadCurrentActivitiesPanel(account.getUserID());  
+        setExtendedState(MAXIMIZED_BOTH);
         lblNameUser.setText(account.getName());
         if(account.getAvatar()!=null) {
-            lblAvatar.setIcon(Image.resizeImage(account.getAvatar(), 56, 56));
-            lblAvatarDlg.setIcon(account.getAvatar());
+            lblAvatar.setIcon(Image.resizeImage(account.getAvatar(), 56, 56));  
         }
-        pnlMainBody.removeAll();
-        pnlMainBody.add(cpListHD);
-        pnlMainBody.revalidate();
-        pnlMainBody.repaint();
+        loadInformationOfAccountDlg();
+//        pnlMainBody.removeAll();
+//        pnlMainBody.add(cpListHD);
+//        pnlMainBody.revalidate();
+//        pnlMainBody.repaint();
     }
     //
     private void changeBodyPanelDisplay(int index){
         if(this.selectedItemMenu==3 ){
             if(index==1||index==2){
-                pnlMainBody.removeAll();
-                pnlMainBody.add(cpListHD);
-                pnlMainBody.revalidate();
-                pnlMainBody.repaint();
+//                pnlMainBody.removeAll();
+//                pnlMainBody.add(cpListHD);
+//                pnlMainBody.revalidate();
+//                pnlMainBody.repaint();
             }
         }else if(index==3){
-                pnlMainBody.removeAll();
-                pnlMainBody.add(cpActivityRegistered);
-                pnlMainBody.revalidate();
-                pnlMainBody.repaint();
+//                pnlMainBody.removeAll();
+//                pnlMainBody.add(cpActivityRegistered);
+//                pnlMainBody.revalidate();
+//                pnlMainBody.repaint();
         }
     }
     private void showForm(int index){// error: cần xóa các panel activity cũ khi loading lại 
@@ -177,161 +170,40 @@ public class SinhVienForm extends javax.swing.JFrame {
 //        pnlListHD.repaint();
     }
     
-    private void setSizeFormSanPham(int soLuong){
-        Dimension dimension = new Dimension(pnlListHD.getWidth(),(int)(soLuong*250 + 10));
-        pnlListHD.setPreferredSize(dimension);
-    }
-    
-    private void setSizeFormSanPham(int soLuong,int soLuongDK){
-        Dimension dimension = new Dimension(pnlListHD.getWidth(),(int)(soLuong*220 + soLuongDK*250 + 10));
-        pnlListHD.setPreferredSize(dimension);
-    }    
+//    private void setSizeFormSanPham(int soLuong){
+//        Dimension dimension = new Dimension(pnlListHD.getWidth(),(int)(soLuong*250 + 10));
+//        pnlListHD.setPreferredSize(dimension);
+//    }
+//    
+//    private void setSizeFormSanPham(int soLuong,int soLuongDK){
+//        Dimension dimension = new Dimension(pnlListHD.getWidth(),(int)(soLuong*220 + soLuongDK*250 + 10));
+//        pnlListHD.setPreferredSize(dimension);
+//    }    
     
 //data transmission another form
-    private void loadInformationOfStudentDlg(){
-        lblStudentNameDlg.setText(account.getName());
-        lblStudentIDDlg.setText(account.getUserID());
+    private void loadInformationOfAccountDlg(){
+        lbNameAccountDlg.setText(account.getName());
+        lblIdAccountDlg.setText(account.getUserID());
        // lblClassDlg.setText("tam thoi chua co");
         lblBirthdayDlg.setText(DateTimeUtil.LocalDateTimeToStringDay(account.getBirthday()));
         lblPhoneNumberDlg.setText(account.getPhoneNumber());
         lblEmailDlg.setText(account.getEmail());
+        if(account.getAvatar()!=null) {
+            lblAvatarDlg.setIcon(account.getAvatar());
+        }
     }
-    
-    //data transmission
-    private void loadCurrentActivitiesPanel(String IDAccount){ 
-        List<Activity> ListHD=  loadActivityList(IDAccount);
-        loadActivityPanelList( ListHD);
-    }
-    
-    private void loadRegisteredActivitiesPanel(String IDAccount){
-        List<DangKy> ListDK= loaRegisteredActivities(IDAccount);
-        loadActivityPanelList2( ListDK);
-    }
-    
-    private void loadParticipationHistoryPanel(String IDAccount){
-        List<DangKy> ListDK= loadParticipationHistory(IDAccount);
-        //List<Activity> ListHD= loadParticipationHistory(IDAccount);
-        loadActivityPanelList3( ListDK);
-    }
-    
-    private void loadActivityPanelList(List<Activity> ListHD){
-        pnlListHD.removeAll();
-        int quantityRigisterPanel =0;
-        if(!ListHD.isEmpty()){
-            for(int index =0;index<ListHD.size();++index){
-                //System.out.println(ListHD.get(index).getId());
-                if(ListHD.get(index).getNumberOfRegistrations()==0){
-                    ActivityPanel activityPanel =new ActivityPanel(ListHD.get(index));
-                    pnlListHD.add(activityPanel);
 
-                }else{
-                    ActivityRegisterPanel activityRegisterPanel = new ActivityRegisterPanel(ListHD.get(index),account.getUserID());
-                    pnlListHD.add(activityRegisterPanel);
-                    ++quantityRigisterPanel;
-                }  
-            }
-        }
-        pnlListHD.revalidate();
-        pnlListHD.repaint();
-        setSizeFormSanPham(ListHD.size()-quantityRigisterPanel,quantityRigisterPanel);
-    }
     
-    private void loadActivityPanelList2(List<DangKy> ListDK){
-        pnlListHD.removeAll();
-        if(!ListDK.isEmpty()){
-            for(int index =0;index<ListDK.size();++index){
-                //System.out.println(ListHD.get(index).getId());
-                ActivityDroppingOutPanel activityPanel =new ActivityDroppingOutPanel(ListDK.get(index));
-                pnlListHD.add(activityPanel);
-            }
-        }
-        pnlListHD.revalidate();
-        pnlListHD.repaint();
-        setSizeFormSanPham(ListDK.size());
-    }
+   
     
-    private void loadActivityPanelList3(List<DangKy> ListDK){
-        //tblActivityRegistered.removeAll();
-        if(!ListDK.isEmpty()){
-            javax.swing.table.DefaultTableModel model = (DefaultTableModel) tblActivityRegistered.getModel();
-            
-            model.setRowCount(0);
-            for(int index =0;index<ListDK.size();++index){
-                model.addRow(new Object[]{
-                    ListDK.get(index).getActivity().getId(),
-                    ListDK.get(index).getActivity().getTitle(),
-                    ListDK.get(index).getActivity().getNameUser(),
-                    ListDK.get(index).getActivity().getGenre(),
-                    DateTimeUtil.LocalDateTimeToStringDayTime(ListDK.get(index).getRegistrationsTime()),
-                    ListDK.get(index).getId()
-                });
-                //System.out.println(ListHD.get(index).getId());
-//                ActivityDroppingOutPanel activityPanel =new ActivityDroppingOutPanel(ListDK.get(index));
-//                tblActivityRegistered.add(activityPanel);
-            }
-            model.fireTableDataChanged();
-        }
-       
-//        tblActivityRegistered.revalidate();
-//        tblActivityRegistered.repaint();
-//        setSizeFormSanPham(ListDK.size());
-    }
-    
-    //loading data  
-    private List<DangKy> loaRegisteredActivities(String IDAccount){
-        List<DangKy> activityList = new ArrayList<>();
-        try {
-            StudentRegister daoList = new StudentRegister();
-            activityList = daoList.getTakenActivities(IDAccount);
-        } catch (Exception ex) {
-           // System.out.println("aasdasdsd"); Thong bao loi
-            Logger.getLogger(ActivityPanel.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        return activityList;
-    }
-    
-    private List<DangKy> loadParticipationHistory(String IDAccount){
-        List<DangKy> activityList = new ArrayList<>();
-        try {
-            
-            StudentRegister daoList = new StudentRegister();
-            activityList = daoList.getParticipationHistory(IDAccount); 
-            
-        } catch (Exception ex) {
-     
-            Logger.getLogger(ActivityPanel.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        return activityList;
-    }
-    
-    private List<Activity> loadActivityList(String IdAccount){
-        List<Activity> activityList = new ArrayList<>();
-        try {
-            StudentActivity daoList = new StudentActivity();
-            activityList = daoList.getCurrentActivities(IdAccount);           
-        } catch (Exception ex) {
-           // System.out.println("aasdasdsd"); Thong bao loi
-            Logger.getLogger(ActivityPanel.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        return activityList;
-    }
-    
-    
-    private void cmbSortLoadData(){
-        
-    }
-    
-    private void reLoadData(String type){
-        pnlListHD.removeAll();
-        cmbSort.removeAllItems();
-        cmbSortLoadData();  
-    }
+   
+
     
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        dlgSinhVienInformation = new javax.swing.JDialog();
+        dlgAccountInformation = new javax.swing.JDialog();
         jPanel2 = new javax.swing.JPanel();
         lblAvatarDlg = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
@@ -339,8 +211,8 @@ public class SinhVienForm extends javax.swing.JFrame {
         jLabel8 = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
         jLabel10 = new javax.swing.JLabel();
-        lblStudentNameDlg = new javax.swing.JLabel();
-        lblStudentIDDlg = new javax.swing.JLabel();
+        lbNameAccountDlg = new javax.swing.JLabel();
+        lblIdAccountDlg = new javax.swing.JLabel();
         lblClassDlg = new javax.swing.JLabel();
         lblBirthdayDlg = new javax.swing.JLabel();
         lblPhoneNumberDlg = new javax.swing.JLabel();
@@ -355,15 +227,10 @@ public class SinhVienForm extends javax.swing.JFrame {
         jLabel20 = new javax.swing.JLabel();
         cpActivityRegistered = new javax.swing.JScrollPane();
         tblActivityRegistered = new javax.swing.JTable();
-        cpListHD = new javax.swing.JScrollPane();
-        pnlListHD = new javax.swing.JPanel();
-        activityRegisterPanel1 = new ttcs.quanlyhdnk.form.activity.ActivityRegisterPanel();
-        activityRegisterPanel2 = new ttcs.quanlyhdnk.form.activity.ActivityRegisterPanel();
         jPanel1 = new javax.swing.JPanel();
         header = new javax.swing.JPanel();
         lblAvatar = new javax.swing.JLabel();
         lblNameUser = new javax.swing.JLabel();
-        btnTB = new javax.swing.JButton();
         pnlMenuBar = new javax.swing.JPanel();
         jPanel5 = new javax.swing.JPanel();
         pnlHome = new javax.swing.JPanel();
@@ -383,9 +250,9 @@ public class SinhVienForm extends javax.swing.JFrame {
         btnSearch = new javax.swing.JButton();
         pnlMainBody = new javax.swing.JPanel();
 
-        dlgSinhVienInformation.setTitle("Thông tin tài khoản");
-        dlgSinhVienInformation.setBackground(new java.awt.Color(255, 255, 255));
-        dlgSinhVienInformation.setSize(new java.awt.Dimension(650, 340));
+        dlgAccountInformation.setTitle("Thông tin tài khoản");
+        dlgAccountInformation.setBackground(new java.awt.Color(255, 255, 255));
+        dlgAccountInformation.setSize(new java.awt.Dimension(650, 340));
 
         jPanel2.setBackground(new java.awt.Color(235, 235, 235));
 
@@ -412,12 +279,12 @@ public class SinhVienForm extends javax.swing.JFrame {
 
         jLabel10.setText("Email:");
 
-        lblStudentNameDlg.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
-        lblStudentNameDlg.setForeground(new java.awt.Color(102, 102, 102));
-        lblStudentNameDlg.setText("Nguyen Van A");
-        lblStudentNameDlg.setVerticalAlignment(javax.swing.SwingConstants.TOP);
+        lbNameAccountDlg.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
+        lbNameAccountDlg.setForeground(new java.awt.Color(102, 102, 102));
+        lbNameAccountDlg.setText("Nguyen Van A");
+        lbNameAccountDlg.setVerticalAlignment(javax.swing.SwingConstants.TOP);
 
-        lblStudentIDDlg.setText("N21DCCN000");
+        lblIdAccountDlg.setText("N21DCCN000");
 
         lblClassDlg.setText("D21CQCN01-N");
 
@@ -456,7 +323,7 @@ public class SinhVienForm extends javax.swing.JFrame {
                             .addGroup(jPanel2Layout.createSequentialGroup()
                                 .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(lblStudentIDDlg, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(lblIdAccountDlg, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(jPanel2Layout.createSequentialGroup()
                                 .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -465,7 +332,7 @@ public class SinhVienForm extends javax.swing.JFrame {
                             .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                             .addComponent(lblEmailDlg, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addComponent(lblStudentNameDlg, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(lbNameAccountDlg, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btnChangePasswordDlg, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(8, Short.MAX_VALUE))
         );
@@ -476,11 +343,11 @@ public class SinhVienForm extends javax.swing.JFrame {
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(lblAvatarDlg, javax.swing.GroupLayout.PREFERRED_SIZE, 188, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(lblStudentNameDlg, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(lbNameAccountDlg, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel6)
-                            .addComponent(lblStudentIDDlg))
+                            .addComponent(lblIdAccountDlg))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(jLabel7)
@@ -564,20 +431,20 @@ public class SinhVienForm extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        javax.swing.GroupLayout dlgSinhVienInformationLayout = new javax.swing.GroupLayout(dlgSinhVienInformation.getContentPane());
-        dlgSinhVienInformation.getContentPane().setLayout(dlgSinhVienInformationLayout);
-        dlgSinhVienInformationLayout.setHorizontalGroup(
-            dlgSinhVienInformationLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(dlgSinhVienInformationLayout.createSequentialGroup()
+        javax.swing.GroupLayout dlgAccountInformationLayout = new javax.swing.GroupLayout(dlgAccountInformation.getContentPane());
+        dlgAccountInformation.getContentPane().setLayout(dlgAccountInformationLayout);
+        dlgAccountInformationLayout.setHorizontalGroup(
+            dlgAccountInformationLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(dlgAccountInformationLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(dlgSinhVienInformationLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(dlgAccountInformationLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jPanel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
-        dlgSinhVienInformationLayout.setVerticalGroup(
-            dlgSinhVienInformationLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(dlgSinhVienInformationLayout.createSequentialGroup()
+        dlgAccountInformationLayout.setVerticalGroup(
+            dlgAccountInformationLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(dlgAccountInformationLayout.createSequentialGroup()
                 .addGap(4, 4, 4)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(1, 1, 1)
@@ -592,17 +459,18 @@ public class SinhVienForm extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Mã hoạt động", "Tên hoạt động", "Đơn vị đăng ", "Thể loại ", "Thời gian đăng ký", "Mã đăng ký"
+                "Mã tài khoản", "Tên tài khoản", "Giới tính", "Ngày sinh", "Email", "Số điện thoại", "Địa chỉ", "Quyền"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false
+                false, false, false, false, false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
                 return canEdit [columnIndex];
             }
         });
+        tblActivityRegistered.setColumnSelectionAllowed(true);
         tblActivityRegistered.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         tblActivityRegistered.getTableHeader().setReorderingAllowed(false);
         cpActivityRegistered.setViewportView(tblActivityRegistered);
@@ -610,31 +478,19 @@ public class SinhVienForm extends javax.swing.JFrame {
         if (tblActivityRegistered.getColumnModel().getColumnCount() > 0) {
             tblActivityRegistered.getColumnModel().getColumn(0).setResizable(false);
             tblActivityRegistered.getColumnModel().getColumn(0).setPreferredWidth(90);
-            tblActivityRegistered.getColumnModel().getColumn(1).setPreferredWidth(320);
+            tblActivityRegistered.getColumnModel().getColumn(1).setPreferredWidth(250);
             tblActivityRegistered.getColumnModel().getColumn(2).setResizable(false);
-            tblActivityRegistered.getColumnModel().getColumn(2).setPreferredWidth(160);
+            tblActivityRegistered.getColumnModel().getColumn(2).setPreferredWidth(60);
             tblActivityRegistered.getColumnModel().getColumn(3).setResizable(false);
-            tblActivityRegistered.getColumnModel().getColumn(3).setPreferredWidth(80);
+            tblActivityRegistered.getColumnModel().getColumn(3).setPreferredWidth(100);
             tblActivityRegistered.getColumnModel().getColumn(4).setResizable(false);
-            tblActivityRegistered.getColumnModel().getColumn(4).setPreferredWidth(100);
+            tblActivityRegistered.getColumnModel().getColumn(4).setPreferredWidth(80);
             tblActivityRegistered.getColumnModel().getColumn(5).setResizable(false);
             tblActivityRegistered.getColumnModel().getColumn(5).setPreferredWidth(80);
+            tblActivityRegistered.getColumnModel().getColumn(6).setResizable(false);
+            tblActivityRegistered.getColumnModel().getColumn(6).setPreferredWidth(100);
+            tblActivityRegistered.getColumnModel().getColumn(7).setResizable(false);
         }
-
-        cpListHD.setBackground(new java.awt.Color(255, 0, 51));
-        cpListHD.setBorder(null);
-        cpListHD.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
-        cpListHD.setMinimumSize(new java.awt.Dimension(830, 6));
-
-        pnlListHD.setBackground(new java.awt.Color(255, 255, 255));
-        pnlListHD.setMaximumSize(new java.awt.Dimension(850, 32767));
-        pnlListHD.setMinimumSize(new java.awt.Dimension(850, 260));
-        pnlListHD.setPreferredSize(new java.awt.Dimension(840, 260));
-        pnlListHD.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.CENTER, 5, 10));
-        pnlListHD.add(activityRegisterPanel1);
-        pnlListHD.add(activityRegisterPanel2);
-
-        cpListHD.setViewportView(pnlListHD);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Hoạt Động Ngoại Khóa");
@@ -666,17 +522,6 @@ public class SinhVienForm extends javax.swing.JFrame {
         lblNameUser.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         lblNameUser.setText("Tên ( NGUYEN VAN A)");
 
-        btnTB.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/notification.png"))); // NOI18N
-        btnTB.setContentAreaFilled(false);
-        btnTB.setMaximumSize(new java.awt.Dimension(50, 50));
-        btnTB.setMinimumSize(new java.awt.Dimension(50, 50));
-        btnTB.setPreferredSize(new java.awt.Dimension(50, 50));
-        btnTB.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnTBActionPerformed(evt);
-            }
-        });
-
         javax.swing.GroupLayout headerLayout = new javax.swing.GroupLayout(header);
         header.setLayout(headerLayout);
         headerLayout.setHorizontalGroup(
@@ -686,9 +531,7 @@ public class SinhVienForm extends javax.swing.JFrame {
                 .addComponent(lblAvatar)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(lblNameUser, javax.swing.GroupLayout.PREFERRED_SIZE, 184, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(btnTB, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(10, 10, 10))
+                .addContainerGap(840, Short.MAX_VALUE))
         );
         headerLayout.setVerticalGroup(
             headerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -696,8 +539,7 @@ public class SinhVienForm extends javax.swing.JFrame {
                 .addGap(10, 10, 10)
                 .addGroup(headerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(lblNameUser, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lblAvatar, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnTB, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(lblAvatar, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(0, 10, Short.MAX_VALUE))
         );
 
@@ -775,7 +617,7 @@ public class SinhVienForm extends javax.swing.JFrame {
         btnRegistrationHistory.setBackground(new java.awt.Color(38, 168, 255));
         btnRegistrationHistory.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         btnRegistrationHistory.setForeground(new java.awt.Color(255, 255, 255));
-        btnRegistrationHistory.setText("ĐÃ ĐĂNG KÝ");
+        btnRegistrationHistory.setText("QUẢN LÝ TÀI KHOẢN");
         btnRegistrationHistory.setContentAreaFilled(false);
         btnRegistrationHistory.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
@@ -812,7 +654,7 @@ public class SinhVienForm extends javax.swing.JFrame {
         btnParticipationHistory.setBackground(new java.awt.Color(38, 168, 255));
         btnParticipationHistory.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         btnParticipationHistory.setForeground(new java.awt.Color(255, 255, 255));
-        btnParticipationHistory.setText("ĐÃ THAM GIA");
+        btnParticipationHistory.setText("null");
         btnParticipationHistory.setContentAreaFilled(false);
         btnParticipationHistory.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
@@ -1022,8 +864,8 @@ public class SinhVienForm extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void lblAvatarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblAvatarMouseClicked
-        dlgSinhVienInformation.setVisible(true);
-        dlgSinhVienInformation.setLocationRelativeTo(null);
+        dlgAccountInformation.setVisible(true);
+        dlgAccountInformation.setLocationRelativeTo(null);
         
     }//GEN-LAST:event_lblAvatarMouseClicked
 
@@ -1052,17 +894,6 @@ public class SinhVienForm extends javax.swing.JFrame {
             txtSearch.setForeground(new Color(153,153,153));
         }
     }//GEN-LAST:event_txtSearchFocusLost
-
-    private void btnTBActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTBActionPerformed
-        NotificationDialog dlgNotification = new NotificationDialog(this, true, account.getUserID());
-        
-        java.awt.Point location = this.getLocation();
-//        System.out.println(location.x+" "+location.y);
-//        System.out.println("--------------------------------");
-        dlgNotification.setLocation(location.x+this.getWidth()-dlgNotification.getWidth()-15,location.y+header.getHeight()/2+btnTB.getHeight());
-        //System.out.println(dlgNotification.getLocation().x+" "+dlgNotification.getLocation().y);
-        dlgNotification.setVisible(true);
-    }//GEN-LAST:event_btnTBActionPerformed
 
     private void btnHomeMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnHomeMouseEntered
         //System.out.println("mouseenter");
@@ -1094,18 +925,18 @@ public class SinhVienForm extends javax.swing.JFrame {
         //btnHome.setFont();
         //pnlHome.setOpaque(true);
         showForm(1);
-        loadCurrentActivitiesPanel(account.getUserID());
+  
     }//GEN-LAST:event_btnHomeActionPerformed
 
     private void btnRegistrationHistoryActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistrationHistoryActionPerformed
         showForm(2);
-        loadRegisteredActivitiesPanel(account.getUserID());
+       
     }//GEN-LAST:event_btnRegistrationHistoryActionPerformed
 
     private void btnParticipationHistoryActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnParticipationHistoryActionPerformed
         // ChuaHoanThanh();
         showForm(3);
-        loadParticipationHistoryPanel(account.getUserID());
+    
         
 //        pnlListHD.removeAll();
 //        pnlListHD.revalidate();
@@ -1148,14 +979,14 @@ public class SinhVienForm extends javax.swing.JFrame {
 
     private void lblAvatarDlgMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblAvatarDlgMouseClicked
 
-        ImageChoose imageChoose= new ImageChoose(dlgSinhVienInformation,(javax.swing.ImageIcon)lblAvatarDlg.getIcon());
+        ImageChoose imageChoose= new ImageChoose(dlgAccountInformation,(javax.swing.ImageIcon)lblAvatarDlg.getIcon());
         imageChoose.setVisible(true);
         if(imageChoose.getMessageType()==ImageChoose.MessageType.OK){
-            System.out.println("có");
+//            System.out.println("có");
             if(lblAvatarDlg.getText()!=null) lblAvatarDlg.setText(null);
             lblAvatarDlg.setIcon(imageChoose.getImageIcon());
             lblAvatar.setIcon(Image.resizeImage(imageChoose.getImageIcon(),56,56));
-            System.out.println("có");
+//            System.out.println("có");
             try {
                  byte[] tmpBytes = Image.ImageIconToByte((javax.swing.ImageIcon)lblAvatarDlg.getIcon());
                  ttcs.quanlyhdnk.DAO.AccountData dao = new ttcs.quanlyhdnk.DAO.AccountData();
@@ -1163,10 +994,10 @@ public class SinhVienForm extends javax.swing.JFrame {
                  try {
                      dao.updateAvatar(account.getUserID(),tmpBytes);
                  } catch (Exception ex) {
-                     Logger.getLogger(SinhVienForm.class.getName()).log(Level.SEVERE, null, ex);
+                     Logger.getLogger(KyThuatForm.class.getName()).log(Level.SEVERE, null, ex);
                  }
             } catch (IOException ex) {
-                 Logger.getLogger(SinhVienForm.class.getName()).log(Level.SEVERE, null, ex);
+                 Logger.getLogger(KyThuatForm.class.getName()).log(Level.SEVERE, null, ex);
             }
 
         }else{
@@ -1194,7 +1025,7 @@ public class SinhVienForm extends javax.swing.JFrame {
         try {
             javax.swing.UIManager.setLookAndFeel( new FlatLightLaf() );
         } catch (UnsupportedLookAndFeelException ex) {
-            Logger.getLogger(SinhVienForm.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(KyThuatForm.class.getName()).log(Level.SEVERE, null, ex);
         }
 
 //        try {
@@ -1236,25 +1067,21 @@ public class SinhVienForm extends javax.swing.JFrame {
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
 //                new SinhVienForm().setVisible(true);
-                new SinhVienForm(nguoiDung).setVisible(true);
+                new KyThuatForm(nguoiDung).setVisible(true);
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private ttcs.quanlyhdnk.form.activity.ActivityRegisterPanel activityRegisterPanel1;
-    private ttcs.quanlyhdnk.form.activity.ActivityRegisterPanel activityRegisterPanel2;
     private javax.swing.JButton btnChangePasswordDlg;
     private javax.swing.JButton btnHome;
     private javax.swing.JButton btnLogout;
     private javax.swing.JButton btnParticipationHistory;
     private javax.swing.JButton btnRegistrationHistory;
     private javax.swing.JButton btnSearch;
-    private javax.swing.JButton btnTB;
     private javax.swing.JComboBox<String> cmbSort;
     private javax.swing.JScrollPane cpActivityRegistered;
-    private javax.swing.JScrollPane cpListHD;
-    private javax.swing.JDialog dlgSinhVienInformation;
+    private javax.swing.JDialog dlgAccountInformation;
     private javax.swing.JPanel header;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel17;
@@ -1274,18 +1101,17 @@ public class SinhVienForm extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel6;
+    private javax.swing.JLabel lbNameAccountDlg;
     private javax.swing.JLabel lblAvatar;
     private javax.swing.JLabel lblAvatarDlg;
     private javax.swing.JLabel lblBirthdayDlg;
     private javax.swing.JLabel lblClassDlg;
     private javax.swing.JLabel lblEmailDlg;
+    private javax.swing.JLabel lblIdAccountDlg;
     private javax.swing.JLabel lblNameUser;
     private javax.swing.JLabel lblPhoneNumberDlg;
-    private javax.swing.JLabel lblStudentIDDlg;
-    private javax.swing.JLabel lblStudentNameDlg;
     private javax.swing.JPanel pnlBody;
     private javax.swing.JPanel pnlHome;
-    private javax.swing.JPanel pnlListHD;
     private javax.swing.JPanel pnlLogout;
     private javax.swing.JPanel pnlMainBody;
     private javax.swing.JPanel pnlMenuBar;

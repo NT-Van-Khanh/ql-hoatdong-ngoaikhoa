@@ -56,6 +56,9 @@ public class QuanLyHDNK extends javax.swing.JFrame {
         jPanel17 = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
         jPanel18 = new javax.swing.JPanel();
+        activityRegisterPanel1 = new ttcs.quanlyhdnk.form.activity.ActivityRegisterPanel();
+        activityRegisterPanel2 = new ttcs.quanlyhdnk.form.activity.ActivityRegisterPanel();
+        activityRegisterPanel3 = new ttcs.quanlyhdnk.form.activity.ActivityRegisterPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Hoạt Động Ngoại Khóa");
@@ -248,7 +251,7 @@ public class QuanLyHDNK extends javax.swing.JFrame {
         );
         jPanel15Layout.setVerticalGroup(
             jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 479, Short.MAX_VALUE)
+            .addGap(0, 325, Short.MAX_VALUE)
         );
 
         jPanel3.add(jPanel15);
@@ -334,27 +337,28 @@ public class QuanLyHDNK extends javax.swing.JFrame {
 
         jPanel17.setOpaque(false);
 
+        jScrollPane2.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+
         jPanel18.setBackground(new java.awt.Color(255, 255, 255));
-        java.awt.FlowLayout flowLayout1 = new java.awt.FlowLayout(java.awt.FlowLayout.CENTER, 10, 10);
-        flowLayout1.setAlignOnBaseline(true);
-        jPanel18.setLayout(flowLayout1);
+        jPanel18.setMaximumSize(new java.awt.Dimension(840, 32767));
+        jPanel18.setMinimumSize(new java.awt.Dimension(840, 260));
+        jPanel18.setPreferredSize(new java.awt.Dimension(840, 260));
+        jPanel18.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.CENTER, 10, 10));
+        jPanel18.add(activityRegisterPanel1);
+        jPanel18.add(activityRegisterPanel2);
+        jPanel18.add(activityRegisterPanel3);
+
         jScrollPane2.setViewportView(jPanel18);
 
         javax.swing.GroupLayout jPanel17Layout = new javax.swing.GroupLayout(jPanel17);
         jPanel17.setLayout(jPanel17Layout);
         jPanel17Layout.setHorizontalGroup(
             jPanel17Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel17Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                .addContainerGap())
+            .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 846, Short.MAX_VALUE)
         );
         jPanel17Layout.setVerticalGroup(
             jPanel17Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel17Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jScrollPane2)
-                .addContainerGap())
+            .addComponent(jScrollPane2)
         );
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
@@ -406,7 +410,7 @@ public class QuanLyHDNK extends javax.swing.JFrame {
             .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
-        setSize(new java.awt.Dimension(1114, 757));
+        setSize(new java.awt.Dimension(1114, 603));
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
@@ -461,24 +465,28 @@ public class QuanLyHDNK extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton8MouseReleased
 
     private void jButton8FocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jButton8FocusGained
-//    jButton8.setOpaque(false);
+    jButton8.setOpaque(false);
+    System.out.println("FOCUSgain");
     }//GEN-LAST:event_jButton8FocusGained
 
     private void jButton8MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton8MouseClicked
-         jButton8.setOpaque(true);
+      //   jButton8.setOpaque(true);
 
     }//GEN-LAST:event_jButton8MouseClicked
 
     private void jButton8MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton8MouseExited
-            jButton8.setOpaque(false);
+            System.out.println("FOCUSgain");
+        jButton8.setOpaque(false);
     }//GEN-LAST:event_jButton8MouseExited
 
     private void jButton8MouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton8MouseMoved
         jButton8.setOpaque(true);
+        System.out.println("FOCUSLOST");
     }//GEN-LAST:event_jButton8MouseMoved
 
     private void jButton8FocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jButton8FocusLost
-//        jButton8.setVisible(true);
+        jButton8.setOpaque(true);
+        System.out.println("FOCUSLOST");
     }//GEN-LAST:event_jButton8FocusLost
 
     private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton8ActionPerformed
@@ -528,6 +536,9 @@ public class QuanLyHDNK extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private ttcs.quanlyhdnk.form.activity.ActivityRegisterPanel activityRegisterPanel1;
+    private ttcs.quanlyhdnk.form.activity.ActivityRegisterPanel activityRegisterPanel2;
+    private ttcs.quanlyhdnk.form.activity.ActivityRegisterPanel activityRegisterPanel3;
     private javax.swing.JButton btnSearch;
     private javax.swing.JPanel header;
     private javax.swing.JButton jButton1;

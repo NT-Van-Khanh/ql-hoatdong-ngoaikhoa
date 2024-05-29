@@ -2,8 +2,9 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JPanel.java to edit this template
  */
-package ttcs.quanlyhdnk.form;
+package ttcs.quanlyhdnk.form.activity;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
@@ -12,23 +13,29 @@ import javax.swing.JOptionPane;
 import ttcs.quanlyhdnk.DAO.SinhVien.StudentActivity;
 import ttcs.quanlyhdnk.model.Activity;
 import ttcs.quanlyhdnk.util.DateTimeUtil;
+import ttcs.quanlyhdnk.util.Image;
 /**
  *
  * @author ADMIN
  */
 public class ActivityPanel extends javax.swing.JPanel {
     
-//    public ActivityPanel() {
-//        initComponents();
-//    }
-    
+    private Activity hoatDong = new Activity();
     public ActivityPanel(Activity hoatDong){
         initComponents();
-        setContentForCard(hoatDong);
-        setContentForDlg(hoatDong);
+        this.hoatDong=hoatDong;
+        setContentForCard();
+        setContentForDlg();
     }
     
-    private void setContentForCard(Activity hoatDong){
+    private void setContentForCard(){
+        try {
+            if(hoatDong.getPicture()!=null){
+                lblPicture.setIcon(Image.ByteToImageIcon(hoatDong.getPicture()));
+            }
+        } catch (IOException ex) {
+            Logger.getLogger(ActivityPanel.class.getName()).log(Level.SEVERE, null, ex);
+        }
         taContent.setText(hoatDong.getContent());
         lblTitle.setText(hoatDong.getTitle());
         lblGenre.setText(hoatDong.getGenre());
@@ -38,7 +45,7 @@ public class ActivityPanel extends javax.swing.JPanel {
         lblEndTime.setText(DateTimeUtil.LocalDateTimeToStringDayTime(hoatDong.getEndDate()));
         //lblEndTime.setIcon();
     }
-    private void setContentForDlg(Activity hoatDong){
+    private void setContentForDlg(){
         taContentOfDlg.setText(hoatDong.getContent());
         lblTitleOfDlg.setText(hoatDong.getTitle());
         lblGenreOfDlg.setText(hoatDong.getGenre());
@@ -46,6 +53,8 @@ public class ActivityPanel extends javax.swing.JPanel {
         lblPostingTimeOfDlg.setText(DateTimeUtil.LocalDateTimeToStringDayTime(hoatDong.getPostingTime()));//sua 3 dong nay
         lblStartTimeOfDlg.setText(DateTimeUtil.LocalDateTimeToStringDayTime(hoatDong.getStartDate()));
         lblEndTimeOfDlg.setText(DateTimeUtil.LocalDateTimeToStringDayTime(hoatDong.getEndDate()));
+        taAddressDlg.setText(hoatDong.getAddress());
+        lblPictureOfDlg.setIcon(lblPicture.getIcon());
         //lblEndTime.setIcon();
     }
 
@@ -73,7 +82,7 @@ public class ActivityPanel extends javax.swing.JPanel {
         jScrollPane3 = new javax.swing.JScrollPane();
         taNameUserOfDlg = new javax.swing.JTextArea();
         jScrollPane4 = new javax.swing.JScrollPane();
-        jTextArea1 = new javax.swing.JTextArea();
+        taAddressDlg = new javax.swing.JTextArea();
         lblPicture = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
         jLabel10 = new javax.swing.JLabel();
@@ -91,7 +100,6 @@ public class ActivityPanel extends javax.swing.JPanel {
         taContent = new javax.swing.JTextArea();
 
         dlgActivityInformation.setBackground(new java.awt.Color(255, 255, 255));
-        dlgActivityInformation.setPreferredSize(new java.awt.Dimension(760, 635));
         dlgActivityInformation.setSize(new java.awt.Dimension(760, 635));
 
         jPanel2.setBackground(new java.awt.Color(229, 229, 229));
@@ -146,7 +154,6 @@ public class ActivityPanel extends javax.swing.JPanel {
         lblPictureOfDlg.setBackground(new java.awt.Color(255, 204, 0));
         lblPictureOfDlg.setForeground(new java.awt.Color(255, 255, 255));
         lblPictureOfDlg.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lblPictureOfDlg.setText("Ảnh");
         lblPictureOfDlg.setOpaque(true);
 
         jLabel2.setForeground(new java.awt.Color(51, 51, 51));
@@ -176,17 +183,17 @@ public class ActivityPanel extends javax.swing.JPanel {
 
         jScrollPane4.setBorder(null);
 
-        jTextArea1.setEditable(false);
-        jTextArea1.setBackground(new java.awt.Color(229, 229, 229));
-        jTextArea1.setColumns(20);
-        jTextArea1.setForeground(new java.awt.Color(51, 51, 51));
-        jTextArea1.setLineWrap(true);
-        jTextArea1.setRows(2);
-        jTextArea1.setText("Phong A00");
-        jTextArea1.setAutoscrolls(false);
-        jTextArea1.setBorder(null);
-        jTextArea1.setCaretColor(new java.awt.Color(238, 238, 238));
-        jScrollPane4.setViewportView(jTextArea1);
+        taAddressDlg.setEditable(false);
+        taAddressDlg.setBackground(new java.awt.Color(229, 229, 229));
+        taAddressDlg.setColumns(20);
+        taAddressDlg.setForeground(new java.awt.Color(51, 51, 51));
+        taAddressDlg.setLineWrap(true);
+        taAddressDlg.setRows(2);
+        taAddressDlg.setText("Phong A00");
+        taAddressDlg.setAutoscrolls(false);
+        taAddressDlg.setBorder(null);
+        taAddressDlg.setCaretColor(new java.awt.Color(238, 238, 238));
+        jScrollPane4.setViewportView(taAddressDlg);
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -272,11 +279,11 @@ public class ActivityPanel extends javax.swing.JPanel {
         dlgActivityInformation.getContentPane().setLayout(dlgActivityInformationLayout);
         dlgActivityInformationLayout.setHorizontalGroup(
             dlgActivityInformationLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jPanel2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 760, Short.MAX_VALUE)
         );
         dlgActivityInformationLayout.setVerticalGroup(
             dlgActivityInformationLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 872, Short.MAX_VALUE)
+            .addComponent(jPanel2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 635, Short.MAX_VALUE)
         );
 
         setBackground(new java.awt.Color(249, 249, 249));
@@ -475,7 +482,6 @@ public class ActivityPanel extends javax.swing.JPanel {
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
-    private javax.swing.JTextArea jTextArea1;
     private javax.swing.JLabel lblEndTime;
     private javax.swing.JLabel lblEndTimeOfDlg;
     private javax.swing.JLabel lblGenre;
@@ -489,6 +495,7 @@ public class ActivityPanel extends javax.swing.JPanel {
     private javax.swing.JLabel lblStartTimeOfDlg;
     private javax.swing.JLabel lblTitle;
     private javax.swing.JLabel lblTitleOfDlg;
+    private javax.swing.JTextArea taAddressDlg;
     private javax.swing.JTextArea taContent;
     private javax.swing.JTextArea taContentOfDlg;
     private javax.swing.JTextArea taNameUserOfDlg;

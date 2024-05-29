@@ -1,18 +1,20 @@
 
 package ttcs.quanlyhdnk.model;
 
+import java.sql.ResultSet;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 public class Activity {
     private int id, numberOfRegistrations;// soLuongDangKy
-    private String title, content, genre, address, picture, note;// ten, noiDung,theLoai,diaChi,anh, ghichu;
+    private byte[] picture;
+    private String title, content, genre, address, note;// ten, noiDung,theLoai,diaChi,anh, ghichu;
     private LocalDateTime startDate, endDate, postingTime;
     private String idUser,nameUser;// nguoiDangHoatDong
 
     public Activity() {
     }
-    public Activity(int id, int numberOfRegistrations, String title, String content, String genre, String address, String picture, String note, LocalDateTime startDate, LocalDateTime endDate, LocalDateTime postingTime, String idUser, String nameUser) {
+    public Activity(int id, int numberOfRegistrations, String title, String content, String genre, String address, byte[] picture, String note, LocalDateTime startDate, LocalDateTime endDate, LocalDateTime postingTime, String idUser, String nameUser) {
         this.id = id;
         this.numberOfRegistrations = numberOfRegistrations;
         this.title = title;
@@ -76,11 +78,11 @@ public class Activity {
         this.address = address;
     }
 
-    public String getPicture() {
+    public byte[] getPicture() {
         return picture;
     }
 
-    public void setPicture(String picture) {
+    public void setPicture(byte[] picture) {
         this.picture = picture;
     }
 
@@ -132,6 +134,42 @@ public class Activity {
         this.nameUser = nameUser;
     }
 
+//    public Activity getActivityFromDB(ResultSet rs) throws Exception{
+//        Activity activity = new Activity();
+//        String checknull;
+//        activity.setId(Integer.parseInt(rs.getString("maHD")));
+//        activity.setTitle(rs.getString("tenHD"));
+//        activity.setContent(rs.getString("noiDung"));
+//        activity.setGenre(rs.getString("theLoai"));
+//                 
+//        activity.setNameUser(rs.getString("tenNguoiDang"));
+//        activity.setAddress(rs.getString("diaDiem"));
+//
+//        checknull=rs.getString("soLuongDK");
+//        if(checknull!=null) activity.setNumberOfRegistrations(Integer.parseInt(checknull));
+//        else activity.setNumberOfRegistrations(0);
+//        activity.setPicture(rs.getString("anh"));
+//        activity.setPostingTime((rs.getTimestamp("ngayDang").toLocalDateTime()));
+//        activity.setStartDate(rs.getTimestamp("ngayBD").toLocalDateTime());
+//        activity.setEndDate(rs.getTimestamp("ngayKT").toLocalDateTime());
+//        return activity;
+//    }
+        public void getActivityDB(ResultSet rs) throws Exception{
+            String checknull;
+            setId(Integer.parseInt(rs.getString("maHD")));
+            setTitle(rs.getString("tenHD"));
+            setContent(rs.getString("noiDung"));
+            setGenre(rs.getString("theLoai"));
 
-    
+            setNameUser(rs.getString("tenNguoiDang"));
+            setAddress(rs.getString("diaDiem"));
+
+            checknull=rs.getString("soLuongDK");
+            if(checknull!=null) setNumberOfRegistrations(Integer.parseInt(checknull));
+            else setNumberOfRegistrations(0);
+            setPicture(rs.getBytes("anh"));
+            setPostingTime(rs.getTimestamp("ngayDang").toLocalDateTime());
+            setStartDate(rs.getTimestamp("ngayBD").toLocalDateTime());
+            setEndDate(rs.getTimestamp("ngayKT").toLocalDateTime());
+        }
 }

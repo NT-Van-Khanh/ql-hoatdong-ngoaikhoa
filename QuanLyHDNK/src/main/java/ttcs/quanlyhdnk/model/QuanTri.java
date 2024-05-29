@@ -9,8 +9,8 @@ public class QuanTri extends NguoiDung {
         super();
     }
 
-    public QuanTri(String user, String password, String name, String gender, String email, String phoneNumber, String address, String note, String role, LocalDateTime accountCreationDate, LocalDateTime Birthday) {
-        super(user, password, name, gender, email, phoneNumber, address, note, role, accountCreationDate, Birthday);
-    }
+//    public QuanTri(String user, String password, String name, String gender, String email, String phoneNumber, String address, String note, String role, LocalDateTime accountCreationDate, LocalDateTime Birthday) {
+//        super(user, password, name, gender, email, phoneNumber, address, note, role, accountCreationDate, Birthday);
+//    }
 
 }

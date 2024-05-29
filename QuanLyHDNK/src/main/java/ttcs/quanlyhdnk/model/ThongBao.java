@@ -8,13 +8,13 @@ import java.time.LocalDateTime;
 
 
 public class ThongBao {
-    private int id;
-    private String title,content, idAction, idUser, nameUser; // tieu de, noi dung, maHoatDong, maNguoiDang;
+    private int id, idAction;
+    private String title,content, idUser, nameUser; // tieu de, noi dung, maHoatDong, maNguoiDang;
     private LocalDateTime postingTime;// thoiGian tao tb
     public ThongBao() {
     }
 
-    public ThongBao(int id, String title, String content, String idAction, String idUser, String nameUser, LocalDateTime postingTime) {
+    public ThongBao(int id, String title, String content, int idAction, String idUser, String nameUser, LocalDateTime postingTime) {
         this.id = id;
         this.title = title;
         this.content = content;
@@ -48,11 +48,11 @@ public class ThongBao {
         this.content = content;
     }
 
-    public String getIdAction() {
+    public int getIdAction() {
         return idAction;
     }
 
-    public void setIdAction(String idAction) {
+    public void setIdAction(int idAction) {
         this.idAction = idAction;
     }
 
