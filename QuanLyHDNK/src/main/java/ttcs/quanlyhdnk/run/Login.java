@@ -17,9 +17,9 @@ import javax.mail.MessagingException;
 import javax.swing.UnsupportedLookAndFeelException;
 import ttcs.quanlyhdnk.DAO.AccountData;
 import ttcs.quanlyhdnk.DAO.SinhVien.StudentActivity;
-import ttcs.quanlyhdnk.form.activity.ActivityPanel;
-import ttcs.quanlyhdnk.form.login.CodeVerificationDlg;
-import ttcs.quanlyhdnk.form.login.PasswordResetPnl;
+import ttcs.quanlyhdnk.component.activity.ActivityPanel;
+import ttcs.quanlyhdnk.component.login.CodeVerificationDlg;
+import ttcs.quanlyhdnk.component.login.PasswordResetPnl;
 import ttcs.quanlyhdnk.model.Activity;
 import ttcs.quanlyhdnk.model.NguoiDung;
 import ttcs.quanlyhdnk.model.SinhVien;
@@ -105,8 +105,9 @@ public class Login extends javax.swing.JFrame {
         if(nguoiDung.getRole().equals("SV")){
             new SinhVienForm(nguoiDung).setVisible(true);
             this.setVisible(false);
-        }else if(nguoiDung.getRole().equals("AD")){
-            
+        }else if(nguoiDung.getRole().equals("QL")){
+            new KyThuatForm(nguoiDung).setVisible(true);
+            this.setVisible(false);
         }else{
             
         }

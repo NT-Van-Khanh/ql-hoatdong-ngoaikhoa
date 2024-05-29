@@ -23,8 +23,7 @@ import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.UnsupportedLookAndFeelException;
 import ttcs.quanlyhdnk.DAO.SinhVien.*;
-import ttcs.quanlyhdnk.form.activity.*;
-import ttcs.quanlyhdnk.form.activity.ActivityRegisterPanel;
+import ttcs.quanlyhdnk.component.activity.ActivityRegisterPanel;
 import ttcs.quanlyhdnk.model.Activity;
 import ttcs.quanlyhdnk.model.NguoiDung;
 import ttcs.quanlyhdnk.model.SinhVien;
@@ -40,8 +39,8 @@ import javax.swing.SwingUtilities;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.table.DefaultTableModel;
 import ttcs.quanlyhdnk.component.ImageChoose;
-import ttcs.quanlyhdnk.form.NotificationDialog;
-import ttcs.quanlyhdnk.form.login.PasswordChangePnl;
+import ttcs.quanlyhdnk.component.notification.NotificationDialog;
+import ttcs.quanlyhdnk.component.login.PasswordChangePnl;
 import ttcs.quanlyhdnk.model.DangKy;
 import ttcs.quanlyhdnk.util.Image;
 /**
@@ -55,22 +54,17 @@ public class KyThuatForm extends javax.swing.JFrame {
 
     public KyThuatForm() {
         initComponents();
-    //Load data
-        
+    //Load data  
         account.setUserID("N21DCCN000");
-        
-
     //design frame
 //        setExtendedState(MAXIMIZED_BOTH);
     //test
-
     }
+    
     public KyThuatForm(NguoiDung account) {
-        initComponents();
-        
+        initComponents();  
     //Load data
     //lblAvatar.setIcon(new javax.swing.ImageIcon(getClass().getResource(""))); // NOI18N
-        
         setStudentInformation(account);
         initDisplay();  
        
@@ -80,7 +74,6 @@ public class KyThuatForm extends javax.swing.JFrame {
     //test
     }
 
-    
     private void setStudentInformation(NguoiDung account){
         this.account=account;
     }
@@ -99,18 +92,18 @@ public class KyThuatForm extends javax.swing.JFrame {
     }
     //
     private void changeBodyPanelDisplay(int index){
-        if(this.selectedItemMenu==3 ){
-            if(index==1||index==2){
+        if(this.selectedItemMenu==2 ){
+            if(index==1||index==3){
 //                pnlMainBody.removeAll();
 //                pnlMainBody.add(cpListHD);
 //                pnlMainBody.revalidate();
 //                pnlMainBody.repaint();
             }
-        }else if(index==3){
-//                pnlMainBody.removeAll();
-//                pnlMainBody.add(cpActivityRegistered);
-//                pnlMainBody.revalidate();
-//                pnlMainBody.repaint();
+        }else if(index==2){
+                pnlMainBody1.removeAll();
+                pnlMainBody1.add(cpActivityRegistered);
+                pnlMainBody1.revalidate();
+                pnlMainBody1.repaint();
         }
     }
     private void showForm(int index){// error: cần xóa các panel activity cũ khi loading lại 
@@ -225,8 +218,17 @@ public class KyThuatForm extends javax.swing.JFrame {
         jLabel18 = new javax.swing.JLabel();
         jLabel19 = new javax.swing.JLabel();
         jLabel20 = new javax.swing.JLabel();
+        jPanel3 = new javax.swing.JPanel();
+        pnlToolbar = new javax.swing.JPanel();
+        jButton1 = new javax.swing.JButton();
+        jButton2 = new javax.swing.JButton();
+        jButton3 = new javax.swing.JButton();
+        pnlMainBody1 = new javax.swing.JPanel();
         cpActivityRegistered = new javax.swing.JScrollPane();
         tblActivityRegistered = new javax.swing.JTable();
+        jPanel4 = new javax.swing.JPanel();
+        pnlToolbar1 = new javax.swing.JPanel();
+        pnlMainBody2 = new javax.swing.JPanel();
         jPanel1 = new javax.swing.JPanel();
         header = new javax.swing.JPanel();
         lblAvatar = new javax.swing.JLabel();
@@ -242,12 +244,6 @@ public class KyThuatForm extends javax.swing.JFrame {
         pnlLogout = new javax.swing.JPanel();
         btnLogout = new javax.swing.JButton();
         jPanel15 = new javax.swing.JPanel();
-        pnlBody = new javax.swing.JPanel();
-        jPanel16 = new javax.swing.JPanel();
-        cmbSort = new javax.swing.JComboBox<>();
-        jLabel3 = new javax.swing.JLabel();
-        txtSearch = new javax.swing.JTextField();
-        btnSearch = new javax.swing.JButton();
         pnlMainBody = new javax.swing.JPanel();
 
         dlgAccountInformation.setTitle("Thông tin tài khoản");
@@ -452,6 +448,48 @@ public class KyThuatForm extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
+        jPanel3.setBackground(new java.awt.Color(255, 255, 255));
+
+        pnlToolbar.setBackground(new java.awt.Color(250, 204, 65));
+
+        jButton1.setText("Thêm");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
+        jButton2.setText("jButton2");
+
+        jButton3.setText("jButton3");
+
+        javax.swing.GroupLayout pnlToolbarLayout = new javax.swing.GroupLayout(pnlToolbar);
+        pnlToolbar.setLayout(pnlToolbarLayout);
+        pnlToolbarLayout.setHorizontalGroup(
+            pnlToolbarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnlToolbarLayout.createSequentialGroup()
+                .addGap(43, 43, 43)
+                .addComponent(jButton1)
+                .addGap(58, 58, 58)
+                .addComponent(jButton2)
+                .addGap(57, 57, 57)
+                .addComponent(jButton3)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        pnlToolbarLayout.setVerticalGroup(
+            pnlToolbarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlToolbarLayout.createSequentialGroup()
+                .addContainerGap(96, Short.MAX_VALUE)
+                .addGroup(pnlToolbarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jButton1)
+                    .addComponent(jButton2)
+                    .addComponent(jButton3))
+                .addGap(24, 24, 24))
+        );
+
+        pnlMainBody1.setOpaque(false);
+        pnlMainBody1.setLayout(new java.awt.BorderLayout());
+
         cpActivityRegistered.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 
         tblActivityRegistered.setModel(new javax.swing.table.DefaultTableModel(
@@ -482,15 +520,65 @@ public class KyThuatForm extends javax.swing.JFrame {
             tblActivityRegistered.getColumnModel().getColumn(2).setResizable(false);
             tblActivityRegistered.getColumnModel().getColumn(2).setPreferredWidth(60);
             tblActivityRegistered.getColumnModel().getColumn(3).setResizable(false);
-            tblActivityRegistered.getColumnModel().getColumn(3).setPreferredWidth(100);
+            tblActivityRegistered.getColumnModel().getColumn(3).setPreferredWidth(60);
             tblActivityRegistered.getColumnModel().getColumn(4).setResizable(false);
             tblActivityRegistered.getColumnModel().getColumn(4).setPreferredWidth(80);
             tblActivityRegistered.getColumnModel().getColumn(5).setResizable(false);
-            tblActivityRegistered.getColumnModel().getColumn(5).setPreferredWidth(80);
+            tblActivityRegistered.getColumnModel().getColumn(5).setPreferredWidth(60);
             tblActivityRegistered.getColumnModel().getColumn(6).setResizable(false);
             tblActivityRegistered.getColumnModel().getColumn(6).setPreferredWidth(100);
             tblActivityRegistered.getColumnModel().getColumn(7).setResizable(false);
         }
+
+        pnlMainBody1.add(cpActivityRegistered, java.awt.BorderLayout.CENTER);
+
+        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
+        jPanel3.setLayout(jPanel3Layout);
+        jPanel3Layout.setHorizontalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(pnlToolbar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(pnlMainBody1, javax.swing.GroupLayout.DEFAULT_SIZE, 1100, Short.MAX_VALUE)
+        );
+        jPanel3Layout.setVerticalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+                .addComponent(pnlToolbar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, 0)
+                .addComponent(pnlMainBody1, javax.swing.GroupLayout.DEFAULT_SIZE, 447, Short.MAX_VALUE))
+        );
+
+        jPanel4.setBackground(new java.awt.Color(255, 255, 255));
+
+        pnlToolbar1.setBackground(new java.awt.Color(250, 204, 65));
+
+        javax.swing.GroupLayout pnlToolbar1Layout = new javax.swing.GroupLayout(pnlToolbar1);
+        pnlToolbar1.setLayout(pnlToolbar1Layout);
+        pnlToolbar1Layout.setHorizontalGroup(
+            pnlToolbar1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 1100, Short.MAX_VALUE)
+        );
+        pnlToolbar1Layout.setVerticalGroup(
+            pnlToolbar1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 62, Short.MAX_VALUE)
+        );
+
+        pnlMainBody2.setOpaque(false);
+        pnlMainBody2.setLayout(new java.awt.BorderLayout());
+
+        javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
+        jPanel4.setLayout(jPanel4Layout);
+        jPanel4Layout.setHorizontalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(pnlToolbar1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(pnlMainBody2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        );
+        jPanel4Layout.setVerticalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
+                .addComponent(pnlToolbar1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(pnlMainBody2, javax.swing.GroupLayout.DEFAULT_SIZE, 522, Short.MAX_VALUE))
+        );
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Hoạt Động Ngoại Khóa");
@@ -741,88 +829,18 @@ public class KyThuatForm extends javax.swing.JFrame {
 
         pnlMenuBar.add(jPanel15);
 
-        pnlBody.setBackground(new java.awt.Color(255, 255, 255));
-        pnlBody.setBorder(javax.swing.BorderFactory.createMatteBorder(2, 2, 2, 2, new java.awt.Color(102, 102, 102)));
+        pnlMainBody.setBackground(new java.awt.Color(255, 255, 255));
+        pnlMainBody.setBorder(javax.swing.BorderFactory.createMatteBorder(2, 2, 2, 2, new java.awt.Color(102, 102, 102)));
 
-        jPanel16.setBackground(new java.awt.Color(250, 204, 65));
-
-        cmbSort.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Tên", "Thời gian bắt đầu", "Thời gian kết thúc" }));
-        cmbSort.setMinimumSize(new java.awt.Dimension(127, 30));
-        cmbSort.setPreferredSize(new java.awt.Dimension(127, 30));
-        cmbSort.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cmbSortActionPerformed(evt);
-            }
-        });
-
-        jLabel3.setForeground(new java.awt.Color(51, 51, 51));
-        jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        jLabel3.setText("Sắp xếp:");
-
-        txtSearch.setForeground(new java.awt.Color(153, 153, 153));
-        txtSearch.setText("Tìm kiếm");
-        txtSearch.setPreferredSize(new java.awt.Dimension(64, 30));
-        txtSearch.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusGained(java.awt.event.FocusEvent evt) {
-                txtSearchFocusGained(evt);
-            }
-            public void focusLost(java.awt.event.FocusEvent evt) {
-                txtSearchFocusLost(evt);
-            }
-        });
-        txtSearch.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                txtSearchMouseClicked(evt);
-            }
-        });
-
-        btnSearch.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/Search.24.png"))); // NOI18N
-
-        javax.swing.GroupLayout jPanel16Layout = new javax.swing.GroupLayout(jPanel16);
-        jPanel16.setLayout(jPanel16Layout);
-        jPanel16Layout.setHorizontalGroup(
-            jPanel16Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel16Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(txtSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(cmbSort, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+        javax.swing.GroupLayout pnlMainBodyLayout = new javax.swing.GroupLayout(pnlMainBody);
+        pnlMainBody.setLayout(pnlMainBodyLayout);
+        pnlMainBodyLayout.setHorizontalGroup(
+            pnlMainBodyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 842, Short.MAX_VALUE)
         );
-        jPanel16Layout.setVerticalGroup(
-            jPanel16Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel16Layout.createSequentialGroup()
-                .addContainerGap(32, Short.MAX_VALUE)
-                .addGroup(jPanel16Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel16Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(cmbSort, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel16Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addComponent(btnSearch, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                        .addComponent(txtSearch, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                .addContainerGap())
-        );
-
-        pnlMainBody.setOpaque(false);
-        pnlMainBody.setLayout(new java.awt.BorderLayout());
-
-        javax.swing.GroupLayout pnlBodyLayout = new javax.swing.GroupLayout(pnlBody);
-        pnlBody.setLayout(pnlBodyLayout);
-        pnlBodyLayout.setHorizontalGroup(
-            pnlBodyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel16, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(pnlMainBody, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-        );
-        pnlBodyLayout.setVerticalGroup(
-            pnlBodyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlBodyLayout.createSequentialGroup()
-                .addComponent(jPanel16, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, 0)
-                .addComponent(pnlMainBody, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        pnlMainBodyLayout.setVerticalGroup(
+            pnlMainBodyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 549, Short.MAX_VALUE)
         );
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -834,7 +852,7 @@ public class KyThuatForm extends javax.swing.JFrame {
                 .addGap(10, 10, 10)
                 .addComponent(pnlMenuBar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(10, 10, 10)
-                .addComponent(pnlBody, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(pnlMainBody, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGap(10, 10, 10))
         );
         jPanel1Layout.setVerticalGroup(
@@ -843,7 +861,7 @@ public class KyThuatForm extends javax.swing.JFrame {
                 .addComponent(header, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(10, 10, 10)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(pnlBody, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(pnlMainBody, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(pnlMenuBar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(10, 10, 10))
         );
@@ -874,26 +892,6 @@ public class KyThuatForm extends javax.swing.JFrame {
         changePasswordDlg.setVisible(true);
         
     }//GEN-LAST:event_btnChangePasswordDlgActionPerformed
-
-    private void txtSearchMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtSearchMouseClicked
-//        if(jTextField1.getText().equals("Tìm kiếm".strip())){
-//            jTextField1.setText("");
-//        }
-    }//GEN-LAST:event_txtSearchMouseClicked
-
-    private void txtSearchFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtSearchFocusGained
-        if(txtSearch.getText().equals("Tìm kiếm".strip())){
-            txtSearch.setText("");
-            txtSearch.setForeground(new Color(51,51,51));
-        }
-    }//GEN-LAST:event_txtSearchFocusGained
-
-    private void txtSearchFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtSearchFocusLost
-        if(txtSearch.getText().equals("".strip())){
-            txtSearch.setText("Tìm kiếm");
-            txtSearch.setForeground(new Color(153,153,153));
-        }
-    }//GEN-LAST:event_txtSearchFocusLost
 
     private void btnHomeMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnHomeMouseEntered
         //System.out.println("mouseenter");
@@ -969,10 +967,6 @@ public class KyThuatForm extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_btnLogoutFocusGained
 
-    private void cmbSortActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbSortActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_cmbSortActionPerformed
-
     private void btnHomeMouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnHomeMouseMoved
        // btnHome.setOpaque(true);
     }//GEN-LAST:event_btnHomeMouseMoved
@@ -1011,6 +1005,10 @@ public class KyThuatForm extends javax.swing.JFrame {
 //        SwingUtilities.convertPointToScreen(point, this);
 //        Rectangle bounds = 
     }//GEN-LAST:event_formMouseClicked
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
      * @param nguoiDung
@@ -1078,17 +1076,17 @@ public class KyThuatForm extends javax.swing.JFrame {
     private javax.swing.JButton btnLogout;
     private javax.swing.JButton btnParticipationHistory;
     private javax.swing.JButton btnRegistrationHistory;
-    private javax.swing.JButton btnSearch;
-    private javax.swing.JComboBox<String> cmbSort;
     private javax.swing.JScrollPane cpActivityRegistered;
     private javax.swing.JDialog dlgAccountInformation;
     private javax.swing.JPanel header;
+    private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
+    private javax.swing.JButton jButton3;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel17;
     private javax.swing.JLabel jLabel18;
     private javax.swing.JLabel jLabel19;
     private javax.swing.JLabel jLabel20;
-    private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
@@ -1097,8 +1095,9 @@ public class KyThuatForm extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel15;
-    private javax.swing.JPanel jPanel16;
     private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel3;
+    private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel6;
     private javax.swing.JLabel lbNameAccountDlg;
@@ -1110,14 +1109,16 @@ public class KyThuatForm extends javax.swing.JFrame {
     private javax.swing.JLabel lblIdAccountDlg;
     private javax.swing.JLabel lblNameUser;
     private javax.swing.JLabel lblPhoneNumberDlg;
-    private javax.swing.JPanel pnlBody;
     private javax.swing.JPanel pnlHome;
     private javax.swing.JPanel pnlLogout;
     private javax.swing.JPanel pnlMainBody;
+    private javax.swing.JPanel pnlMainBody1;
+    private javax.swing.JPanel pnlMainBody2;
     private javax.swing.JPanel pnlMenuBar;
     private javax.swing.JPanel pnlParticipationHistory;
     private javax.swing.JPanel pnlRegistrationHistory;
+    private javax.swing.JPanel pnlToolbar;
+    private javax.swing.JPanel pnlToolbar1;
     private javax.swing.JTable tblActivityRegistered;
-    private javax.swing.JTextField txtSearch;
     // End of variables declaration//GEN-END:variables
 }

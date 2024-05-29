@@ -2,8 +2,10 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JPanel.java to edit this template
  */
-package ttcs.quanlyhdnk.form.activity;
+package ttcs.quanlyhdnk.component.activity;
 
+import ttcs.quanlyhdnk.component.activity.ActivityPanel;
+import ttcs.quanlyhdnk.component.activity.ActivityDroppingOutPanel;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;

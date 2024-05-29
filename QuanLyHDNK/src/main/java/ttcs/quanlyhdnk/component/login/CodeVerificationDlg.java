@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JDialog.java to edit this template
  */
-package ttcs.quanlyhdnk.form.login;
+package ttcs.quanlyhdnk.component.login;
 
 import java.awt.TrayIcon.MessageType;
 import static ttcs.quanlyhdnk.util.RandomCode.randomCode;

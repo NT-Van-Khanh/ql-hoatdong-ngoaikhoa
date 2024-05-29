@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JPanel.java to edit this template
  */
-package ttcs.quanlyhdnk.form;
+package ttcs.quanlyhdnk.component.notification;
 
 import ttcs.quanlyhdnk.model.ThongBao;
 import ttcs.quanlyhdnk.util.DateTimeUtil;
@@ -11,13 +11,14 @@ import ttcs.quanlyhdnk.util.DateTimeUtil;
  *
  * @author ADMIN
  */
-public class NotificationPanel extends javax.swing.JPanel {
+public class NotificationLargePanel extends javax.swing.JPanel {
 
     private ThongBao thongBao = new ThongBao();
-    public NotificationPanel() {
+    public NotificationLargePanel(){
         initComponents();
     }
-    public NotificationPanel(ThongBao thongBao){
+    
+    public NotificationLargePanel(ThongBao thongBao){
         initComponents();
         this.thongBao=thongBao;
         setContentForCard();
@@ -157,26 +158,11 @@ public class NotificationPanel extends javax.swing.JPanel {
         );
 
         setBackground(new java.awt.Color(255, 255, 255));
-        setMaximumSize(new java.awt.Dimension(320, 50));
-        setMinimumSize(new java.awt.Dimension(320, 50));
-        setPreferredSize(new java.awt.Dimension(320, 50));
-        addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusGained(java.awt.event.FocusEvent evt) {
-                formFocusGained(evt);
-            }
-            public void focusLost(java.awt.event.FocusEvent evt) {
-                formFocusLost(evt);
-            }
-        });
+        setMinimumSize(new java.awt.Dimension(460, 50));
+        setPreferredSize(new java.awt.Dimension(460, 50));
         addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 formMouseClicked(evt);
-            }
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                formMouseEntered(evt);
-            }
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                formMouseExited(evt);
             }
         });
 
@@ -210,7 +196,7 @@ public class NotificationPanel extends javax.swing.JPanel {
                         .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(lblPostingName, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 7, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 147, Short.MAX_VALUE)
                         .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(lblTimePost, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))))
@@ -220,7 +206,7 @@ public class NotificationPanel extends javax.swing.JPanel {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(lblTitle)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 12, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(lblTimePost)
@@ -232,29 +218,12 @@ public class NotificationPanel extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void formMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_formMouseClicked
-        dlgNotification.setVisible(true);
-        dlgNotification.setLocationRelativeTo(null);
+        
     }//GEN-LAST:event_formMouseClicked
 
     private void dlgNotificationFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_dlgNotificationFocusLost
-      
+
     }//GEN-LAST:event_dlgNotificationFocusLost
-
-    private void formFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_formFocusGained
-        // TODO add your handling code here:
-    }//GEN-LAST:event_formFocusGained
-
-    private void formFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_formFocusLost
-        
-    }//GEN-LAST:event_formFocusLost
-
-    private void formMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_formMouseExited
-        setBackground(new java.awt.Color(255,255,255));
-    }//GEN-LAST:event_formMouseExited
-
-    private void formMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_formMouseEntered
-        setBackground(new java.awt.Color(229,229,229));
-    }//GEN-LAST:event_formMouseEntered
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

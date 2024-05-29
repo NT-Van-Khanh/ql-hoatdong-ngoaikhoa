@@ -56,9 +56,9 @@ public class QuanLyHDNK extends javax.swing.JFrame {
         jPanel17 = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
         jPanel18 = new javax.swing.JPanel();
-        activityRegisterPanel1 = new ttcs.quanlyhdnk.form.activity.ActivityRegisterPanel();
-        activityRegisterPanel2 = new ttcs.quanlyhdnk.form.activity.ActivityRegisterPanel();
-        activityRegisterPanel3 = new ttcs.quanlyhdnk.form.activity.ActivityRegisterPanel();
+        activityRegisterPanel1 = new ttcs.quanlyhdnk.component.activity.ActivityRegisterPanel();
+        activityRegisterPanel2 = new ttcs.quanlyhdnk.component.activity.ActivityRegisterPanel();
+        activityRegisterPanel3 = new ttcs.quanlyhdnk.component.activity.ActivityRegisterPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Hoạt Động Ngoại Khóa");
@@ -536,9 +536,9 @@ public class QuanLyHDNK extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private ttcs.quanlyhdnk.form.activity.ActivityRegisterPanel activityRegisterPanel1;
-    private ttcs.quanlyhdnk.form.activity.ActivityRegisterPanel activityRegisterPanel2;
-    private ttcs.quanlyhdnk.form.activity.ActivityRegisterPanel activityRegisterPanel3;
+    private ttcs.quanlyhdnk.component.activity.ActivityRegisterPanel activityRegisterPanel1;
+    private ttcs.quanlyhdnk.component.activity.ActivityRegisterPanel activityRegisterPanel2;
+    private ttcs.quanlyhdnk.component.activity.ActivityRegisterPanel activityRegisterPanel3;
     private javax.swing.JButton btnSearch;
     private javax.swing.JPanel header;
     private javax.swing.JButton jButton1;

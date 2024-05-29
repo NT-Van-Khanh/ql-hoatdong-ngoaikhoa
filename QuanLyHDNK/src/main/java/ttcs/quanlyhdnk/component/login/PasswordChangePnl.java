@@ -2,14 +2,14 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JDialog.java to edit this template
  */
-package ttcs.quanlyhdnk.form.login;
+package ttcs.quanlyhdnk.component.login;
 
 import java.awt.Color;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import ttcs.quanlyhdnk.DAO.AccountData;
-import ttcs.quanlyhdnk.form.activity.ActivityPanel;
+import ttcs.quanlyhdnk.component.activity.ActivityPanel;
 import ttcs.quanlyhdnk.model.NguoiDung;
 
 /**

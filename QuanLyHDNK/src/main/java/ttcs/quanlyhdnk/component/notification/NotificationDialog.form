@@ -7,9 +7,6 @@
         <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
           <Dimension value="[490, 600]"/>
         </Property>
-        <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-          <Dimension value="[490, 600]"/>
-        </Property>
         <Property name="resizable" type="boolean" value="false"/>
         <Property name="size" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
           <Dimension value="[490, 700]"/>
@@ -103,29 +100,29 @@
                 <Property name="verticalGap" type="int" value="2"/>
               </Layout>
               <SubComponents>
-                <Component class="ttcs.quanlyhdnk.form.NotificationLargePanel" name="notificationLargePanel1">
+                <Component class="ttcs.quanlyhdnk.component.notification.NotificationLargePanel" name="notificationLargePanel1">
                 </Component>
-                <Component class="ttcs.quanlyhdnk.form.NotificationLargePanel" name="notificationLargePanel2">
+                <Component class="ttcs.quanlyhdnk.component.notification.NotificationLargePanel" name="notificationLargePanel2">
                 </Component>
-                <Component class="ttcs.quanlyhdnk.form.NotificationLargePanel" name="notificationLargePanel3">
+                <Component class="ttcs.quanlyhdnk.component.notification.NotificationLargePanel" name="notificationLargePanel3">
                 </Component>
-                <Component class="ttcs.quanlyhdnk.form.NotificationLargePanel" name="notificationLargePanel4">
+                <Component class="ttcs.quanlyhdnk.component.notification.NotificationLargePanel" name="notificationLargePanel4">
                 </Component>
-                <Component class="ttcs.quanlyhdnk.form.NotificationLargePanel" name="notificationLargePanel5">
+                <Component class="ttcs.quanlyhdnk.component.notification.NotificationLargePanel" name="notificationLargePanel5">
                 </Component>
-                <Component class="ttcs.quanlyhdnk.form.NotificationLargePanel" name="notificationLargePanel6">
+                <Component class="ttcs.quanlyhdnk.component.notification.NotificationLargePanel" name="notificationLargePanel6">
                 </Component>
-                <Component class="ttcs.quanlyhdnk.form.NotificationLargePanel" name="notificationLargePanel7">
+                <Component class="ttcs.quanlyhdnk.component.notification.NotificationLargePanel" name="notificationLargePanel7">
                 </Component>
-                <Component class="ttcs.quanlyhdnk.form.NotificationLargePanel" name="notificationLargePanel8">
+                <Component class="ttcs.quanlyhdnk.component.notification.NotificationLargePanel" name="notificationLargePanel8">
                 </Component>
-                <Component class="ttcs.quanlyhdnk.form.NotificationLargePanel" name="notificationLargePanel9">
+                <Component class="ttcs.quanlyhdnk.component.notification.NotificationLargePanel" name="notificationLargePanel9">
                 </Component>
-                <Component class="ttcs.quanlyhdnk.form.NotificationLargePanel" name="notificationLargePanel10">
+                <Component class="ttcs.quanlyhdnk.component.notification.NotificationLargePanel" name="notificationLargePanel10">
                 </Component>
-                <Component class="ttcs.quanlyhdnk.form.NotificationLargePanel" name="notificationLargePanel11">
+                <Component class="ttcs.quanlyhdnk.component.notification.NotificationLargePanel" name="notificationLargePanel11">
                 </Component>
-                <Component class="ttcs.quanlyhdnk.form.NotificationLargePanel" name="notificationLargePanel12">
+                <Component class="ttcs.quanlyhdnk.component.notification.NotificationLargePanel" name="notificationLargePanel12">
                 </Component>
               </SubComponents>
             </Container>
@@ -218,17 +215,17 @@
         <Property name="verticalGap" type="int" value="3"/>
       </Layout>
       <SubComponents>
-        <Component class="ttcs.quanlyhdnk.form.NotificationPanel" name="notificationPanel1">
+        <Component class="ttcs.quanlyhdnk.component.notification.NotificationPanel" name="notificationPanel1">
         </Component>
-        <Component class="ttcs.quanlyhdnk.form.NotificationPanel" name="notificationPanel2">
+        <Component class="ttcs.quanlyhdnk.component.notification.NotificationPanel" name="notificationPanel2">
         </Component>
-        <Component class="ttcs.quanlyhdnk.form.NotificationPanel" name="notificationPanel3">
+        <Component class="ttcs.quanlyhdnk.component.notification.NotificationPanel" name="notificationPanel3">
         </Component>
-        <Component class="ttcs.quanlyhdnk.form.NotificationPanel" name="notificationPanel4">
+        <Component class="ttcs.quanlyhdnk.component.notification.NotificationPanel" name="notificationPanel4">
         </Component>
-        <Component class="ttcs.quanlyhdnk.form.NotificationPanel" name="notificationPanel5">
+        <Component class="ttcs.quanlyhdnk.component.notification.NotificationPanel" name="notificationPanel5">
         </Component>
-        <Component class="ttcs.quanlyhdnk.form.NotificationPanel" name="notificationPanel7">
+        <Component class="ttcs.quanlyhdnk.component.notification.NotificationPanel" name="notificationPanel7">
         </Component>
       </SubComponents>
     </Container>

@@ -1,5 +1,7 @@
 package ttcs.quanlyhdnk.run.form;
 
+import ttcs.quanlyhdnk.component.activity.ActivityPanel;
+import ttcs.quanlyhdnk.component.activity.ActivityDroppingOutPanel;
 import com.formdev.flatlaf.FlatLightLaf;
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -22,8 +24,7 @@ import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.UnsupportedLookAndFeelException;
 import ttcs.quanlyhdnk.DAO.SinhVien.*;
-import ttcs.quanlyhdnk.form.activity.*;
-import ttcs.quanlyhdnk.form.activity.ActivityRegisterPanel;
+import ttcs.quanlyhdnk.component.activity.ActivityRegisterPanel;
 import ttcs.quanlyhdnk.model.Activity;
 import ttcs.quanlyhdnk.model.NguoiDung;
 import ttcs.quanlyhdnk.model.SinhVien;
@@ -39,8 +40,8 @@ import javax.swing.SwingUtilities;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.table.DefaultTableModel;
 import ttcs.quanlyhdnk.component.ImageChoose;
-import ttcs.quanlyhdnk.form.NotificationDialog;
-import ttcs.quanlyhdnk.form.login.PasswordChangePnl;
+import ttcs.quanlyhdnk.component.notification.NotificationDialog;
+import ttcs.quanlyhdnk.component.login.PasswordChangePnl;
 import ttcs.quanlyhdnk.model.DangKy;
 import ttcs.quanlyhdnk.util.Image;
 /**
@@ -357,8 +358,8 @@ public class SinhVienForm extends javax.swing.JFrame {
         tblActivityRegistered = new javax.swing.JTable();
         cpListHD = new javax.swing.JScrollPane();
         pnlListHD = new javax.swing.JPanel();
-        activityRegisterPanel1 = new ttcs.quanlyhdnk.form.activity.ActivityRegisterPanel();
-        activityRegisterPanel2 = new ttcs.quanlyhdnk.form.activity.ActivityRegisterPanel();
+        activityRegisterPanel1 = new ttcs.quanlyhdnk.component.activity.ActivityRegisterPanel();
+        activityRegisterPanel2 = new ttcs.quanlyhdnk.component.activity.ActivityRegisterPanel();
         jPanel1 = new javax.swing.JPanel();
         header = new javax.swing.JPanel();
         lblAvatar = new javax.swing.JLabel();
@@ -1242,8 +1243,8 @@ public class SinhVienForm extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private ttcs.quanlyhdnk.form.activity.ActivityRegisterPanel activityRegisterPanel1;
-    private ttcs.quanlyhdnk.form.activity.ActivityRegisterPanel activityRegisterPanel2;
+    private ttcs.quanlyhdnk.component.activity.ActivityRegisterPanel activityRegisterPanel1;
+    private ttcs.quanlyhdnk.component.activity.ActivityRegisterPanel activityRegisterPanel2;
     private javax.swing.JButton btnChangePasswordDlg;
     private javax.swing.JButton btnHome;
     private javax.swing.JButton btnLogout;
