@@ -1,6 +1,5 @@
 package ttcs.quanlyhdnk.run;
 
-import ttcs.quanlyhdnk.run.form.*;
 import com.formdev.flatlaf.FlatLightLaf;
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -12,36 +11,26 @@ import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.net.URLConnection;
-import java.util.AbstractList;
 import java.util.ArrayList;
 import java.util.List;
+
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.UnsupportedLookAndFeelException;
-import ttcs.quanlyhdnk.DAO.SinhVien.*;
-import ttcs.quanlyhdnk.component.activity.ActivityRegisterPanel;
-import ttcs.quanlyhdnk.model.Activity;
+import javax.swing.table.DefaultTableModel;
+import ttcs.quanlyhdnk.DAO.AccountData;
+
 import ttcs.quanlyhdnk.model.NguoiDung;
-import ttcs.quanlyhdnk.model.SinhVien;
 import ttcs.quanlyhdnk.run.*;
-import ttcs.quanlyhdnk.util.DateTimeUtil;
-import ttcs.quanlyhdnk.util.SHA256Encryption;
+
 
 import ttcs.quanlyhdnk.util.DateTimeUtil;
-import java.time.LocalDateTime;
-import javax.imageio.ImageIO;
-import javax.swing.JFileChooser;
-import javax.swing.SwingUtilities;
-import javax.swing.filechooser.FileNameExtensionFilter;
-import javax.swing.table.DefaultTableModel;
+
+import ttcs.quanlyhdnk.component.AccountAdd;
 import ttcs.quanlyhdnk.component.ImageChoose;
-import ttcs.quanlyhdnk.component.notification.NotificationDialog;
+
 import ttcs.quanlyhdnk.component.login.PasswordChangePnl;
-import ttcs.quanlyhdnk.model.DangKy;
 import ttcs.quanlyhdnk.util.Image;
 /**
  *
@@ -50,8 +39,9 @@ import ttcs.quanlyhdnk.util.Image;
 public class KyThuatForm extends javax.swing.JFrame {
     private int selectedItemMenu=1;
     private NguoiDung account = new NguoiDung();
+    private List<NguoiDung> accountList = new ArrayList<>();
    // String pw=SHA256Encryption.toSHA256("abcdef"); 
-
+    private AccountData.OrderBy oderBy=AccountData.OrderBy.ID_ACCOUNT;
     public KyThuatForm() {
         initComponents();
     //Load data  
@@ -66,14 +56,44 @@ public class KyThuatForm extends javax.swing.JFrame {
     //Load data
     //lblAvatar.setIcon(new javax.swing.ImageIcon(getClass().getResource(""))); // NOI18N
         setStudentInformation(account);
-        initDisplay();  
+        initDisplay(); 
+        getAccountList(oderBy);
+        fillToTable();
        
     //test
     //design frame
     //    setExtendedState(MAXIMIZED_BOTH);
     //test
     }
+    private void getAccountList(AccountData.OrderBy orderBy){
+        try {
+            AccountData dao = new AccountData();
+            accountList = dao.getAllAccountDB(orderBy);
+        } catch (Exception ex) {
+            Logger.getLogger(KyThuatForm.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
 
+    private void getAccountListByRole(AccountData.AccountRole role,AccountData.OrderBy orderBy){
+        try {
+            AccountData dao = new AccountData();
+            accountList = dao.getAccountByRoleDB(role,orderBy);
+        } catch (Exception ex) {
+            Logger.getLogger(KyThuatForm.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    private void fillToTable(){
+        DefaultTableModel tblModel=(DefaultTableModel) tblAccountList.getModel();
+        tblModel.setRowCount(0); 
+        for(NguoiDung account:accountList){
+            Object[] row = new Object[]{account.getUserID(),account.getName(),account.getGender()
+                        ,DateTimeUtil.LocalDateTimeToStringDay(account.getBirthday())
+                        ,account.getEmail(),account.getPhoneNumber(),account.getAddress(),account.getRole()};
+            tblModel.addRow(row);
+        }
+    }
+    
     private void setStudentInformation(NguoiDung account){
         this.account=account;
     }
@@ -91,25 +111,11 @@ public class KyThuatForm extends javax.swing.JFrame {
 //        pnlMainBody.repaint();
     }
     //
-    private void changeBodyPanelDisplay(int index){
-        if(this.selectedItemMenu==2 ){
-            if(index==1||index==3){
-//                pnlMainBody.removeAll();
-//                pnlMainBody.add(cpListHD);
-//                pnlMainBody.revalidate();
-//                pnlMainBody.repaint();
-            }
-        }else if(index==2){
-                pnlMainBody1.removeAll();
-                pnlMainBody1.add(cpActivityRegistered);
-                pnlMainBody1.revalidate();
-                pnlMainBody1.repaint();
-        }
-    }
+
     private void showForm(int index){// error: cần xóa các panel activity cũ khi loading lại 
         
         if(index!=selectedItemMenu){
-            changeBodyPanelDisplay(index);
+           
             Font fontOfNewBtnMenu= new Font("Segoe UI",Font.BOLD,14);
             Font fontOfOldBtnMenu= new Font("Segoe UI",Font.PLAIN,14);
             switch( selectedItemMenu){
@@ -119,15 +125,6 @@ public class KyThuatForm extends javax.swing.JFrame {
                     pnlHome.setOpaque(false);
                     break;
                 case 2:
-                    btnRegistrationHistory.setFont(fontOfOldBtnMenu);
-                    pnlRegistrationHistory.setOpaque(false);
-
-                    break;   
-                case 3:
-                    btnParticipationHistory.setFont(fontOfOldBtnMenu);
-                    pnlParticipationHistory.setOpaque(false);
-                    break;  
-                case 4:
                     btnLogout.setFont(fontOfOldBtnMenu);
                     pnlLogout.setOpaque(false);
                     break;
@@ -141,17 +138,10 @@ public class KyThuatForm extends javax.swing.JFrame {
                     pnlHome.setOpaque(true);
                     break;
                 case 2:
-                    btnRegistrationHistory.setFont(fontOfNewBtnMenu);
-                    pnlRegistrationHistory.setOpaque(true);
-                    break;   
-                case 3:
-                    btnParticipationHistory.setFont(fontOfNewBtnMenu);
-                    pnlParticipationHistory.setOpaque(true);
-                    break;
-                case 4:
                     btnLogout.setFont(fontOfNewBtnMenu);
                     pnlLogout.setOpaque(true);
                     break;
+
                 default:
                     break;
             }
@@ -200,13 +190,11 @@ public class KyThuatForm extends javax.swing.JFrame {
         jPanel2 = new javax.swing.JPanel();
         lblAvatarDlg = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
-        jLabel7 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
         jLabel10 = new javax.swing.JLabel();
         lbNameAccountDlg = new javax.swing.JLabel();
         lblIdAccountDlg = new javax.swing.JLabel();
-        lblClassDlg = new javax.swing.JLabel();
         lblBirthdayDlg = new javax.swing.JLabel();
         lblPhoneNumberDlg = new javax.swing.JLabel();
         lblEmailDlg = new javax.swing.JLabel();
@@ -218,17 +206,10 @@ public class KyThuatForm extends javax.swing.JFrame {
         jLabel18 = new javax.swing.JLabel();
         jLabel19 = new javax.swing.JLabel();
         jLabel20 = new javax.swing.JLabel();
-        jPanel3 = new javax.swing.JPanel();
-        pnlToolbar = new javax.swing.JPanel();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
-        pnlMainBody1 = new javax.swing.JPanel();
-        cpActivityRegistered = new javax.swing.JScrollPane();
-        tblActivityRegistered = new javax.swing.JTable();
         jPanel4 = new javax.swing.JPanel();
         pnlToolbar1 = new javax.swing.JPanel();
-        pnlMainBody2 = new javax.swing.JPanel();
+        pnlAMBody = new javax.swing.JPanel();
+        buttonGroup1 = new javax.swing.ButtonGroup();
         jPanel1 = new javax.swing.JPanel();
         header = new javax.swing.JPanel();
         lblAvatar = new javax.swing.JLabel();
@@ -237,14 +218,27 @@ public class KyThuatForm extends javax.swing.JFrame {
         jPanel5 = new javax.swing.JPanel();
         pnlHome = new javax.swing.JPanel();
         btnHome = new javax.swing.JButton();
-        pnlRegistrationHistory = new javax.swing.JPanel();
-        btnRegistrationHistory = new javax.swing.JButton();
-        pnlParticipationHistory = new javax.swing.JPanel();
-        btnParticipationHistory = new javax.swing.JButton();
         pnlLogout = new javax.swing.JPanel();
         btnLogout = new javax.swing.JButton();
         jPanel15 = new javax.swing.JPanel();
         pnlMainBody = new javax.swing.JPanel();
+        pnlAccountManagerForm = new javax.swing.JPanel();
+        pnlToolbar = new javax.swing.JPanel();
+        jButton1 = new javax.swing.JButton();
+        jButton2 = new javax.swing.JButton();
+        jButton3 = new javax.swing.JButton();
+        txtSearch2 = new javax.swing.JTextField();
+        jLabel3 = new javax.swing.JLabel();
+        cmbSort = new javax.swing.JComboBox<>();
+        btnSearch = new javax.swing.JButton();
+        jLabel11 = new javax.swing.JLabel();
+        jRadioButton1 = new javax.swing.JRadioButton();
+        jRadioButton2 = new javax.swing.JRadioButton();
+        jRadioButton3 = new javax.swing.JRadioButton();
+        jRadioButton4 = new javax.swing.JRadioButton();
+        pnlMainBody1 = new javax.swing.JPanel();
+        cpActivityRegistered = new javax.swing.JScrollPane();
+        tblAccountList = new javax.swing.JTable();
 
         dlgAccountInformation.setTitle("Thông tin tài khoản");
         dlgAccountInformation.setBackground(new java.awt.Color(255, 255, 255));
@@ -265,9 +259,7 @@ public class KyThuatForm extends javax.swing.JFrame {
             }
         });
 
-        jLabel6.setText("MSV:");
-
-        jLabel7.setText("Lớp:");
+        jLabel6.setText("Mã tài khoản");
 
         jLabel8.setText("Ngày sinh:");
 
@@ -281,8 +273,6 @@ public class KyThuatForm extends javax.swing.JFrame {
         lbNameAccountDlg.setVerticalAlignment(javax.swing.SwingConstants.TOP);
 
         lblIdAccountDlg.setText("N21DCCN000");
-
-        lblClassDlg.setText("D21CQCN01-N");
 
         lblBirthdayDlg.setText("01/01/2003");
 
@@ -319,11 +309,7 @@ public class KyThuatForm extends javax.swing.JFrame {
                             .addGroup(jPanel2Layout.createSequentialGroup()
                                 .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(lblIdAccountDlg, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(lblClassDlg, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addComponent(lblIdAccountDlg, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addGroup(jPanel2Layout.createSequentialGroup()
                             .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -334,7 +320,7 @@ public class KyThuatForm extends javax.swing.JFrame {
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+            .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGap(20, 20, 20)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(lblAvatarDlg, javax.swing.GroupLayout.PREFERRED_SIZE, 188, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -344,23 +330,19 @@ public class KyThuatForm extends javax.swing.JFrame {
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel6)
                             .addComponent(lblIdAccountDlg))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jLabel7)
-                            .addComponent(lblClassDlg, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(18, 18, 18)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel8)
                             .addComponent(lblBirthdayDlg))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel9)
                             .addComponent(lblPhoneNumberDlg))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel10)
                             .addComponent(lblEmailDlg))
-                        .addGap(18, 18, 18)
+                        .addGap(34, 34, 34)
                         .addComponent(btnChangePasswordDlg)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -448,105 +430,6 @@ public class KyThuatForm extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
-        jPanel3.setBackground(new java.awt.Color(255, 255, 255));
-
-        pnlToolbar.setBackground(new java.awt.Color(250, 204, 65));
-
-        jButton1.setText("Thêm");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
-            }
-        });
-
-        jButton2.setText("jButton2");
-
-        jButton3.setText("jButton3");
-
-        javax.swing.GroupLayout pnlToolbarLayout = new javax.swing.GroupLayout(pnlToolbar);
-        pnlToolbar.setLayout(pnlToolbarLayout);
-        pnlToolbarLayout.setHorizontalGroup(
-            pnlToolbarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(pnlToolbarLayout.createSequentialGroup()
-                .addGap(43, 43, 43)
-                .addComponent(jButton1)
-                .addGap(58, 58, 58)
-                .addComponent(jButton2)
-                .addGap(57, 57, 57)
-                .addComponent(jButton3)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-        pnlToolbarLayout.setVerticalGroup(
-            pnlToolbarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlToolbarLayout.createSequentialGroup()
-                .addContainerGap(96, Short.MAX_VALUE)
-                .addGroup(pnlToolbarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton1)
-                    .addComponent(jButton2)
-                    .addComponent(jButton3))
-                .addGap(24, 24, 24))
-        );
-
-        pnlMainBody1.setOpaque(false);
-        pnlMainBody1.setLayout(new java.awt.BorderLayout());
-
-        cpActivityRegistered.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
-
-        tblActivityRegistered.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-
-            },
-            new String [] {
-                "Mã tài khoản", "Tên tài khoản", "Giới tính", "Ngày sinh", "Email", "Số điện thoại", "Địa chỉ", "Quyền"
-            }
-        ) {
-            boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false, false, false
-            };
-
-            public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit [columnIndex];
-            }
-        });
-        tblActivityRegistered.setColumnSelectionAllowed(true);
-        tblActivityRegistered.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
-        tblActivityRegistered.getTableHeader().setReorderingAllowed(false);
-        cpActivityRegistered.setViewportView(tblActivityRegistered);
-        tblActivityRegistered.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
-        if (tblActivityRegistered.getColumnModel().getColumnCount() > 0) {
-            tblActivityRegistered.getColumnModel().getColumn(0).setResizable(false);
-            tblActivityRegistered.getColumnModel().getColumn(0).setPreferredWidth(90);
-            tblActivityRegistered.getColumnModel().getColumn(1).setPreferredWidth(250);
-            tblActivityRegistered.getColumnModel().getColumn(2).setResizable(false);
-            tblActivityRegistered.getColumnModel().getColumn(2).setPreferredWidth(60);
-            tblActivityRegistered.getColumnModel().getColumn(3).setResizable(false);
-            tblActivityRegistered.getColumnModel().getColumn(3).setPreferredWidth(60);
-            tblActivityRegistered.getColumnModel().getColumn(4).setResizable(false);
-            tblActivityRegistered.getColumnModel().getColumn(4).setPreferredWidth(80);
-            tblActivityRegistered.getColumnModel().getColumn(5).setResizable(false);
-            tblActivityRegistered.getColumnModel().getColumn(5).setPreferredWidth(60);
-            tblActivityRegistered.getColumnModel().getColumn(6).setResizable(false);
-            tblActivityRegistered.getColumnModel().getColumn(6).setPreferredWidth(100);
-            tblActivityRegistered.getColumnModel().getColumn(7).setResizable(false);
-        }
-
-        pnlMainBody1.add(cpActivityRegistered, java.awt.BorderLayout.CENTER);
-
-        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
-        jPanel3.setLayout(jPanel3Layout);
-        jPanel3Layout.setHorizontalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(pnlToolbar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(pnlMainBody1, javax.swing.GroupLayout.DEFAULT_SIZE, 1100, Short.MAX_VALUE)
-        );
-        jPanel3Layout.setVerticalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                .addComponent(pnlToolbar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, 0)
-                .addComponent(pnlMainBody1, javax.swing.GroupLayout.DEFAULT_SIZE, 447, Short.MAX_VALUE))
-        );
-
         jPanel4.setBackground(new java.awt.Color(255, 255, 255));
 
         pnlToolbar1.setBackground(new java.awt.Color(250, 204, 65));
@@ -562,22 +445,22 @@ public class KyThuatForm extends javax.swing.JFrame {
             .addGap(0, 62, Short.MAX_VALUE)
         );
 
-        pnlMainBody2.setOpaque(false);
-        pnlMainBody2.setLayout(new java.awt.BorderLayout());
+        pnlAMBody.setOpaque(false);
+        pnlAMBody.setLayout(new java.awt.BorderLayout());
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
         jPanel4Layout.setHorizontalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(pnlToolbar1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(pnlMainBody2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(pnlAMBody, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
                 .addComponent(pnlToolbar1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(pnlMainBody2, javax.swing.GroupLayout.DEFAULT_SIZE, 522, Short.MAX_VALUE))
+                .addComponent(pnlAMBody, javax.swing.GroupLayout.DEFAULT_SIZE, 522, Short.MAX_VALUE))
         );
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -619,7 +502,7 @@ public class KyThuatForm extends javax.swing.JFrame {
                 .addComponent(lblAvatar)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(lblNameUser, javax.swing.GroupLayout.PREFERRED_SIZE, 184, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(840, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         headerLayout.setVerticalGroup(
             headerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -661,7 +544,7 @@ public class KyThuatForm extends javax.swing.JFrame {
         btnHome.setBackground(new java.awt.Color(38, 168, 255));
         btnHome.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         btnHome.setForeground(new java.awt.Color(255, 255, 255));
-        btnHome.setText("TRANG CHỦ");
+        btnHome.setText("QUẢN LÝ TÀI KHOẢN");
         btnHome.setContentAreaFilled(false);
         btnHome.setOpaque(true);
         btnHome.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
@@ -695,81 +578,6 @@ public class KyThuatForm extends javax.swing.JFrame {
         );
 
         pnlMenuBar.add(pnlHome);
-
-        pnlRegistrationHistory.setBackground(new java.awt.Color(50, 173, 255));
-        pnlRegistrationHistory.setMaximumSize(new java.awt.Dimension(220, 45));
-        pnlRegistrationHistory.setMinimumSize(new java.awt.Dimension(220, 45));
-        pnlRegistrationHistory.setOpaque(false);
-        pnlRegistrationHistory.setPreferredSize(new java.awt.Dimension(220, 45));
-
-        btnRegistrationHistory.setBackground(new java.awt.Color(38, 168, 255));
-        btnRegistrationHistory.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        btnRegistrationHistory.setForeground(new java.awt.Color(255, 255, 255));
-        btnRegistrationHistory.setText("QUẢN LÝ TÀI KHOẢN");
-        btnRegistrationHistory.setContentAreaFilled(false);
-        btnRegistrationHistory.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                btnRegistrationHistoryMouseEntered(evt);
-            }
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                btnRegistrationHistoryMouseExited(evt);
-            }
-        });
-        btnRegistrationHistory.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnRegistrationHistoryActionPerformed(evt);
-            }
-        });
-
-        javax.swing.GroupLayout pnlRegistrationHistoryLayout = new javax.swing.GroupLayout(pnlRegistrationHistory);
-        pnlRegistrationHistory.setLayout(pnlRegistrationHistoryLayout);
-        pnlRegistrationHistoryLayout.setHorizontalGroup(
-            pnlRegistrationHistoryLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(btnRegistrationHistory, javax.swing.GroupLayout.DEFAULT_SIZE, 220, Short.MAX_VALUE)
-        );
-        pnlRegistrationHistoryLayout.setVerticalGroup(
-            pnlRegistrationHistoryLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(btnRegistrationHistory, javax.swing.GroupLayout.DEFAULT_SIZE, 45, Short.MAX_VALUE)
-        );
-
-        pnlMenuBar.add(pnlRegistrationHistory);
-
-        pnlParticipationHistory.setBackground(new java.awt.Color(50, 173, 255));
-        pnlParticipationHistory.setMaximumSize(new java.awt.Dimension(220, 45));
-        pnlParticipationHistory.setMinimumSize(new java.awt.Dimension(220, 45));
-        pnlParticipationHistory.setOpaque(false);
-
-        btnParticipationHistory.setBackground(new java.awt.Color(38, 168, 255));
-        btnParticipationHistory.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        btnParticipationHistory.setForeground(new java.awt.Color(255, 255, 255));
-        btnParticipationHistory.setText("null");
-        btnParticipationHistory.setContentAreaFilled(false);
-        btnParticipationHistory.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                btnParticipationHistoryMouseEntered(evt);
-            }
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                btnParticipationHistoryMouseExited(evt);
-            }
-        });
-        btnParticipationHistory.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnParticipationHistoryActionPerformed(evt);
-            }
-        });
-
-        javax.swing.GroupLayout pnlParticipationHistoryLayout = new javax.swing.GroupLayout(pnlParticipationHistory);
-        pnlParticipationHistory.setLayout(pnlParticipationHistoryLayout);
-        pnlParticipationHistoryLayout.setHorizontalGroup(
-            pnlParticipationHistoryLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(btnParticipationHistory, javax.swing.GroupLayout.DEFAULT_SIZE, 220, Short.MAX_VALUE)
-        );
-        pnlParticipationHistoryLayout.setVerticalGroup(
-            pnlParticipationHistoryLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(btnParticipationHistory, javax.swing.GroupLayout.DEFAULT_SIZE, 45, Short.MAX_VALUE)
-        );
-
-        pnlMenuBar.add(pnlParticipationHistory);
 
         pnlLogout.setBackground(new java.awt.Color(50, 173, 255));
         pnlLogout.setMaximumSize(new java.awt.Dimension(220, 45));
@@ -824,35 +632,249 @@ public class KyThuatForm extends javax.swing.JFrame {
         );
         jPanel15Layout.setVerticalGroup(
             jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 318, Short.MAX_VALUE)
+            .addGap(0, 408, Short.MAX_VALUE)
         );
 
         pnlMenuBar.add(jPanel15);
 
         pnlMainBody.setBackground(new java.awt.Color(255, 255, 255));
         pnlMainBody.setBorder(javax.swing.BorderFactory.createMatteBorder(2, 2, 2, 2, new java.awt.Color(102, 102, 102)));
+        pnlMainBody.setLayout(new java.awt.BorderLayout());
 
-        javax.swing.GroupLayout pnlMainBodyLayout = new javax.swing.GroupLayout(pnlMainBody);
-        pnlMainBody.setLayout(pnlMainBodyLayout);
-        pnlMainBodyLayout.setHorizontalGroup(
-            pnlMainBodyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 842, Short.MAX_VALUE)
+        pnlAccountManagerForm.setBackground(new java.awt.Color(255, 255, 255));
+
+        pnlToolbar.setBackground(new java.awt.Color(250, 204, 65));
+
+        jButton1.setBackground(new java.awt.Color(51, 153, 0));
+        jButton1.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        jButton1.setForeground(new java.awt.Color(255, 255, 255));
+        jButton1.setText("Thêm tài khoản mới");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
+        jButton2.setBackground(new java.awt.Color(204, 51, 0));
+        jButton2.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        jButton2.setForeground(new java.awt.Color(255, 255, 255));
+        jButton2.setText("Xóa tài khoản ");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
+
+        jButton3.setBackground(new java.awt.Color(229, 229, 229));
+        jButton3.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        jButton3.setForeground(new java.awt.Color(51, 51, 51));
+        jButton3.setText("Cập nhật thông tin tài khoản");
+
+        txtSearch2.setForeground(new java.awt.Color(153, 153, 153));
+        txtSearch2.setText("Tìm kiếm");
+        txtSearch2.setPreferredSize(new java.awt.Dimension(64, 30));
+        txtSearch2.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                txtSearch2FocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                txtSearch2FocusLost(evt);
+            }
+        });
+        txtSearch2.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                txtSearch2MouseClicked(evt);
+            }
+        });
+
+        jLabel3.setForeground(new java.awt.Color(51, 51, 51));
+        jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        jLabel3.setText("Sắp xếp:");
+
+        cmbSort.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Mã tài khoản", "Tên tài khoản" }));
+        cmbSort.setMinimumSize(new java.awt.Dimension(127, 30));
+        cmbSort.setPreferredSize(new java.awt.Dimension(127, 30));
+        cmbSort.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cmbSortActionPerformed(evt);
+            }
+        });
+
+        btnSearch.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/Search.24.png"))); // NOI18N
+
+        jLabel11.setForeground(new java.awt.Color(51, 51, 51));
+        jLabel11.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        jLabel11.setText("Hiện đối tượng:");
+
+        buttonGroup1.add(jRadioButton1);
+        jRadioButton1.setForeground(new java.awt.Color(51, 51, 51));
+        jRadioButton1.setText("Sinh Viên");
+        jRadioButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jRadioButton1ActionPerformed(evt);
+            }
+        });
+
+        buttonGroup1.add(jRadioButton2);
+        jRadioButton2.setForeground(new java.awt.Color(51, 51, 51));
+        jRadioButton2.setText("Người đăng");
+        jRadioButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jRadioButton2ActionPerformed(evt);
+            }
+        });
+
+        buttonGroup1.add(jRadioButton3);
+        jRadioButton3.setForeground(new java.awt.Color(51, 51, 51));
+        jRadioButton3.setText("Quản lý");
+        jRadioButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jRadioButton3ActionPerformed(evt);
+            }
+        });
+
+        buttonGroup1.add(jRadioButton4);
+        jRadioButton4.setForeground(new java.awt.Color(51, 51, 51));
+        jRadioButton4.setSelected(true);
+        jRadioButton4.setText("Tất cả");
+        jRadioButton4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jRadioButton4ActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout pnlToolbarLayout = new javax.swing.GroupLayout(pnlToolbar);
+        pnlToolbar.setLayout(pnlToolbarLayout);
+        pnlToolbarLayout.setHorizontalGroup(
+            pnlToolbarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnlToolbarLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(pnlToolbarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(pnlToolbarLayout.createSequentialGroup()
+                        .addComponent(txtSearch2, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(btnSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(pnlToolbarLayout.createSequentialGroup()
+                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 230, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(pnlToolbarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlToolbarLayout.createSequentialGroup()
+                        .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jRadioButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jRadioButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(pnlToolbarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(cmbSort, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlToolbarLayout.createSequentialGroup()
+                        .addComponent(jRadioButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jRadioButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap())
         );
-        pnlMainBodyLayout.setVerticalGroup(
-            pnlMainBodyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 549, Short.MAX_VALUE)
+        pnlToolbarLayout.setVerticalGroup(
+            pnlToolbarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnlToolbarLayout.createSequentialGroup()
+                .addGap(15, 15, 15)
+                .addGroup(pnlToolbarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(pnlToolbarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(txtSearch2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btnSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(pnlToolbarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jRadioButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jRadioButton2)
+                        .addComponent(jRadioButton3)
+                        .addComponent(jLabel11)
+                        .addComponent(jRadioButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 28, Short.MAX_VALUE)
+                .addGroup(pnlToolbarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(pnlToolbarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(cmbSort, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabel3))
+                    .addGroup(pnlToolbarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jButton3)
+                        .addComponent(jButton1)
+                        .addComponent(jButton2)))
+                .addContainerGap())
         );
+
+        pnlMainBody1.setOpaque(false);
+        pnlMainBody1.setLayout(new java.awt.BorderLayout());
+
+        cpActivityRegistered.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+
+        tblAccountList.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "Mã tài khoản", "Tên tài khoản", "Giới tính", "Ngày sinh", "Email", "Số điện thoại", "Địa chỉ", "Quyền"
+            }
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        tblAccountList.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        tblAccountList.getTableHeader().setReorderingAllowed(false);
+        cpActivityRegistered.setViewportView(tblAccountList);
+        tblAccountList.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        if (tblAccountList.getColumnModel().getColumnCount() > 0) {
+            tblAccountList.getColumnModel().getColumn(0).setResizable(false);
+            tblAccountList.getColumnModel().getColumn(0).setPreferredWidth(90);
+            tblAccountList.getColumnModel().getColumn(1).setPreferredWidth(250);
+            tblAccountList.getColumnModel().getColumn(2).setResizable(false);
+            tblAccountList.getColumnModel().getColumn(2).setPreferredWidth(60);
+            tblAccountList.getColumnModel().getColumn(3).setResizable(false);
+            tblAccountList.getColumnModel().getColumn(3).setPreferredWidth(60);
+            tblAccountList.getColumnModel().getColumn(4).setResizable(false);
+            tblAccountList.getColumnModel().getColumn(4).setPreferredWidth(80);
+            tblAccountList.getColumnModel().getColumn(5).setResizable(false);
+            tblAccountList.getColumnModel().getColumn(5).setPreferredWidth(60);
+            tblAccountList.getColumnModel().getColumn(6).setResizable(false);
+            tblAccountList.getColumnModel().getColumn(6).setPreferredWidth(100);
+            tblAccountList.getColumnModel().getColumn(7).setResizable(false);
+        }
+
+        pnlMainBody1.add(cpActivityRegistered, java.awt.BorderLayout.CENTER);
+
+        javax.swing.GroupLayout pnlAccountManagerFormLayout = new javax.swing.GroupLayout(pnlAccountManagerForm);
+        pnlAccountManagerForm.setLayout(pnlAccountManagerFormLayout);
+        pnlAccountManagerFormLayout.setHorizontalGroup(
+            pnlAccountManagerFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(pnlToolbar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(pnlMainBody1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        );
+        pnlAccountManagerFormLayout.setVerticalGroup(
+            pnlAccountManagerFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlAccountManagerFormLayout.createSequentialGroup()
+                .addComponent(pnlToolbar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, 0)
+                .addComponent(pnlMainBody1, javax.swing.GroupLayout.DEFAULT_SIZE, 443, Short.MAX_VALUE))
+        );
+
+        pnlMainBody.add(pnlAccountManagerForm, java.awt.BorderLayout.CENTER);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(header, javax.swing.GroupLayout.DEFAULT_SIZE, 1096, Short.MAX_VALUE)
+            .addComponent(header, javax.swing.GroupLayout.DEFAULT_SIZE, 1389, Short.MAX_VALUE)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(10, 10, 10)
                 .addComponent(pnlMenuBar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(10, 10, 10)
-                .addComponent(pnlMainBody, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(pnlMainBody, javax.swing.GroupLayout.DEFAULT_SIZE, 1139, Short.MAX_VALUE)
                 .addGap(10, 10, 10))
         );
         jPanel1Layout.setVerticalGroup(
@@ -861,7 +883,7 @@ public class KyThuatForm extends javax.swing.JFrame {
                 .addComponent(header, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(10, 10, 10)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(pnlMainBody, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(pnlMainBody, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
                     .addComponent(pnlMenuBar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(10, 10, 10))
         );
@@ -877,7 +899,7 @@ public class KyThuatForm extends javax.swing.JFrame {
             .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
-        setSize(new java.awt.Dimension(1110, 650));
+        setSize(new java.awt.Dimension(1403, 650));
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
@@ -903,43 +925,12 @@ public class KyThuatForm extends javax.swing.JFrame {
         pnlHome.setOpaque(false);
     }//GEN-LAST:event_btnHomeMouseExited
 
-    private void btnRegistrationHistoryMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnRegistrationHistoryMouseEntered
-        pnlRegistrationHistory.setOpaque(true);
-    }//GEN-LAST:event_btnRegistrationHistoryMouseEntered
-
-    private void btnParticipationHistoryMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnParticipationHistoryMouseEntered
-        pnlParticipationHistory.setOpaque(true);
-    }//GEN-LAST:event_btnParticipationHistoryMouseEntered
-
-    private void btnRegistrationHistoryMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnRegistrationHistoryMouseExited
-         pnlRegistrationHistory.setOpaque(false);
-    }//GEN-LAST:event_btnRegistrationHistoryMouseExited
-
-    private void btnParticipationHistoryMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnParticipationHistoryMouseExited
-         pnlParticipationHistory.setOpaque(false);
-    }//GEN-LAST:event_btnParticipationHistoryMouseExited
-
     private void btnHomeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHomeActionPerformed
         //btnHome.setFont();
         //pnlHome.setOpaque(true);
         showForm(1);
   
     }//GEN-LAST:event_btnHomeActionPerformed
-
-    private void btnRegistrationHistoryActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistrationHistoryActionPerformed
-        showForm(2);
-       
-    }//GEN-LAST:event_btnRegistrationHistoryActionPerformed
-
-    private void btnParticipationHistoryActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnParticipationHistoryActionPerformed
-        // ChuaHoanThanh();
-        showForm(3);
-    
-        
-//        pnlListHD.removeAll();
-//        pnlListHD.revalidate();
-//        pnlListHD.repaint();
-    }//GEN-LAST:event_btnParticipationHistoryActionPerformed
 
     private void btnLogoutMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnLogoutMouseEntered
         pnlLogout.setOpaque(true);
@@ -1007,8 +998,57 @@ public class KyThuatForm extends javax.swing.JFrame {
     }//GEN-LAST:event_formMouseClicked
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        
+        AccountAdd addAccountDlg = new AccountAdd(this, true);
+        addAccountDlg.setLocationRelativeTo(null);
+        addAccountDlg.setVisible(true);
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void txtSearch2FocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtSearch2FocusGained
+
+    }//GEN-LAST:event_txtSearch2FocusGained
+
+    private void txtSearch2FocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtSearch2FocusLost
+//
+    }//GEN-LAST:event_txtSearch2FocusLost
+
+    private void txtSearch2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtSearch2MouseClicked
+        //        if(jTextField1.getText().equals("Tìm kiếm".strip())){
+            //            jTextField1.setText("");
+            //        }
+    }//GEN-LAST:event_txtSearch2MouseClicked
+
+    private void cmbSortActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbSortActionPerformed
+        if(cmbSort.getSelectedIndex()==1){
+            oderBy=AccountData.OrderBy.ID_ACCOUNT;
+        }else{
+            oderBy=AccountData.OrderBy.NAME_ACCOUNT;
+        }
+    }//GEN-LAST:event_cmbSortActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jRadioButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButton4ActionPerformed
+        getAccountList(oderBy);
+        fillToTable();
+    }//GEN-LAST:event_jRadioButton4ActionPerformed
+
+    private void jRadioButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButton1ActionPerformed
+        getAccountListByRole(AccountData.AccountRole.STUDENT,oderBy);
+        fillToTable();
+    }//GEN-LAST:event_jRadioButton1ActionPerformed
+
+    private void jRadioButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButton2ActionPerformed
+        getAccountListByRole(AccountData.AccountRole.POSTER,oderBy);
+       
+        fillToTable();
+    }//GEN-LAST:event_jRadioButton2ActionPerformed
+
+    private void jRadioButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButton3ActionPerformed
+        getAccountListByRole(AccountData.AccountRole.MANAGER,oderBy);
+        fillToTable();
+    }//GEN-LAST:event_jRadioButton3ActionPerformed
 
     /**
      * @param nguoiDung
@@ -1074,8 +1114,9 @@ public class KyThuatForm extends javax.swing.JFrame {
     private javax.swing.JButton btnChangePasswordDlg;
     private javax.swing.JButton btnHome;
     private javax.swing.JButton btnLogout;
-    private javax.swing.JButton btnParticipationHistory;
-    private javax.swing.JButton btnRegistrationHistory;
+    private javax.swing.JButton btnSearch;
+    private javax.swing.ButtonGroup buttonGroup1;
+    private javax.swing.JComboBox<String> cmbSort;
     private javax.swing.JScrollPane cpActivityRegistered;
     private javax.swing.JDialog dlgAccountInformation;
     private javax.swing.JPanel header;
@@ -1083,42 +1124,45 @@ public class KyThuatForm extends javax.swing.JFrame {
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel17;
     private javax.swing.JLabel jLabel18;
     private javax.swing.JLabel jLabel19;
     private javax.swing.JLabel jLabel20;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel15;
     private javax.swing.JPanel jPanel2;
-    private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel6;
+    private javax.swing.JRadioButton jRadioButton1;
+    private javax.swing.JRadioButton jRadioButton2;
+    private javax.swing.JRadioButton jRadioButton3;
+    private javax.swing.JRadioButton jRadioButton4;
     private javax.swing.JLabel lbNameAccountDlg;
     private javax.swing.JLabel lblAvatar;
     private javax.swing.JLabel lblAvatarDlg;
     private javax.swing.JLabel lblBirthdayDlg;
-    private javax.swing.JLabel lblClassDlg;
     private javax.swing.JLabel lblEmailDlg;
     private javax.swing.JLabel lblIdAccountDlg;
     private javax.swing.JLabel lblNameUser;
     private javax.swing.JLabel lblPhoneNumberDlg;
+    private javax.swing.JPanel pnlAMBody;
+    private javax.swing.JPanel pnlAccountManagerForm;
     private javax.swing.JPanel pnlHome;
     private javax.swing.JPanel pnlLogout;
     private javax.swing.JPanel pnlMainBody;
     private javax.swing.JPanel pnlMainBody1;
-    private javax.swing.JPanel pnlMainBody2;
     private javax.swing.JPanel pnlMenuBar;
-    private javax.swing.JPanel pnlParticipationHistory;
-    private javax.swing.JPanel pnlRegistrationHistory;
     private javax.swing.JPanel pnlToolbar;
     private javax.swing.JPanel pnlToolbar1;
-    private javax.swing.JTable tblActivityRegistered;
+    private javax.swing.JTable tblAccountList;
+    private javax.swing.JTextField txtSearch2;
     // End of variables declaration//GEN-END:variables
 }

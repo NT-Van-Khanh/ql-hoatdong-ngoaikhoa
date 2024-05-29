@@ -23,7 +23,7 @@ create table TaiKhoan(
 	diaChi nvarchar(200),
 	maVaiTro nvarchar(2) not null,
 	flagTK bit not null DEFAULT 0,
-	CONSTRAINT checkNS CHECK (DATEDIFF(YEAR, ngaySinh, getdate())<=150 AND DATEDIFF(YEAR, ngaySinh, getdate()) >= 18),
+	--CONSTRAINT checkNS CHECK (DATEDIFF(YEAR, ngaySinh, getdate())<=150 AND DATEDIFF(YEAR, ngaySinh, getdate()) >= 18),--
 	CONSTRAINT checkMTK CHECK (LEN(maTK)>=5),
 	CONSTRAINT fk_tk_vaitro Foreign key (maVaiTro) REFERENCES VaiTro(maVT) ON UPDATE CASCADE,
 )

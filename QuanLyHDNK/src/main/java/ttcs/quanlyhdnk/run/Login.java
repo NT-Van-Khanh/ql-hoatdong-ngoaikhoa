@@ -23,7 +23,6 @@ import ttcs.quanlyhdnk.component.login.PasswordResetPnl;
 import ttcs.quanlyhdnk.model.Activity;
 import ttcs.quanlyhdnk.model.NguoiDung;
 import ttcs.quanlyhdnk.model.SinhVien;
-import ttcs.quanlyhdnk.run.form.SinhVienForm;
 import ttcs.quanlyhdnk.util.Helper;
 import static ttcs.quanlyhdnk.util.RandomCode.randomCode;
 import ttcs.quanlyhdnk.util.SHA256Encryption;
